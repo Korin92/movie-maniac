@@ -19,7 +19,7 @@ import { onAuthStateChanged, signOut } from 'firebase/auth'
 import LoginForm from '../auth/loginForm/component'
 import RegisterForm from '../auth/registerForm/component'
 
-const pages = ['Products', 'Pricing', 'Blog']
+const pages = ['Cartelera', 'Pricing', 'Blog']
 
 export default function NavBar() {
   const [anchorElNav, setAnchorElNav] = useState(null)
@@ -27,7 +27,7 @@ export default function NavBar() {
 
   const [user, setUser] = useState(null)
   const [isLoading, setIsLoading] = useState(true)
-  const [reloadApp, setReloadApp] = useState(false)
+  // const [reloadApp, setReloadApp] = useState(false)
   const [textContent, setTextContent] = useState('')
   const [open, setOpen] = useState(false)
 

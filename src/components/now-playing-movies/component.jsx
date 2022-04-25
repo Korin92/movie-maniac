@@ -17,7 +17,7 @@ export default function ListOfMovies() {
   const [loading, setLoading] = useState(false)
 
   useEffect(() => {
-    MovieServices.getTrendingsMovies().then((movies) => {
+    MovieServices.getNowPlayingMovies().then((movies) => {
       setMovies(movies)
       setLoading(true)
     })

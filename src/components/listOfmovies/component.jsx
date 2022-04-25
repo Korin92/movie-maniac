@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import getMovies from '../../services/getMovies'
+import {MovieServices} from '../../services/movies-services'
 import Card from '@mui/material/Card'
 import Grid from '@mui/material/Grid'
 import CardActions from '@mui/material/CardActions'
@@ -17,7 +17,7 @@ export default function ListOfMovies() {
   const [loading, setLoading] = useState(false)
 
   useEffect(() => {
-    getMovies().then((movies) => {
+    MovieServices.getTrendingsMovies().then((movies) => {
       setMovies(movies)
       setLoading(true)
     })

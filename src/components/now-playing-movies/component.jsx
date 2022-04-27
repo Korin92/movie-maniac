@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import {MovieServices} from '../../services/movies-services'
+import { useParams } from "react-router-dom";
 import Card from '@mui/material/Card'
 import Grid from '@mui/material/Grid'
 import CardActions from '@mui/material/CardActions'
@@ -12,9 +13,12 @@ import Box from '@mui/material/Box'
 
 import { STCardMovies } from './style'
 
-export default function ListOfMovies() {
+export default function NowPlayingMovies() {
+
+  console.log('now playing movies')
   const [movies, setMovies] = useState([])
   const [loading, setLoading] = useState(false)
+
 
   useEffect(() => {
     MovieServices.getNowPlayingMovies().then((movies) => {
@@ -27,7 +31,7 @@ export default function ListOfMovies() {
     <STCardMovies>
       <Grid sx={{ flexGrow: 1 }}>
         <Grid item xs={12}>
-        <h2 className='title'>Las más populares...</h2>
+        <h2 className='title'>Cartelera</h2>
           <Grid justifyContent="center" container spacing={2}>
             {movies.results.map((movie, index) => (
               <Grid key={index} item>

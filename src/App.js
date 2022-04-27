@@ -1,13 +1,14 @@
 import './App.css'
-import ListOfMovies from './components/listOfmovies/component'
-import NavBar from './components/navBar/component'
+import NavBar from './components/nav-bar/component'
+import Routes from './routes/Routes'
+import { BrowserRouter as Router } from 'react-router-dom'
 
 function App() {
   return (
-    <>
+    <Router>
       <NavBar />
-      <ListOfMovies />
-    </>
+      <Routes />
+    </Router>
   )
 }
 

@@ -11,6 +11,9 @@ import DialogTitle from '@mui/material/DialogTitle'
 
 //components
 import ButtonResetSendEmailVerification from '../../reset-send-email-validation/component'
+import Loader from '../../loader/component'
+import AlertMessage from '../../alert/component'
+
 
 //services
 import { authServices } from '../../../services/auth-services'
@@ -22,6 +25,9 @@ export default function LoginForm(props) {
   const [isLoading, setIsLoading] = useState(false)
   const [userActive, setUserActive] = useState(true)
   const [user, setUser] = useState(null)
+  const [alert, setAlert] = useState(false)
+  const [severity, setSeverity] = useState(null)
+  const [message, setMessage] = useState(null)
 
   //props
   const { open, handleClose } = props
@@ -37,7 +43,7 @@ export default function LoginForm(props) {
   const onSubmit = (e) => {
     e.preventDefault()
 
-    authServices.login(setFormError, formData, setIsLoading, handleClose, setUser, setUserActive)
+    authServices.login(setFormError, formData, setIsLoading, handleClose, setUser, setUserActive, setMessage, setAlert, setSeverity)
   }
 
   return (
@@ -45,6 +51,7 @@ export default function LoginForm(props) {
       <Dialog open={open}>
         <form onSubmit={onSubmit} onChange={onChange}>
           <DialogTitle>Inicio de sesión</DialogTitle>
+          {alert ? <AlertMessage severity={severity} message={message} /> : null}
           <DialogContent>
             <DialogContentText>
               Si estás registrado en nuestra web, introduce tu email y contraseña para acceder a tu
@@ -83,11 +90,12 @@ export default function LoginForm(props) {
           </DialogContent>
           <DialogActions>
             <Button onClick={handleClose}>Volver</Button>
-            <Button type="submit" loading={isLoading} variant="contained">
+            <Button type="submit" variant="contained">
               Iniciar Sesión
             </Button>
           </DialogActions>
         </form>
+        {isLoading && <Loader open={open} />}
         {!userActive && (
           <ButtonResetSendEmailVerification
             user={user}

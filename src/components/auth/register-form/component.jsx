@@ -1,4 +1,6 @@
 import { useState } from 'react'
+
+//MaterialUI
 import Button from '@mui/material/Button'
 import TextField from '@mui/material/TextField'
 import Dialog from '@mui/material/Dialog'
@@ -6,20 +8,27 @@ import DialogActions from '@mui/material/DialogActions'
 import DialogContent from '@mui/material/DialogContent'
 import DialogContentText from '@mui/material/DialogContentText'
 import DialogTitle from '@mui/material/DialogTitle'
-import Alert from '@mui/material/Alert'
-import Stack from '@mui/material/Stack'
+import Typography from '@mui/material/Typography'
 
-import { Typography } from '@mui/material'
+//Components
+import AlertMessage from '../../alert/component'
+import Loader from '../../loader/component'
+
+//Services
 import { authServices } from '../../../services/auth-services'
 
 export default function RegisterForm(props) {
   const { open, handleClose } = props
-  
+
   const [formData, setFormData] = useState(defaultValueForm())
   // const [showPassword, setShowPassword] = useState(false)
   const [formError, setFormError] = useState({})
   const [isLoading, setIsLoading] = useState(false)
-  const [alert, setAlert] = useState(null)
+  const [alert, setAlert] = useState(false)
+  const [severity, setSeverity] = useState(null)
+  const [message, setMessage] = useState(null)
+
+ 
 
   // const handlerShowPassword = () => {
   //   setShowPassword(!showPassword)
@@ -35,25 +44,16 @@ export default function RegisterForm(props) {
   const onSubmit = (e) => {
     e.preventDefault()
 
-    authServices.register(setFormError, formData, setIsLoading, setAlert)
+    authServices.register(setFormError, formData, setIsLoading, setAlert, setSeverity, setMessage)
   }
-
 
   return (
     <div>
-      <Stack sx={{ width: '100%' }} spacing={2}>
-          {alert ?
-            <Alert severity="success">
-              Se ha enviado un email de verificación, por favor, comprueba tu correo
-            </Alert>
-            :
-            <Alert severity="error">Error al enviar el email de verificacion</Alert>}
-          </Stack> 
       <Dialog open={open}>
         <form onSubmit={onSubmit} onChange={onChange}>
           <DialogTitle>Registro</DialogTitle>
-          
           <DialogContent>
+            {alert ? <AlertMessage severity={severity} message={message} /> : null}
             <DialogContentText>
               ¿Aún no tienes cuenta? Regístrate con tu correo electrónico.
             </DialogContentText>
@@ -69,7 +69,9 @@ export default function RegisterForm(props) {
               error={formError.username}
             />
             {formError.username && (
-              <Typography className="error-text">Por favor, introduce un nombre de usuario.</Typography>
+              <Typography className="error-text">
+                Por favor, introduce un nombre de usuario.
+              </Typography>
             )}
             <TextField
               autoFocus
@@ -83,7 +85,9 @@ export default function RegisterForm(props) {
               error={formError.email}
             />
             {formError.email && (
-              <Typography className="error-text">Por favor, introduce un correo electronico válido.</Typography>
+              <Typography className="error-text">
+                Por favor, introduce un correo electronico válido.
+              </Typography>
             )}
             <TextField
               autoFocus
@@ -103,11 +107,19 @@ export default function RegisterForm(props) {
             )}
           </DialogContent>
           <DialogActions>
-            <Button onClick={handleClose}>Volver</Button>
-            <Button type="submit" loading={isLoading} variant="contained">
+            <Button
+              onClick={() => {
+                handleClose()
+                setAlert(false)
+              }}
+            >
+              Volver
+            </Button>
+            <Button type="submit" variant="contained">
               Registrarse
             </Button>
           </DialogActions>
+          {isLoading && <Loader open={open} />}
         </form>
       </Dialog>
     </div>
@@ -121,3 +133,5 @@ function defaultValueForm() {
     username: '',
   }
 }
+
+

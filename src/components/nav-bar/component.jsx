@@ -28,6 +28,7 @@ export default function NavBar() {
   const [textContent, setTextContent] = useState('')
   const [open, setOpen] = useState(false)
 
+
   onAuthStateChanged(auth, (currentUser) => {
     if (!currentUser?.emailVerified) {
       signOut(auth)

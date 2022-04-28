@@ -8,15 +8,12 @@ import DialogActions from '@mui/material/DialogActions'
 import DialogContent from '@mui/material/DialogContent'
 import DialogContentText from '@mui/material/DialogContentText'
 import DialogTitle from '@mui/material/DialogTitle'
-import Alert from '@mui/material/Alert'
-import Stack from '@mui/material/Stack'
 
-//Utils
-import { validateEmail } from '../../../utils/validations'
+//components
+import ButtonResetSendEmailVerification from '../../reset-send-email-validation/component'
 
-//Firebase
-import { signInWithEmailAndPassword, sendEmailVerification } from 'firebase/auth'
-import { auth } from '../../../utils/firebase'
+//services
+import { authServices } from '../../../services/auth-services'
 
 export default function LoginForm(props) {
   //States
@@ -40,41 +37,7 @@ export default function LoginForm(props) {
   const onSubmit = (e) => {
     e.preventDefault()
 
-    setFormError({})
-    let errors = {}
-    let formOk = true
-
-    if (!validateEmail(formData.email)) {
-      errors.email = true
-      formOk = false
-    }
-
-    if (formData.password.length < 6) {
-      errors.password = true
-      formOk = false
-    }
-    setFormError(errors)
-
-    if (formOk) {
-      setIsLoading(true)
-      signInWithEmailAndPassword(auth, formData.email, formData.password)
-        .then((response) => {
-          setUser(response.user)
-          setUserActive(response.user.emailVerified)
-          handleClose()
-          if (!response.user.emailVerified) {
-            ;<Stack sx={{ width: '100%' }} spacing={2}>
-              <Alert severity="warning">Verifica tu cuenta para acceder</Alert>
-            </Stack>
-          }
-        })
-        .catch((err) => {
-          handlerErrors(err.code)
-        })
-        .finally(() => {
-          setIsLoading(false)
-        })
-    }
+    authServices.login(setFormError, formData, setIsLoading, handleClose, setUser, setUserActive)
   }
 
   return (
@@ -135,60 +98,6 @@ export default function LoginForm(props) {
       </Dialog>
     </div>
   )
-}
-
-function ButtonResetSendEmailVerification(props) {
-  const { user, setIsLoading, setUserActive } = props
-  const resendVerificationEmail = () => {
-    sendEmailVerification(user)
-      .then(() => {
-        ;<Stack sx={{ width: '100%' }} spacing={2}>
-          <Alert severity="success">Se ha enviado email de confirmación</Alert>
-        </Stack>
-      })
-      .catch((err) => {
-        handlerErrors(err.code)
-      })
-      .finally(() => {
-        setIsLoading(false)
-        setUserActive(true)
-      })
-  }
-  return (
-    <div className="resend-verification-email">
-      <p>
-        Si no has recibido el email de verificación puedes volver a enviarlo haciendo click{' '}
-        <span onClick={resendVerificationEmail}>aquí</span>
-      </p>
-    </div>
-  )
-}
-
-function handlerErrors(code) {
-  switch (code) {
-    case 'auth/wrong-password':
-      ;<Stack sx={{ width: '100%' }} spacing={2}>
-        <Alert severity="warning">El usuario o la contraseña son incorrectos</Alert>
-      </Stack>
-
-      break
-    case 'auth/too-many-requests':
-      ;<Stack sx={{ width: '100%' }} spacing={2}>
-        <Alert severity="warning">
-          Has enviado demasiadas solicitudes de reenvío de email de confirmación en muy poco tiempo
-        </Alert>
-      </Stack>
-      break
-    case 'auth/user-not-found':
-      ;<Stack sx={{ width: '100%' }} spacing={2}>
-        <Alert severity="warning">El usuario o la contraseña son incorrectos</Alert>
-      </Stack>
-
-      break
-
-    default:
-      break
-  }
 }
 
 function defaultValueForm() {

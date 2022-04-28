@@ -48,7 +48,7 @@ export default function RegisterForm(props) {
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Volver</Button>
-          <Button>Iniciar Sesión</Button>
+          <Button>Registrarse</Button>
         </DialogActions>
       </Dialog>
     </div>

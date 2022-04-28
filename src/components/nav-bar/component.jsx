@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react'
-import { Link, useLocation } from 'react-router-dom'
+import { useState } from 'react'
+import { Link } from 'react-router-dom'
 import AppBar from '@mui/material/AppBar'
 import Box from '@mui/material/Box'
 import Toolbar from '@mui/material/Toolbar'
@@ -9,7 +9,6 @@ import Menu from '@mui/material/Menu'
 import MenuIcon from '@mui/icons-material/Menu'
 import Container from '@mui/material/Container'
 import Avatar from '@mui/material/Avatar'
-import Button from '@mui/material/Button'
 import Tooltip from '@mui/material/Tooltip'
 import MenuItem from '@mui/material/MenuItem'
 import SearchIcon from '@mui/icons-material/Search'
@@ -21,27 +20,13 @@ import LoginForm from '../auth/login-form/component'
 import RegisterForm from '../auth/register-form/component'
 
 export default function NavBar() {
+  //States
   const [anchorElNav, setAnchorElNav] = useState(null)
   const [anchorElUser, setAnchorElUser] = useState(null)
-  const location = useLocation()
-
-  const [activeMenu, setActiveMenu] = useState(location.pathname)
-
   const [user, setUser] = useState(null)
   const [isLoading, setIsLoading] = useState(true)
-  // const [reloadApp, setReloadApp] = useState(false)
   const [textContent, setTextContent] = useState('')
   const [open, setOpen] = useState(false)
-
-  const settings = user ? ['Mi perfil', 'Cerrar sesión'] : ['Login', 'Registro']
-
-  useEffect(() => {
-    setActiveMenu(location.pathname)
-  }, [location])
-
-  const handlerMenu = (e, menu) => {
-    setActiveMenu(menu.to)
-  }
 
   onAuthStateChanged(auth, (currentUser) => {
     if (!currentUser?.emailVerified) {
@@ -75,11 +60,14 @@ export default function NavBar() {
   const handleUserMenu = (event) => {
     setTextContent(event.currentTarget.textContent)
     setOpen(true)
-    console.log('Hago click')
   }
 
   const handleClose = () => {
     setOpen(false)
+  }
+
+  const handleLogout = () => {
+    signOut(auth)
   }
 
   return (
@@ -127,7 +115,7 @@ export default function NavBar() {
                   display: { xs: 'block', md: 'none' },
                 }}
               >
-                <MenuItem onClick={handleCloseNavMenu}>
+                <MenuItem as={Link} to="/now-playing-movies" onClick={handleCloseNavMenu}>
                   <Typography textAlign="center">Cartelera</Typography>
                 </MenuItem>
                 <MenuItem onClick={handleCloseNavMenu}>
@@ -139,14 +127,16 @@ export default function NavBar() {
               </Menu>
             </Box>
 
-            <Typography
-              variant="h6"
-              noWrap
-              component="div"
-              sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}
-            >
-              LOGO
-            </Typography>
+            <MenuItem as={Link} to="/">
+              <Typography
+                variant="h6"
+                noWrap
+                component="div"
+                sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}
+              >
+                LOGO
+              </Typography>
+            </MenuItem>
 
             <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
               <MenuItem as={Link} to="/now-playing-movies">
@@ -183,11 +173,36 @@ export default function NavBar() {
                   </MenuItem>
                 </>
               ) : (
-                <Tooltip title="Open settings">
-                  <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                    <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
-                  </IconButton>
-                </Tooltip>
+                <>
+                  <Tooltip title="Open settings">
+                    <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                      <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                    </IconButton>
+                  </Tooltip>
+                  <Menu
+                    sx={{ mt: '45px' }}
+                    id="menu-appbar"
+                    anchorEl={anchorElUser}
+                    anchorOrigin={{
+                      vertical: 'top',
+                      horizontal: 'right',
+                    }}
+                    keepMounted
+                    transformOrigin={{
+                      vertical: 'top',
+                      horizontal: 'right',
+                    }}
+                    open={Boolean(anchorElUser)}
+                    onClose={handleCloseUserMenu}
+                  >
+                    <MenuItem onClick={handleCloseUserMenu}>
+                      <Typography textAlign="center">Mi Perfil</Typography>
+                    </MenuItem>
+                    <MenuItem onClick={handleLogout}>
+                      <Typography textAlign="center">Cerrar sesión</Typography>
+                    </MenuItem>
+                  </Menu>
+                </>
               )}
 
               {textContent ? (

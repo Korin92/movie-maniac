@@ -26,14 +26,11 @@ export default function LoginForm(props) {
   const [userActive, setUserActive] = useState(true)
   const [user, setUser] = useState(null)
 
-  console.log(formData)
-
   //props
   const { open, handleClose } = props
 
   //handlers
   const onChange = (e) => {
-    console.log('entro al onChange')
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
@@ -42,13 +39,12 @@ export default function LoginForm(props) {
 
   const onSubmit = (e) => {
     e.preventDefault()
-    console.log('entro a onSubmit')
+
     setFormError({})
     let errors = {}
     let formOk = true
 
     if (!validateEmail(formData.email)) {
-      console.log('Entro al validateEmail')
       errors.email = true
       formOk = false
     }
@@ -60,13 +56,12 @@ export default function LoginForm(props) {
     setFormError(errors)
 
     if (formOk) {
-      console.log('Entro al form ok')
       setIsLoading(true)
       signInWithEmailAndPassword(auth, formData.email, formData.password)
         .then((response) => {
-          console.log(response.user)
           setUser(response.user)
           setUserActive(response.user.emailVerified)
+          handleClose()
           if (!response.user.emailVerified) {
             ;<Stack sx={{ width: '100%' }} spacing={2}>
               <Alert severity="warning">Verifica tu cuenta para acceder</Alert>
@@ -81,12 +76,6 @@ export default function LoginForm(props) {
         })
     }
   }
-
-  const onFoo = () => {
-    console.log('Te has logueado', user)
-  }
-
-  console.log(user)
 
   return (
     <div>
@@ -131,7 +120,7 @@ export default function LoginForm(props) {
           </DialogContent>
           <DialogActions>
             <Button onClick={handleClose}>Volver</Button>
-            <Button type="submit" onClick={onFoo} loading={isLoading} variant="contained">
+            <Button type="submit" loading={isLoading} variant="contained">
               Iniciar Sesión
             </Button>
           </DialogActions>

@@ -3,9 +3,10 @@ import { Routes, Route } from "react-router-dom";
 
 
 //Pages
-import Home from "../components/pages/home/component";
-import NowPlayingMoviesPage from "../components/pages/now-playing-movies/component";
-import Auth from "../components/pages/auth/component";
+import Home from "../pages/home/component";
+import NowPlayingMoviesPage from "../pages/now-playing-movies/component";
+import ProfilePage from "../pages/profile/component";
+
 
 export default function routes() {
 
@@ -15,7 +16,7 @@ export default function routes() {
       <Routes>
         <Route path="/" element={<Home />}></Route>
         <Route path="/now-playing-movies" element={<NowPlayingMoviesPage />} />
-        <Route path="/auth" element={<Auth />} />
+        <Route path="/profile" element={<ProfilePage />} />
       </Routes>
     </div>
   );

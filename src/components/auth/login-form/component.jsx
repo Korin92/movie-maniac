@@ -101,6 +101,9 @@ export default function LoginForm(props) {
             user={user}
             setIsLoading={setIsLoading}
             setUserActive={setUserActive}
+            setMessage={setMessage}
+            setAlert={setAlert}
+            setSeverity={setSeverity}
           />
         )}
       </Dialog>

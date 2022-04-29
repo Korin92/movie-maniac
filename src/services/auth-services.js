@@ -53,7 +53,9 @@ const login = (
         }
       })
       .catch((err) => {
-        Errors.handlerErrors(err.code)
+        setSeverity('error')
+        setAlert(true)
+        Errors.handlerErrors(err.code, setMessage)
       })
       .finally(() => {
         setIsLoading(false)
@@ -82,13 +84,11 @@ const register = (setFormError, formData, setIsLoading, setAlert, setSeverity, s
   setFormError(errors)
 
   if (formOk) {
-    console.log('entro al formOk')
     setIsLoading(true)
-    const user = createUserWithEmailAndPassword(auth, formData.email, formData.password)
+    createUserWithEmailAndPassword(auth, formData.email, formData.password)
       .then(() => {
         changeUserName()
         sendEmailVerification(auth.currentUser)
-        console.log(user)
       })
       .then(() => {
         setSeverity('success')
@@ -97,10 +97,10 @@ const register = (setFormError, formData, setIsLoading, setAlert, setSeverity, s
         )
       })
       .catch((error) => {
-        setSeverity('error')
-        setMessage('Ha ocurrido un error, por favor, inténtalo de nuevo')
+        setSeverity('warning')
+        Errors.handlerErrors(error.code, setMessage)
       })
-      .catch((error) => {
+      .catch(() => {
         setSeverity('error')
         setMessage('Ha ocurrido un error, por favor, inténtalo de nuevo')
       })

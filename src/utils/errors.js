@@ -1,34 +1,25 @@
-import Alert from '@mui/material/Alert'
-import Stack from '@mui/material/Stack'
+const handlerErrors = (code, setMessage) => {
+  switch (code) {
+    case 'auth/wrong-password':
+      setMessage('El usuario o la contraseña son incorrectos')
+      break
+    case 'auth/too-many-requests':
+      setMessage(
+        'Has enviado demasiadas solicitudes de reenvío de email de confirmación en muy poco tiempo'
+      )
+      break
+    case 'auth/user-not-found':
+      setMessage('El usuario o la contraseña son incorrectos')
+      break
+    case 'auth/email-already-in-use':
+      setMessage('El email ya está en uso')
+      break
 
-const handlerErrors =(code) => {
-    switch (code) {
-      case 'auth/wrong-password':
-        ;<Stack sx={{ width: '100%' }} spacing={2}>
-          <Alert severity="warning">El usuario o la contraseña son incorrectos</Alert>
-        </Stack>
-
-        break
-      case 'auth/too-many-requests':
-        ;<Stack sx={{ width: '100%' }} spacing={2}>
-          <Alert severity="warning">
-            Has enviado demasiadas solicitudes de reenvío de email de confirmación en muy poco
-            tiempo
-          </Alert>
-        </Stack>
-        break
-      case 'auth/user-not-found':
-        ;<Stack sx={{ width: '100%' }} spacing={2}>
-          <Alert severity="warning">El usuario o la contraseña son incorrectos</Alert>
-        </Stack>
-
-        break
-
-      default:
-        break
-    }
+    default:
+      break
   }
+}
 
-  export const Errors = {
-    handlerErrors
-  }
+export const Errors = {
+  handlerErrors,
+}

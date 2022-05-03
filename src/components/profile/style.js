@@ -9,14 +9,14 @@ export const STProfile = styled.div`
     height: 100%;
 
     .container-profile {
-        margin-top: 50%;
+        margin-top: 50px;
 
         >h1{
             font-size: 2.5rem;
             font-weight: bold;
             color: #000;
             margin-bottom: 20px;
-            margin-top: 50%;
+
         }
     }
 

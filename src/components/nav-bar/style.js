@@ -5,7 +5,35 @@ export const STnavBar = style.div`
 .app-bar {
   background: #0c0735;
   color: #f6f6fe;
+
+  .links-app{
+
+    .css-ov3z8l-MuiMenuItem-root{
+      &:visited{
+        color: #f6f6fe;
+      }
+    }
+
+  }
+
+
+  .user-container{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    height: 100%;
+    padding: 0 20px;
+
+    .user-name{
+      font-size: 1.5rem;
+      font-weight: bold;
+      padding-left: 5px;
+
+    }
+  }
 }
+
 `
 
 export const Search = styled('div')(({ theme }) => ({

@@ -1,6 +1,12 @@
-import styled from 'styled-components';
+import styled from 'styled-components'
 
-export const STProfile = styled.div`
+export const STProfileComponent = styled.div`
+  display: flex;
+  align-items: flex-start;
+  width: 100%;
+  height: 100%;
+
+  .container-profile {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -8,16 +14,14 @@ export const STProfile = styled.div`
     width: 100%;
     height: 100%;
 
-    .container-profile {
-        margin-top: 50px;
-
-        >h1{
-            font-size: 2.5rem;
-            font-weight: bold;
-            color: #000;
-            margin-bottom: 20px;
-
-        }
+    .title-profile {
+      font-size: 2.5rem;
+      font-weight: bold;
+      margin: 10px 0 30px 0;
     }
+  }
 
+  .divider {
+    border-color: #f6f6fe;
+  }
 `

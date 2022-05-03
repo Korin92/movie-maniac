@@ -8,40 +8,33 @@ import Typography from '@mui/material/Typography'
 import Menu from '@mui/material/Menu'
 import MenuIcon from '@mui/icons-material/Menu'
 import Container from '@mui/material/Container'
-import Avatar from '@mui/material/Avatar'
 import Tooltip from '@mui/material/Tooltip'
 import MenuItem from '@mui/material/MenuItem'
 import SearchIcon from '@mui/icons-material/Search'
 import { Search, SearchIconWrapper, StyledInputBase, STnavBar } from './style'
 
 import { auth } from '../../utils/firebase'
-import { onAuthStateChanged, signOut } from 'firebase/auth'
+import { signOut } from 'firebase/auth'
+
+
+
 import LoginForm from '../auth/login-form/component'
 import RegisterForm from '../auth/register-form/component'
+import ImageAvatar from '../avatar/component'
 
-export default function NavBar() {
+
+import defaultAvatar from '../../assets/png/user.png'
+
+export default function NavBar(props) {
+
+  const {user} = props
   //States
   const [anchorElNav, setAnchorElNav] = useState(null)
   const [anchorElUser, setAnchorElUser] = useState(null)
-  const [user, setUser] = useState(null)
-  const [isLoading, setIsLoading] = useState(true)
+  
   const [textContent, setTextContent] = useState('')
   const [open, setOpen] = useState(false)
 
-
-  onAuthStateChanged(auth, (currentUser) => {
-    if (!currentUser?.emailVerified) {
-      signOut(auth)
-      setUser(null)
-    } else {
-      setUser(currentUser)
-    }
-    setIsLoading(false)
-  })
-
-  if (isLoading) {
-    return null
-  }
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget)
@@ -139,7 +132,7 @@ export default function NavBar() {
               </Typography>
             </MenuItem>
 
-            <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+            <Box className='links-app' sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
               <MenuItem as={Link} to="/now-playing-movies">
                 <Typography textAlign="center">Cartelera</Typography>
               </MenuItem>
@@ -175,11 +168,15 @@ export default function NavBar() {
                 </>
               ) : (
                 <>
+                <Container className='user-container'>
                   <Tooltip title="Open settings">
                     <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                      <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                      <ImageAvatar src={user.photoURL ? user.photoURL :defaultAvatar} />
                     </IconButton>
                   </Tooltip>
+                  <Typography className='user-name' variant="h6" noWrap>{user.displayName}</Typography>
+                  </Container>
+                  
                   <Menu
                     sx={{ mt: '45px' }}
                     id="menu-appbar"
@@ -196,7 +193,7 @@ export default function NavBar() {
                     open={Boolean(anchorElUser)}
                     onClose={handleCloseUserMenu}
                   >
-                    <MenuItem as={Link} to='/profile' onClick={handleCloseUserMenu}>
+                    <MenuItem as={Link} to="/profile" onClick={handleCloseUserMenu}>
                       <Typography textAlign="center">Mi Perfil</Typography>
                     </MenuItem>
                     <MenuItem onClick={handleLogout}>

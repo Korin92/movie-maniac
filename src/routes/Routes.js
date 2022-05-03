@@ -8,7 +8,9 @@ import NowPlayingMoviesPage from "../pages/now-playing-movies/component";
 import ProfilePage from "../pages/profile/component";
 
 
-export default function routes() {
+export default function routes(props) {
+
+  const {user, setReloadApp} = props
 
 
   return (
@@ -16,7 +18,7 @@ export default function routes() {
       <Routes>
         <Route path="/" element={<Home />}></Route>
         <Route path="/now-playing-movies" element={<NowPlayingMoviesPage />} />
-        <Route path="/profile" element={<ProfilePage />} />
+        <Route path="/profile" element={<ProfilePage user={user} setReloadApp={setReloadApp} />} />
       </Routes>
     </div>
   );

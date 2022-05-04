@@ -34,10 +34,30 @@ const getNowPlayingMovies = async () => {
     return apiResponse
 }
 
+const getDetails = async (movieId) => {
+  const apiUrl = `${API_URL}/${movieId}?api_key=${API_KEY}&language=es-ES`
+  
+  const res = await fetch(apiUrl)
+  const apiResponse = await res.json()
+  
+  return apiResponse
+}
+
+const getCredits = async (movieId) => {
+  const apiUrl = `${API_URL}/${movieId}/credits?api_key=${API_KEY}&language=es-ES`
+  
+  const res = await fetch(apiUrl)
+  const apiResponse = await res.json()
+  
+  return apiResponse
+}
+
 
 
 export const MovieServices = {
   getTrendingsMovies,
   getNextMovies,
-  getNowPlayingMovies
+  getNowPlayingMovies,
+  getDetails,
+  getCredits
 }

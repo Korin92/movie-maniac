@@ -13,6 +13,7 @@ import MenuItem from '@mui/material/MenuItem'
 import SearchIcon from '@mui/icons-material/Search'
 import { Search, SearchIconWrapper, StyledInputBase, STnavBar } from './style'
 
+
 import { auth } from '../../utils/firebase'
 import { signOut } from 'firebase/auth'
 

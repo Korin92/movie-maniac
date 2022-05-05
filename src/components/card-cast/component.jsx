@@ -11,6 +11,8 @@ import Skeleton from '@mui/material/Skeleton'
 import Box from '@mui/material/Box'
 import MenuItem from '@mui/material/MenuItem'
 
+import NOIMAGE from '../../assets/png/NO-IMAGE1.png'
+
 import { STCardCast } from './style'
 
 export default function CardCast(props) {
@@ -27,6 +29,13 @@ export default function CardCast(props) {
     })
   }, [movieId])
 
+  const getImage = (image) => {
+    if (image) {
+      return `https://image.tmdb.org/t/p/original/${image}`
+    }
+    return NOIMAGE
+  }
+
   return loading ? (
     <STCardCast>
       <Grid sx={{ flexGrow: 1 }}>
@@ -42,7 +51,7 @@ export default function CardCast(props) {
                         className="img-actor"
                         component="img"
                         alt="image of actor"
-                        image={`https://image.tmdb.org/t/p/original/${item.profile_path}`}
+                        image={getImage(item.profile_path)}
                       />
                     ) : (
                       <Skeleton variant="rectangular" width={210} height={118} />
@@ -51,7 +60,12 @@ export default function CardCast(props) {
                     {item ? (
                       <>
                         <CardContent className="description">
-                          <Typography className='description-name' gutterBottom variant="h5" component="div">
+                          <Typography
+                            className="description-name"
+                            gutterBottom
+                            variant="h5"
+                            component="div"
+                          >
                             {item.name}
                           </Typography>
                           <Typography
@@ -72,9 +86,9 @@ export default function CardCast(props) {
                   </Card>
                 </Grid>
               ))}
-              <Typography className='show-more' gutterBottom variant="h5" component="div">
-                           Ver más
-                          </Typography>
+            <Typography className="show-more" gutterBottom variant="h5" component="div">
+              Ver más
+            </Typography>
           </Grid>
         </Grid>
       </Grid>

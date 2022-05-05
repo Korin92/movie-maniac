@@ -18,6 +18,21 @@ export const STDetails = styled.div`
       font-weight: bold;
       margin-bottom: 1%;
       margin-left: 2%;
+      margin-top: 2%;
+    }
+
+    .trailer {
+      height: 750px;
+      width: 100%;
+      border: none;
+      border-radius: 10px;
+
+      @media (max-width: 450px) {
+        height: 200px;
+      }
+      /* @media (max-width: 450px) {
+        height: 300px;
+      } */
     }
   }
 `
@@ -33,7 +48,6 @@ export const STPoster = styled.div`
   background-position: center;
   background-repeat: no-repeat;
   background-position-y: 10%;
-
 
   .title {
     color: #f6f6fe;

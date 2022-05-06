@@ -11,6 +11,7 @@ import CardMedia from '@mui/material/CardMedia'
 import { STDetails, STPoster } from './style'
 import CardCast from '../card-cast/component'
 import Providers from '../watch-providers/component'
+import SimilarMovies from '../similar-movies/component'
 
 export default function Details() {
   //States
@@ -18,7 +19,6 @@ export default function Details() {
   const [loading, setLoading] = useState(false)
 
   const [video, setVideo] = useState()
-  const [language, setLanguage] = useState()
 
   const { movieId } = useParams()
 
@@ -77,6 +77,7 @@ export default function Details() {
           <Typography className="content-title">¿Dónde encontrarla?</Typography>
           <Providers movieId={movieId} />
           <Typography className="content-title">Películas similares</Typography>
+          <SimilarMovies movieId={movieId} />
 
         </CardContent>
       </Card>

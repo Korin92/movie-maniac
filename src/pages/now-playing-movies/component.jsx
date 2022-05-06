@@ -1,9 +1,19 @@
-import React from 'react'
-import NowPlayingMovies from '../../components/now-playing-movies/component'
+import {useEffect, useState} from 'react'
+import {MovieServices} from '../../services/movies-services'
+import CardMovies from '../../components/card-movies/component'
 
 export default function NowPlayingMoviesPage() {
 
-  return (
-    <NowPlayingMovies />
-  )
+  const [movies, setMovies] = useState([])
+  const [loading, setLoading] = useState(false)
+
+
+  useEffect(() => {
+    MovieServices.getNowPlayingMovies().then((movies) => {
+      setMovies(movies)
+      setLoading(true)
+    })
+  }, [])
+
+  return  <CardMovies movies={movies} loading={loading} title='Cartelera' />
 }

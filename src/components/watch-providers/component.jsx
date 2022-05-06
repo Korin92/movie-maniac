@@ -33,7 +33,7 @@ export default function Providers(props) {
 
     return provider
   }
-  console.log(providers)
+
   return loading ? (
     <STProviders>
       {!providers && (

@@ -1,18 +1,13 @@
-import React from "react";
-import { Routes, Route } from "react-router-dom";
-
+import { Routes, Route } from 'react-router-dom'
 
 //Pages
-import Home from "../pages/home/component";
-import NowPlayingMoviesPage from "../pages/now-playing-movies/component";
-import ProfilePage from "../pages/profile/component";
-import DetailsPage from "../pages/details/component";
-
+import Home from '../pages/home/component'
+import NowPlayingMoviesPage from '../pages/now-playing-movies/component'
+import ProfilePage from '../pages/profile/component'
+import DetailsPage from '../pages/details/component'
 
 export default function routes(props) {
-
-  const {user, setReloadApp} = props
-
+  const { user, setReloadApp } = props
 
   return (
     <div>
@@ -23,5 +18,5 @@ export default function routes(props) {
         <Route path="/details/:movieId" element={<DetailsPage />} />
       </Routes>
     </div>
-  );
+  )
 }

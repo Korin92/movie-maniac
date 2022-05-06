@@ -13,16 +13,16 @@ import MenuItem from '@mui/material/MenuItem'
 
 import { STCardMovies } from './style'
 
-export default function CardMovies({movies, loading}) {
-  return  loading ? (
-    <STCardMovies>
+export default function CardMovies({ movies, loading, title, className }) {
+  return loading ? (
+    <STCardMovies  className={className}>
       <Grid sx={{ flexGrow: 1 }}>
         <Grid item xs={12}>
-          <h2 className="title">Las más populares...</h2>
-          <Grid justifyContent="center" container spacing={2}>
+          <h2 className="title">{title}</h2>
+          <Grid justifyContent="center" container spacing={2} className='grid'>
             {movies.results.map((movie) => (
               <Grid key={movie.id} item>
-                <Card sx={{ maxWidth: 345 }}>
+                <Card sx={{ maxWidth: 345 }} className='card'>
                   {movie ? (
                     <CardMedia
                       className="poster"
@@ -48,7 +48,7 @@ export default function CardMovies({movies, loading}) {
                           {movie.overview}
                         </Typography>
                       </CardContent>
-                      <CardActions>
+                      <CardActions className="content-buttons">
                         <Button size="small">Share</Button>
 
                         <MenuItem as={Link} to={`/details/${movie.id}`}>

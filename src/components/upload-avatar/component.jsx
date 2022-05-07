@@ -1,13 +1,10 @@
 import { useState, useCallback } from 'react'
 
-import Avatar from '@mui/material/Avatar'
-import Typography from '@mui/material/Typography'
-import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions'
-import DialogContent from '@mui/material/DialogContent'
-import DialogContentText from '@mui/material/DialogContentText'
-import DialogTitle from '@mui/material/DialogTitle'
+import Dialog from '@mui/material/Dialog'
+import Container from '@mui/material/Container'
+import Button from '@mui/material/Button'
+
+import Loader from '../loader/component'
 
 import { auth } from '../../utils/firebase'
 import { updateProfile } from '@firebase/auth'
@@ -17,13 +14,12 @@ import { useDropzone } from 'react-dropzone'
 
 import AlertMessage from '../alert/component'
 
-import { STUploadAvatar } from './style'
-
-import defaultAvatar from '../../assets/png/user.png'
+import { STDialogContent, STAddPhotoAlternateIcon, STTypography, STDialogActions } from './style'
 
 export default function UploadAvatar(props) {
-  const { user, setReloadApp, open } = props
+  const { user, setReloadApp, open, handleClose } = props
   const [avatarUrl, setAvatarUrl] = useState()
+  const [loading, setLoading] = useState(false)
 
   const onDrop = useCallback((acceptedFiles) => {
     const file = acceptedFiles[0]
@@ -43,6 +39,7 @@ export default function UploadAvatar(props) {
   })
 
   const uploadImage = (file) => {
+    setLoading(true)
     const storage = getStorage()
     const spaceRef = ref(storage, `avatar/${user.uid}`)
     return uploadBytes(spaceRef, file)
@@ -53,21 +50,27 @@ export default function UploadAvatar(props) {
       .then(async (response) => {
         await updateProfile(auth.currentUser, { photoURL: response })
         setReloadApp((prevState) => !prevState)
+        handleClose()
       })
       .catch((err) => {
         <AlertMessage severity="error" message={'Error al actualizar el avatar'} />
         console.log(err)
       })
+      .finally(() => {
+        setLoading(false)
+      })
   }
   return (
-    <STUploadAvatar {...getRootProps()}>
-      <Dialog open={open}>
-      <DialogTitle>Cambio de avatar</DialogTitle>
-      <DialogContent>
-      <input {...getInputProps()} />
-      <AddPhotoAlternateIcon className='avatar' />
-      </DialogContent>
-      </Dialog>
-    </STUploadAvatar>
+    <Dialog open={open}>
+      <STDialogContent {...getRootProps()}>
+        <STAddPhotoAlternateIcon />
+        <Container {...getInputProps()} />
+        <STTypography>Arrastra imagen o haz click encima para actualizar tu avatar</STTypography>
+      </STDialogContent>
+      <STDialogActions sx={{ justifyContent: 'center' }}>
+        <Button onClick={handleClose}>Cerrar</Button>
+      </STDialogActions>
+      {loading && <Loader open={open} />}
+    </Dialog>
   )
 }

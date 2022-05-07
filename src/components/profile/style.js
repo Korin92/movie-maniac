@@ -21,7 +21,5 @@ export const STProfileComponent = styled.div`
     }
   }
 
-  .divider {
-    border-color: #f6f6fe;
-  }
+  
 `

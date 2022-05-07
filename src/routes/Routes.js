@@ -7,14 +7,14 @@ import ProfilePage from '../pages/profile/component'
 import DetailsPage from '../pages/details/component'
 
 export default function routes(props) {
-  const { user, setReloadApp } = props
+  const { user, setReloadApp, selected } = props
 
   return (
     <div>
       <Routes>
         <Route path="/" element={<Home />}></Route>
         <Route path="/now-playing-movies" element={<NowPlayingMoviesPage />} />
-        <Route path="/profile" element={<ProfilePage user={user} setReloadApp={setReloadApp} />} />
+        <Route path="/profile" element={<ProfilePage user={user} setReloadApp={setReloadApp} selected={selected} />} />
         <Route path="/details/:movieId" element={<DetailsPage />} />
       </Routes>
     </div>

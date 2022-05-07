@@ -1,4 +1,4 @@
-import * as React from 'react'
+import { useState } from 'react'
 import Box from '@mui/material/Box'
 import List from '@mui/material/List'
 import ListItemButton from '@mui/material/ListItemButton'
@@ -11,10 +11,20 @@ import VisibilityOffIcon from '@mui/icons-material/VisibilityOff'
 import { STMenuProfile } from './style'
 
 export default function MenuProfile() {
-  const [selectedIndex, setSelectedIndex] = React.useState(1)
+  const [selectedIndex, setSelectedIndex] = useState(1)
 
+  const [selected, setSelected] = useState(null);
+
+  console.log(selected)
   const handleListItemClick = (event, index) => {
     setSelectedIndex(index)
+    if(selectedIndex === 0){
+      setSelected('Favoritos')
+    }else if(selectedIndex === 1){
+      setSelected('Pendientes de ver')
+    }else{
+      setSelected('profile')
+    }
   }
 
   return (

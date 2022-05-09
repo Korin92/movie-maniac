@@ -83,6 +83,14 @@ const getSimilarMovies = async (movieId) => {
   return apiResponse
 }
 
+const getMovie = async (movieId) => {
+  const apiUrl = `${API_URL}/${movieId}?api_key=${API_KEY}&language=es-ES`
+  const res = await fetch(apiUrl)
+  const apiResponse = await res.json()
+
+  return apiResponse
+}
+
 
 export const MovieServices = {
   getTrendingsMovies,
@@ -92,5 +100,6 @@ export const MovieServices = {
   getCredits,
   getVideos,
   getProviders,
-  getSimilarMovies
+  getSimilarMovies,
+  getMovie
 }

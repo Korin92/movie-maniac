@@ -10,17 +10,27 @@ import Typography from '@mui/material/Typography'
 import Skeleton from '@mui/material/Skeleton'
 import Box from '@mui/material/Box'
 import MenuItem from '@mui/material/MenuItem'
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye'
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff'
 
 import { STCardMovies } from './style'
 
 export default function CardMovies({ movies, loading, title, className }) {
+
+
+  const handleClick = (movie) => {
+    console.log('id',movie.id)
+    
+
+  }
   return loading ? (
     <STCardMovies  className={className}>
       <Grid sx={{ flexGrow: 1 }}>
         <Grid item xs={12}>
           <h2 className="title">{title}</h2>
           <Grid justifyContent="center" container spacing={2} className='grid'>
-            {movies.results.map((movie) => (
+            {movies?.map((movie) => (
               <Grid key={movie.id} item>
                 <Card sx={{ maxWidth: 345 }} className='card'>
                   {movie ? (
@@ -49,7 +59,9 @@ export default function CardMovies({ movies, loading, title, className }) {
                         </Typography>
                       </CardContent>
                       <CardActions className="content-buttons">
-                        <Button size="small">Share</Button>
+                        <Button className='icon-favourite' size="small" onClick={() =>{handleClick(movie)}}><FavoriteIcon /></Button>
+                        <Button className='icon-pending' size="small"><VisibilityOffIcon /></Button>
+                        <Button className='icon-seen' size="small"><RemoveRedEyeIcon /></Button>
 
                         <MenuItem as={Link} to={`/details/${movie.id}`}>
                           <Button size="small">Saber más</Button>

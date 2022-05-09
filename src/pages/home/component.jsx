@@ -15,6 +15,6 @@ export default function Home() {
   }, [])
 
   return (
-    <CardMovies movies={movies} loading={loading} title='Las más populares' />
+    <CardMovies movies={movies.results} loading={loading} title='Las más populares' />
   )
 }

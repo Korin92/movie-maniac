@@ -15,5 +15,5 @@ export default function NowPlayingMoviesPage() {
     })
   }, [])
 
-  return  <CardMovies movies={movies} loading={loading} title='Cartelera' />
+  return  <CardMovies movies={movies.results} loading={loading} title='Cartelera' />
 }

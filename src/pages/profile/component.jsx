@@ -17,7 +17,7 @@ export default function ProfilePage(props) {
   const handlerSelected = () => {
     switch (selected) {
       case 'favoritos':
-        return <Favs />
+        return <Favs/>
       case 'pendientes de ver':
         return <PendingWatch />
       case 'vistas':

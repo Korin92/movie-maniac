@@ -7,6 +7,21 @@ export const STDetails = styled.div`
 
   .card-details {
     background-color: rgb(0 0 0 / 78%);
+
+    .skeleton {
+      background-color: #b7b4b4a6;
+      width: 100%;
+      height: 100%;
+
+      .skeleton-img {
+        width: 100%;
+        height: 500px;
+      }
+      .skeleton-title {
+        background-color: #b7b4b4a6;
+        height: 50px;
+      }
+    }
   }
 
   .content {

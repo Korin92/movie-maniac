@@ -1,9 +1,30 @@
 import { useState, useEffect } from 'react'
-import { MovieServices } from '../../services/movies-services'
+import { Link } from 'react-router-dom'
+
+//Firebase
 import { db } from '../../utils/firebase'
 import { getDocs, query, collection } from 'firebase/firestore'
-import CardMovies from '../card-movies/component'
 
+//Services
+import { MovieServices } from '../../services/movies-services'
+import { DatabaseServices } from '../../services/save-info-services'
+
+//MaterialUI
+import CardActions from '@mui/material/CardActions'
+import MenuItem from '@mui/material/MenuItem'
+import Grid from '@mui/material/Grid'
+import Card from '@mui/material/Card'
+import Skeleton from '@mui/material/Skeleton'
+import Box from '@mui/material/Box'
+import Typography from '@mui/material/Typography'
+import Tooltip from '@mui/material/Tooltip'
+import Avatar from '@mui/material/Avatar'
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline'
+
+//Components
+import CardMediaComponent from '../card-media/component'
+
+//Styles
 import { STCardFav } from './style'
 
 export default function Favs() {
@@ -14,6 +35,15 @@ export default function Favs() {
   useEffect(() => {
     getFavs()
   }, [])
+
+  useEffect(() => {
+    favs?.map((fav) =>
+      MovieServices.getMovie(fav.credential).then((movie) => {
+        setMovies((prevState) => [...prevState, movie])
+      })
+    )
+    setLoading(true)
+  }, [favs])
 
   const getFavs = async () => {
     const q = query(collection(db, 'favs'))
@@ -28,19 +58,51 @@ export default function Favs() {
     setFavs(arrayFavs)
   }
 
-  useEffect(() => {
-    favs?.map((fav) =>
-      MovieServices.getMovie(fav.credential).then((movie) => {
-        setMovies((prevState) => [...prevState, movie])
-      })
-    )
-    setLoading(true)
-  }, [favs])
+  const handleClick = (id) => {
+    let idRemove = favs.findIndex((fav) => fav.credential === id)
+    DatabaseServices.removeFavs(favs[idRemove].id)
+    setMovies((prevState) => prevState.filter((movie) => movie.id !== id))
+  }
 
   return (
     <STCardFav>
-      {' '}
-      <CardMovies movies={movies} className="cards-favs" loading={loading} title="Favoritos" />
+      <Grid sx={{ flexGrow: 1 }}>
+        <Grid item xs={12}>
+          <h2 className="title">Favoritos</h2>
+          <Grid justifyContent="center" container spacing={2} className="grid">
+            {movies?.map((movie) => (
+              <Grid key={movie.id} item>
+                <Card sx={{ maxWidth: 345 }} className="card">
+                  <CardMediaComponent movie={movie} className="skeleton" loading={loading} />
+                  {loading ? (
+                    <>
+                      <CardActions className="content-buttons">
+                        <Tooltip title="Quitar de favoritos">
+                          <DeleteOutlineIcon
+                            onClick={() => {
+                              handleClick(movie.id)
+                            }}
+                          />
+                        </Tooltip>
+
+                        <MenuItem as={Link} to={`/details/${movie.id}`}>
+                          <Typography className="more">Saber más</Typography>
+                        </MenuItem>
+                      </CardActions>
+                    </>
+                  ) : (
+                    <Box className="skeleton2" sx={{ pt: 0.5 }}>
+                      <Skeleton variant="circular">
+                        <Avatar />
+                      </Skeleton>
+                    </Box>
+                  )}
+                </Card>
+              </Grid>
+            ))}
+          </Grid>
+        </Grid>
+      </Grid>
     </STCardFav>
   )
 }

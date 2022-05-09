@@ -197,7 +197,7 @@ export default function NavBar(props) {
                     <MenuItem as={Link} to="/profile" onClick={handleCloseUserMenu}>
                       <Typography textAlign="center">Mi Perfil</Typography>
                     </MenuItem>
-                    <MenuItem onClick={handleLogout}>
+                    <MenuItem as={Link} to="/" onClick={handleLogout}>
                       <Typography textAlign="center">Cerrar sesión</Typography>
                     </MenuItem>
                   </Menu>

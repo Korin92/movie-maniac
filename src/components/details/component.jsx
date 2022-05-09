@@ -7,6 +7,7 @@ import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
 import Typography from '@mui/material/Typography'
 import CardMedia from '@mui/material/CardMedia'
+import Box from '@mui/material/Box'
 
 import { STDetails, STPoster } from './style'
 import CardCast from '../card-cast/component'
@@ -51,14 +52,21 @@ export default function Details() {
     }
   }
 
-  return loading ? (
+  return  (
     <STDetails>
       <Card className="card-details">
-        <STPoster image={`https://image.tmdb.org/t/p/original/${movie.backdrop_path}`}>
-          <Typography className="title" variant="h5" component="div">
-            {movie.title} ({releasedDate()})
-          </Typography>
-        </STPoster>
+        {loading ? (
+          <STPoster image={`https://image.tmdb.org/t/p/original/${movie.backdrop_path}`}>
+            <Typography className="title" variant="h5" component="div">
+              {movie.title} ({releasedDate()})
+            </Typography>
+          </STPoster>
+        ) : (
+          <Box className="skeleton" sx={{ pt: 0.5 }}>
+            <Skeleton className='skeleton-img' variant="rectangular" />
+            <Skeleton className='skeleton-title' width="80%" />
+          </Box>
+        )}
         <CardContent className="content">
           <Typography className="content-title">Sinopsis</Typography>
           <Typography>{movie.overview}</Typography>
@@ -78,11 +86,8 @@ export default function Details() {
           <Providers movieId={movieId} />
           <Typography className="content-title">Películas similares</Typography>
           <SimilarMovies movieId={movieId} />
-
         </CardContent>
       </Card>
     </STDetails>
-  ) : (
-    <Skeleton variant="rectangular" width={210} height={118} />
-  )
+  ) 
 }

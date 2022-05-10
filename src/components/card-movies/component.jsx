@@ -13,7 +13,7 @@ import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye'
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff'
 
 import { STCardMovies } from './style'
-import { DatabaseServices } from '../../services/save-info-services'
+import { DatabaseServices } from '../../services/database-services'
 import CardMediaComponent from '../card-media/component'
 import CardContentComponent from '../card-content/component'
 
@@ -34,7 +34,7 @@ export default function CardMovies({ movies, loading, title, className }) {
                 <Card sx={{ maxWidth: 345 }} className="card">
                   <CardMediaComponent movie={movie} loading={loading} className='skeleton' />
 
-                  {loading ? (
+                  {!loading ? (
                     <>
                       <CardContentComponent movie={movie} />
                       <CardActions className="content-buttons">

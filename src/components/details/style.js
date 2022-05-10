@@ -22,6 +22,20 @@ export const STDetails = styled.div`
         height: 50px;
       }
     }
+
+    .container-title {
+      width: 100%;
+      margin-left: 3%;
+      margin-bottom: 2%;
+      .stars {
+        font-size: 2.5rem;
+        font-weight: bold;
+        .css-1c99szj-MuiRating-icon {
+          color: #b7b4b4a6;
+          filter: drop-shadow(7px 5px 4px rgb(0 0 0 / 75%));
+        }
+      }
+    }
   }
 
   .content {
@@ -54,8 +68,9 @@ export const STDetails = styled.div`
 
 export const STPoster = styled.div`
   display: flex;
-  justify-content: flex-start;
-  align-items: flex-end;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-start;
   width: 100%;
   height: 700px;
   background-image: url(${(props) => props.image});
@@ -68,7 +83,8 @@ export const STPoster = styled.div`
     color: #f6f6fe;
     font-size: 2.5rem;
     font-weight: bold;
-    margin-bottom: 2%;
+
+    margin-bottom: 1.5%;
     margin-left: 3%;
     display: flex;
   }

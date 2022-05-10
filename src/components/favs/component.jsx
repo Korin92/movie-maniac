@@ -2,12 +2,12 @@ import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 
 //Firebase
-import { db } from '../../utils/firebase'
+import { db, auth } from '../../utils/firebase'
 import { getDocs, query, collection } from 'firebase/firestore'
 
 //Services
 import { MovieServices } from '../../services/movies-services'
-import { DatabaseServices } from '../../services/save-info-services'
+import { DatabaseServices } from '../../services/database-services'
 
 //MaterialUI
 import CardActions from '@mui/material/CardActions'
@@ -30,7 +30,7 @@ import { STCardFav } from './style'
 export default function Favs() {
   const [favs, setFavs] = useState([])
   const [movies, setMovies] = useState([])
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     getFavs()
@@ -42,11 +42,11 @@ export default function Favs() {
         setMovies((prevState) => [...prevState, movie])
       })
     )
-    setLoading(true)
+    setLoading(false)
   }, [favs])
 
   const getFavs = async () => {
-    const q = query(collection(db, 'favs'))
+    const q = query(collection(db, `users/${auth.currentUser.uid}/favs`))
     const querySnapshot = await getDocs(q)
     const arrayFavs = []
 
@@ -74,7 +74,7 @@ export default function Favs() {
               <Grid key={movie.id} item>
                 <Card sx={{ maxWidth: 345 }} className="card">
                   <CardMediaComponent movie={movie} className="skeleton" loading={loading} />
-                  {loading ? (
+                  {!loading ? (
                     <>
                       <CardActions className="content-buttons">
                         <Tooltip title="Quitar de favoritos">

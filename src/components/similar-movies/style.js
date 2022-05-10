@@ -8,25 +8,56 @@ export const STSimilarMovies = styled.div`
     margin-top: 4%;
   }
 
-  .css-13i4rnv-MuiGrid-root{
-    margin:0 23px;
+  .css-13i4rnv-MuiGrid-root {
+    margin: 0 23px;
   }
+
+  .react-multi-carousel-list{
+      position: initial;
+    }
+    .react-multi-carousel-track{
+      padding: revert;
+    }
 
   .container {
     width: 100%;
   }
-  .dotList{
+  .dotList {
     margin: 0;
   }
 
   .card {
-    width: 100%;
+    width: 80%;
     height: 100%;
     border-radius: 10px;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
     transition: all 0.3s ease;
     &:hover {
       box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.9);
+    }
+    
+
+    .content-buttons {
+      display: flex;
+      justify-content: space-between;
+      background-color: #f6f6fe;
+      .css-i4bv87-MuiSvgIcon-root {
+        font-size: 1.5rem;
+        cursor: pointer;
+        color: #0c0735;
+        transition: all 0.3s ease;
+        &:hover {
+          color: #120a52ad;
+        }
+      }
+      .more {
+        font-weight: bold;
+      }
+    }
+
+    .skeleton {
+      width: 450px;
+      height: 342px;
     }
 
     .poster {

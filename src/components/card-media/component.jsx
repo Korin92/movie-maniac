@@ -8,7 +8,7 @@ export default function CardMediaComponent(props) {
   const { movie, loading, className } = props
   return (
     <STCardMedia>
-      {loading ? (
+      {!loading ? (
         <CardMedia
           className="poster"
           component="img"

@@ -1,29 +1,36 @@
 import React, { useEffect, useState } from 'react'
-
-//Services
-import { MovieServices } from '../../services/movies-services'
-
 import { Link } from 'react-router-dom'
+
+//MaterialUI
 import Card from '@mui/material/Card'
 import Grid from '@mui/material/Grid'
 import CardActions from '@mui/material/CardActions'
-import CardContent from '@mui/material/CardContent'
-import CardMedia from '@mui/material/CardMedia'
 import Button from '@mui/material/Button'
-import Typography from '@mui/material/Typography'
 import Skeleton from '@mui/material/Skeleton'
 import Box from '@mui/material/Box'
 import MenuItem from '@mui/material/MenuItem'
+import FavoriteIcon from '@mui/icons-material/Favorite'
+import Avatar from '@mui/material/Avatar'
+import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye'
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff'
+import Typography from '@mui/material/Typography'
 
+//Services
+import { MovieServices } from '../../services/movies-services'
+import { DatabaseServices } from '../../services/database-services'
+
+//Carousel
 import Carousel from 'react-multi-carousel'
 import 'react-multi-carousel/lib/styles.css'
 
 //Components
 import { STSimilarMovies } from './style'
+import CardMediaComponent from '../card-media/component'
+import CardContentComponent from '../card-content/component'
 
 export default function SimilarMovies(props) {
   const [movies, setMovies] = useState([])
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(true)
 
   const { movieId } = props
 
@@ -66,80 +73,86 @@ export default function SimilarMovies(props) {
   useEffect(() => {
     MovieServices.getSimilarMovies(movieId).then((movies) => {
       setMovies(movies)
-      setLoading(true)
+      setLoading(false)
     })
   }, [movieId])
 
+  const handleClick = (movie) => {
+    DatabaseServices.addFavs(movie.id)
+    console.log('id', movie.id)
+  }
+
   return (
-    loading && (
+    !loading && (
       <STSimilarMovies>
         <Grid sx={{ flexGrow: 1 }}>
           <Grid item xs={12}>
             <Grid justifyContent="center" container spacing={2}>
               <Carousel
-                  additionalTransfrom={0}
-                  arrows
-                  autoPlaySpeed={3000}
-                  centerMode={false}
-                  className="container"
-                  containerClass="container-with-dots"
-                  dotListClass="dotList"
-                  draggable
-                  focusOnSelect={true}
-                  infinite
-                  itemClass=""
-                  keyBoardControl
-                  minimumTouchDrag={80}
-                  renderButtonGroupOutside={false}
-                  renderDotsOutside={false}
-                  responsive={responsive}
-                  showDots={false}
-                  sliderClass=""
-                  slidesToSlide={1}
-                  swipeable
-
+                additionalTransfrom={0}
+                arrows
+                autoPlaySpeed={3000}
+                centerMode={false}
+                className="container"
+                containerClass="container-with-dots"
+                dotListClass="dotList"
+                draggable
+                focusOnSelect={true}
+                infinite
+                itemClass=""
+                keyBoardControl
+                minimumTouchDrag={80}
+                renderButtonGroupOutside={false}
+                renderDotsOutside={false}
+                responsive={responsive}
+                showDots={false}
+                sliderClass=""
+                slidesToSlide={1}
+                swipeable
               >
-                {movies.results.map((movie) => (
-                  <Grid key={movie.id} item className='grid-card'>
+                {movies?.results.map((movie) => (
+                  <Grid key={movie.id} item className="grid-card">
                     <Card sx={{ maxWidth: 345 }} className="card">
-                      {movie ? (
-                        <CardMedia
-                          className="poster"
-                          component="img"
-                          alt="image of film"
-                          image={`https://image.tmdb.org/t/p/original/${movie.poster_path}`}
-                        />
-                      ) : (
-                        <Skeleton variant="rectangular" width={210} height={118} />
-                      )}
-
-                      {movie ? (
+                      {!movie ? (
                         <>
-                          <CardContent className="description">
-                            <Typography gutterBottom variant="h5" component="div">
-                              {movie.title}
-                            </Typography>
-                            <Typography
-                              className="text-description"
-                              variant="body2"
-                              color="text.secondary"
-                            >
-                              {movie.overview}
-                            </Typography>
-                          </CardContent>
+                          <CardMediaComponent
+                            movie={movie}
+                            className="skeleton"
+                            loading={loading}
+                          />
+                          <Box className="skeleton-animation" sx={{ pt: 0.5 }}>
+                            <Skeleton />
+                            <Skeleton />
+                            <Skeleton />
+                            <Skeleton width="80%" />
+                            <Skeleton width="60%" />
+                            <Skeleton variant="circular">
+                              <Avatar />
+                            </Skeleton>
+                          </Box>
+                        </>
+                      ) : (
+                        <>
+                          <CardMediaComponent movie={movie} loading={loading} />
+                          <CardContentComponent movie={movie} />
                           <CardActions className="content-buttons">
-                            <Button size="small">Share</Button>
+                            <FavoriteIcon
+                              className="icon-favourite"
+                              size="small"
+                              onClick={() => {
+                                handleClick(movie)
+                              }}
+                            />
+
+                            <VisibilityOffIcon />
+
+                            <RemoveRedEyeIcon />
 
                             <MenuItem as={Link} to={`/details/${movie.id}`}>
-                              <Button size="small">Saber más</Button>
+                              <Typography className="more">Saber más</Typography>
                             </MenuItem>
                           </CardActions>
                         </>
-                      ) : (
-                        <Box sx={{ pt: 0.5 }}>
-                          <Skeleton />
-                          <Skeleton width="60%" />
-                        </Box>
                       )}
                     </Card>
                   </Grid>

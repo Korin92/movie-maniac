@@ -31,7 +31,7 @@ export default function ProfilePage(props) {
 
   return (
     <STProfile>
-      <MenuProfile setSelected={setSelected} />
+      <MenuProfile user={user} setSelected={setSelected} />
       <Divider className="divider" orientation="vertical" flexItem />
       {handlerSelected()}
     </STProfile>

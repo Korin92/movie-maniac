@@ -10,7 +10,7 @@ export default function Home() {
   useEffect(() => {
     MovieServices.getTrendingsMovies().then((movies) => {
       setMovies(movies)
-      setLoading(true)
+      setLoading(false)
     })
   }, [])
 

@@ -2,10 +2,12 @@ import {useEffect, useState} from 'react'
 import {MovieServices} from '../../services/movies-services'
 import CardMovies from '../../components/card-movies/component'
 
-export default function Home() {
+export default function Home(props) {
 
   const [movies, setMovies] = useState([])
   const [loading, setLoading] = useState(false)
+
+  const {user} = props
 
   useEffect(() => {
     MovieServices.getTrendingsMovies().then((movies) => {
@@ -15,6 +17,6 @@ export default function Home() {
   }, [])
 
   return (
-    <CardMovies movies={movies.results} loading={loading} title='Las más populares' />
+    <CardMovies movies={movies.results} loading={loading} title='Las más populares' user={user} />
   )
 }

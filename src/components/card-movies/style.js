@@ -26,7 +26,31 @@ export const STCardMovies = styled.div`
     }
 
     .content-buttons {
+      display: flex;
+      justify-content: space-around;
       background-color: #f6f6fe;
+      .css-i4bv87-MuiSvgIcon-root {
+        font-size: 1.5rem;
+        cursor: pointer;
+  
+        transition: all 0.3s ease;
+        &:hover {
+          color: #120a52ad;
+        }
+
+        .colorPrimary{
+        color: #0c0735 !important;
+      }
+
+      .colorCliked{
+        color: #fb0f03 !important;
+      }
+      }
+      .more {
+        font-weight: bold;
+      }
+
+     
     }
 
     .skeleton {

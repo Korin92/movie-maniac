@@ -12,8 +12,8 @@ export default function routes(props) {
   return (
     <div>
       <Routes>
-        <Route path="/" element={<Home />}></Route>
-        <Route path="/now-playing-movies" element={<NowPlayingMoviesPage />} />
+        <Route path="/" element={<Home user={user} />}></Route>
+        <Route path="/now-playing-movies" element={<NowPlayingMoviesPage user={user} />} />
         <Route path="/profile" element={<ProfilePage user={user} setReloadApp={setReloadApp} />} />
         <Route path="/details/:movieId" element={<DetailsPage user={user} />} />
       </Routes>

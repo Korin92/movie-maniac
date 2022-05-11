@@ -42,6 +42,7 @@ export const STCardFav = styled.div`
       }
       .more {
         font-weight: bold;
+        color: #0c0735;
       }
     }
   }

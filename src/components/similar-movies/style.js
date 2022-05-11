@@ -39,7 +39,7 @@ export const STSimilarMovies = styled.div`
 
     .content-buttons {
       display: flex;
-      justify-content: space-between;
+      justify-content: space-around;
       background-color: #f6f6fe;
       .css-i4bv87-MuiSvgIcon-root {
         font-size: 1.5rem;

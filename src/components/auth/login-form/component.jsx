@@ -14,7 +14,6 @@ import ButtonResetSendEmailVerification from '../../reset-send-email-validation/
 import Loader from '../../loader/component'
 import AlertMessage from '../../alert/component'
 
-
 //services
 import { authServices } from '../../../services/auth-services'
 
@@ -43,7 +42,17 @@ export default function LoginForm(props) {
   const onSubmit = (e) => {
     e.preventDefault()
 
-    authServices.login(setFormError, formData, setIsLoading, handleClose, setUser, setUserActive, setMessage, setAlert, setSeverity)
+    authServices.login(
+      setFormError,
+      formData,
+      setIsLoading,
+      handleClose,
+      setUser,
+      setUserActive,
+      setMessage,
+      setAlert,
+      setSeverity
+    )
   }
 
   return (

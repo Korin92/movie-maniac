@@ -1,6 +1,6 @@
-import { useState } from 'react'
+import React, { useState } from 'react'
 
-//MaterialUI
+// MaterialUI
 import Button from '@mui/material/Button'
 import TextField from '@mui/material/TextField'
 import Dialog from '@mui/material/Dialog'
@@ -10,16 +10,17 @@ import DialogContentText from '@mui/material/DialogContentText'
 import DialogTitle from '@mui/material/DialogTitle'
 import Typography from '@mui/material/Typography'
 
-//Components
+// Components
 import AlertMessage from '../../alert/component'
 import Loader from '../../loader/component'
 
-//Services
-import { authServices } from '../../../services/auth-services'
+// Services
+import { AuthServices } from '../../../services/auth-services'
 
 export default function RegisterForm(props) {
   const { open, handleClose } = props
 
+  // eslint-disable-next-line no-use-before-define
   const [formData, setFormData] = useState(defaultValueForm())
   // const [showPassword, setShowPassword] = useState(false)
   const [formError, setFormError] = useState({})
@@ -27,8 +28,6 @@ export default function RegisterForm(props) {
   const [alert, setAlert] = useState(false)
   const [severity, setSeverity] = useState(null)
   const [message, setMessage] = useState(null)
-
- 
 
   // const handlerShowPassword = () => {
   //   setShowPassword(!showPassword)
@@ -44,7 +43,7 @@ export default function RegisterForm(props) {
   const onSubmit = (e) => {
     e.preventDefault()
 
-    authServices.register(setFormError, formData, setIsLoading, setAlert, setSeverity, setMessage)
+    AuthServices.register(setFormError, formData, setIsLoading, setAlert, setSeverity, setMessage)
   }
 
   return (
@@ -133,5 +132,3 @@ function defaultValueForm() {
     username: '',
   }
 }
-
-

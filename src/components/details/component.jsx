@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { MovieServices } from '../../services/movies-services'
 
+// MaterialUI
 import Skeleton from '@mui/material/Skeleton'
 import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
@@ -10,13 +10,19 @@ import CardMedia from '@mui/material/CardMedia'
 import Box from '@mui/material/Box'
 import Rating from '@mui/material/Rating'
 
+// Services
+import { MovieServices } from '../../services/movies-services'
+
+// Styles
 import { STDetails, STPoster } from './style'
+
+// Components
 import CardCast from '../card-cast/component'
 import Providers from '../watch-providers/component'
 import SimilarMovies from '../similar-movies/component'
 
 export default function Details(props) {
-  //States
+  // States
   const [movie, setMovie] = useState({})
   const [loading, setLoading] = useState(true)
   const [value, setValue] = React.useState(2)
@@ -27,15 +33,15 @@ export default function Details(props) {
   const { user } = props
 
   useEffect(() => {
-    MovieServices.getDetails(movieId).then((movie) => {
-      setMovie(movie)
+    MovieServices.getDetails(movieId).then((film) => {
+      setMovie(film)
       setLoading(false)
     })
   }, [movieId])
 
   useEffect(() => {
-    MovieServices.getVideos(movieId).then((movie) => {
-      setVideo(movie.results)
+    MovieServices.getVideos(movieId).then((film) => {
+      setVideo(film.results)
 
       setLoading(false)
     })
@@ -47,15 +53,16 @@ export default function Details(props) {
     }
     return new Date(movie.release_date).getFullYear()
   }
-  const getVideo = (video) => {
-    if (video) {
+  const getVideo = (videoMovie) => {
+    if (videoMovie) {
       const videoKey = video.filter((item) => item.type === 'Trailer')
 
       return videoKey[0].key
     }
+    return ''
   }
 
-  const handleStars = (value) => {}
+  // const handleStars = (value) => {}
 
   return (
     <STDetails>
@@ -63,7 +70,11 @@ export default function Details(props) {
         {!loading ? (
           <STPoster image={`https://image.tmdb.org/t/p/original/${movie.backdrop_path}`}>
             <Typography className="title" variant="h5" component="div">
-              {movie.title} ({releasedDate()})
+              {movie.title}
+              {' '}
+              (
+              {releasedDate()}
+              )
             </Typography>
 
             {user && (
@@ -96,15 +107,20 @@ export default function Details(props) {
           <Typography className="content-title">Reparto principal</Typography>
           <CardCast movieId={movieId} />
           <Typography className="content-title">Tráiler</Typography>
-          <CardMedia
-            className="trailer"
-            component="iframe"
-            alt="trailer of movie"
-            src={video && `https://www.youtube.com/embed/${getVideo(video)}`}
-            controls
-            autoPlay
-            allowFullScreen
-          />
+          {video !== undefined && video.length > 0 ? (
+            <CardMedia
+              className="trailer"
+              component="iframe"
+              alt="trailer of movie"
+              src={`https://www.youtube.com/embed/${getVideo(video)}`}
+              controls
+              autoPlay
+              allowFullScreen
+            />
+          ) : (
+            <Typography>No hay tráiler</Typography>
+          )}
+
           <Typography className="content-title">¿Dónde encontrarla?</Typography>
           <Providers movieId={movieId} />
           <Typography className="content-title">Películas similares</Typography>

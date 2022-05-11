@@ -1,4 +1,3 @@
-/* eslint-disable semi */
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 
@@ -21,7 +20,8 @@ import { createTheme, ThemeProvider } from '@mui/material/styles'
 import { STCardMovies } from './style'
 
 // Services
-import { DatabaseServices } from '../../services/database-services'
+import { FavServices } from '../../services/fav-services'
+import { PendingWatchServices } from '../../services/pending-watch-services'
 
 // Components
 import CardMediaComponent from '../card-media/component'
@@ -33,14 +33,18 @@ export default function CardMovies({
 }) {
   const [style, setStyle] = useState(false)
 
-  const handleClick = (movie) => {
-    DatabaseServices.addFavs(movie.id)
+  const handleFav = (movie) => {
+    FavServices.addFavs(movie.id)
 
     setStyle(!style)
   }
 
+  const handlePending = (movie) => {
+    PendingWatchServices.addPending(movie.id)
+  }
+
   const handleButtonFavorite = (movie) => {
-    if (DatabaseServices.findFavs(movie)) {
+    if (FavServices.findFavs(movie)) {
       return true
     }
     return false
@@ -80,7 +84,7 @@ export default function CardMovies({
                                     color="primary"
                                     size="small"
                                     onClick={() => {
-                                      handleClick(movie)
+                                      handleFav(movie)
                                     }}
                                   />
                                 </Tooltip>
@@ -90,7 +94,7 @@ export default function CardMovies({
                                     color="fav"
                                     size="small"
                                     onClick={() => {
-                                      handleClick(movie)
+                                      handleFav(movie)
                                     }}
                                   />
                                 </Tooltip>
@@ -98,7 +102,11 @@ export default function CardMovies({
                             </ThemeProvider>
 
                             <Tooltip title="Añadir a pendientes">
-                              <VisibilityOffIcon />
+                              <VisibilityOffIcon
+                                onClick={() => {
+                                  handlePending(movie)
+                                }}
+                              />
                             </Tooltip>
 
                             <Tooltip title="Añadir a vistas">

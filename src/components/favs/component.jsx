@@ -1,5 +1,3 @@
-/* eslint-disable implicit-arrow-linebreak */
-/* eslint-disable semi */
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 
@@ -16,41 +14,49 @@ import Avatar from '@mui/material/Avatar'
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline'
 
 // Services
-import { DatabaseServices } from '../../services/database-services'
+import { FavServices } from '../../services/fav-services'
 import { MovieServices } from '../../services/movies-services'
 
 // Components
 import CardMediaComponent from '../card-media/component'
 
 // Styles
-import { STCardFav } from './style'
+import { STCardProfile } from '../../styles/card-profile/style'
 
 export default function Favs() {
   const [favs, setFavs] = useState([])
   const [movies, setMovies] = useState([])
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState()
 
+  const getMoviesFavs = async () => {
+    if (favs.length > 0) {
+      const unresolvedPromises = favs.map((fav) => MovieServices.getMovie(fav.credential))
+      const results = await Promise.all(unresolvedPromises)
+      setMovies(results)
+      setLoading(false)
+    }
+  }
   useEffect(() => {
-    DatabaseServices.getFavs(setFavs)
+    setLoading(true)
+    FavServices.getFavs().then((i) => {
+      setFavs(i)
+    })
   }, [])
 
   useEffect(() => {
-    setMovies([])
-    favs?.map((fav) =>
-      MovieServices.getMovie(fav.credential).then((movie) => {
-        setMovies((prev) => [...prev, movie])
-      }))
-    setLoading(false)
+    getMoviesFavs()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [favs])
 
   const handleClick = (id) => {
     const idRemove = favs.findIndex((fav) => fav.credential === id)
-    DatabaseServices.removeFavs(favs[idRemove].id)
+    FavServices.removeFavs(favs[idRemove].id)
+
     setMovies((prevState) => prevState.filter((movie) => movie.id !== id))
   }
 
   return (
-    <STCardFav>
+    <STCardProfile>
       <Grid sx={{ flexGrow: 1 }}>
         <Grid item xs={12}>
           <h2 className="title">Favoritos</h2>
@@ -61,12 +67,8 @@ export default function Favs() {
                   <CardMediaComponent movie={movie} className="skeleton" loading={loading} />
                   {!loading ? (
                     <CardActions className="content-buttons">
-                      <Tooltip title="Quitar de favoritos">
-                        <DeleteOutlineIcon
-                          onClick={() => {
-                            handleClick(movie.id)
-                          }}
-                        />
+                      <Tooltip title='Eliminar de favoritos'>
+                        <DeleteOutlineIcon onClick={() => handleClick(movie.id)} />
                       </Tooltip>
 
                       <MenuItem as={Link} to={`/details/${movie.id}`}>
@@ -86,6 +88,6 @@ export default function Favs() {
           </Grid>
         </Grid>
       </Grid>
-    </STCardFav>
+    </STCardProfile>
   )
 }

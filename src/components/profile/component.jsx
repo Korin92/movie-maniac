@@ -1,18 +1,16 @@
-import { useState } from 'react'
+import React, { useState } from 'react'
 
-//MaterialUI
+// MaterialUI
 import Container from '@mui/material/Container'
-
 import Button from '@mui/material/Button'
 
-//components
-import UploadAvatar from '../../components/upload-avatar/component'
-
+// components
+import { Typography } from '@mui/material'
+import UploadAvatar from '../upload-avatar/component'
 import ImageAvatar from '../avatar/component'
 
-//style
+// style
 import { STProfileComponent } from './style'
-import { Typography } from '@mui/material'
 
 export default function Profile(props) {
   const { user, setReloadApp } = props

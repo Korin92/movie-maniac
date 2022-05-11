@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 
-//MaterialUI
+// MaterialUI
 import Card from '@mui/material/Card'
 import Grid from '@mui/material/Grid'
 import CardActions from '@mui/material/CardActions'
@@ -14,15 +14,15 @@ import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye'
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff'
 import Typography from '@mui/material/Typography'
 
-//Services
-import { MovieServices } from '../../services/movies-services'
-import { DatabaseServices } from '../../services/database-services'
-
-//Carousel
+// Services
 import Carousel from 'react-multi-carousel'
+import { MovieServices } from '../../services/movies-services'
+import { FavServices } from '../../services/fav-services'
+
+// Carousel
 import 'react-multi-carousel/lib/styles.css'
 
-//Components
+// Components
 import { STSimilarMovies } from './style'
 import CardMediaComponent from '../card-media/component'
 import CardContentComponent from '../card-content/component'
@@ -70,15 +70,14 @@ export default function SimilarMovies(props) {
   }
 
   useEffect(() => {
-    MovieServices.getSimilarMovies(movieId).then((movies) => {
-      setMovies(movies)
+    MovieServices.getSimilarMovies(movieId).then((film) => {
+      setMovies(film)
       setLoading(false)
     })
   }, [movieId])
 
   const handleClick = (movie) => {
-    DatabaseServices.addFavs(movie.id)
-    console.log('id', movie.id)
+    FavServices.addFavs(movie.id)
   }
 
   return (
@@ -96,7 +95,7 @@ export default function SimilarMovies(props) {
                 containerClass="container-with-dots"
                 dotListClass="dotList"
                 draggable
-                focusOnSelect={true}
+                focusOnSelect
                 infinite
                 itemClass=""
                 keyBoardControl

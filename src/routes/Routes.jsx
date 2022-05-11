@@ -1,6 +1,6 @@
-import { Routes, Route } from 'react-router-dom'
+import React, { Routes, Route } from 'react-router-dom'
 
-//Pages
+// Pages
 import Home from '../pages/home/component'
 import NowPlayingMoviesPage from '../pages/now-playing-movies/component'
 import ProfilePage from '../pages/profile/component'
@@ -12,7 +12,7 @@ export default function routes(props) {
   return (
     <div>
       <Routes>
-        <Route path="/" element={<Home user={user} />}></Route>
+        <Route path="/" element={<Home user={user} />} />
         <Route path="/now-playing-movies" element={<NowPlayingMoviesPage user={user} />} />
         <Route path="/profile" element={<ProfilePage user={user} setReloadApp={setReloadApp} />} />
         <Route path="/details/:movieId" element={<DetailsPage user={user} />} />

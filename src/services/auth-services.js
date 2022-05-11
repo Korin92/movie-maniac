@@ -1,15 +1,21 @@
-//Utils
-import { validateEmail } from '../utils/validations'
-import { Errors } from '../utils/errors'
-
-//Firebase
+/* eslint-disable no-shadow */
+// Utils
 import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
   updateProfile,
   sendEmailVerification,
 } from 'firebase/auth'
-import { auth } from '../utils/firebase'
+import {
+  collection,
+  getDoc,
+  doc,
+} from 'firebase/firestore'
+import { validateEmail } from '../utils/validations'
+import { Errors } from '../utils/errors'
+
+// Firebase
+import { db, auth } from '../utils/firebase'
 
 const login = (
   setFormError,
@@ -20,10 +26,10 @@ const login = (
   setUserActive,
   setMessage,
   setAlert,
-  setSeverity
+  setSeverity,
 ) => {
   setFormError({})
-  let errors = {}
+  const errors = {}
   let formOk = true
 
   if (!validateEmail(formData.email)) {
@@ -66,7 +72,7 @@ const login = (
 const register = (setFormError, formData, setIsLoading, setAlert, setSeverity, setMessage) => {
   setFormError({})
 
-  let errors = {}
+  const errors = {}
   let formOk = true
 
   if (!validateEmail(formData.email)) {
@@ -83,6 +89,15 @@ const register = (setFormError, formData, setIsLoading, setAlert, setSeverity, s
   }
   setFormError(errors)
 
+  const changeUserName = (setMessage) => {
+    updateProfile(auth.currentUser, {
+      displayName: formData.username,
+    }).catch(() => {
+      setSeverity('error')
+      setMessage('Error al asignar el nombre de usuario')
+    })
+  }
+
   if (formOk) {
     setIsLoading(true)
     createUserWithEmailAndPassword(auth, formData.email, formData.password)
@@ -93,7 +108,7 @@ const register = (setFormError, formData, setIsLoading, setAlert, setSeverity, s
       .then(() => {
         setSeverity('success')
         setMessage(
-          'Se ha enviado un email de verificación. Por favor, comprueba tu bandeja de entrada'
+          'Se ha enviado un email de verificación. Por favor, comprueba tu bandeja de entrada',
         )
       })
       .catch((error) => {
@@ -109,18 +124,21 @@ const register = (setFormError, formData, setIsLoading, setAlert, setSeverity, s
         setIsLoading(false)
       })
   }
-
-  const changeUserName = (setMessage) => {
-    updateProfile(auth.currentUser, {
-      displayName: formData.username,
-    }).catch(() => {
-      setSeverity('error')
-      setMessage('Error al asignar el nombre de usuario')
-    })
-  }
 }
 
-export const authServices = {
+// check if the user is admin
+const isUserAdmin = async (uid) => {
+  const q = collection(db, 'admins')
+
+  const document = doc(q, uid)
+
+  const response = await getDoc(document)
+
+  return response.exists()
+}
+
+export const AuthServices = {
   login,
   register,
+  isUserAdmin,
 }

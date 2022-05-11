@@ -1,9 +1,13 @@
-import { useState } from 'react'
+import React, { useState } from 'react'
+
+// MaterialUI
+import Divider from '@mui/material/Divider'
 import Profile from '../../components/profile/component'
+
+// Styles
 import { STProfile } from './style'
 
-import Divider from '@mui/material/Divider'
-
+// Components
 import MenuProfile from '../../components/menu-profile/component'
 import Favs from '../../components/favs/component'
 import PendingWatch from '../../components/pending-watch/component'
@@ -17,7 +21,7 @@ export default function ProfilePage(props) {
   const handlerSelected = () => {
     switch (selected) {
       case 'favoritos':
-        return <Favs/>
+        return <Favs />
       case 'pendientes de ver':
         return <PendingWatch />
       case 'vistas':

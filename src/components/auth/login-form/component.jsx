@@ -1,6 +1,6 @@
-import { useState } from 'react'
+import React, { useState } from 'react'
 
-//MaterialUI
+// MaterialUI
 import Button from '@mui/material/Button'
 import TextField from '@mui/material/TextField'
 import Dialog from '@mui/material/Dialog'
@@ -9,16 +9,17 @@ import DialogContent from '@mui/material/DialogContent'
 import DialogContentText from '@mui/material/DialogContentText'
 import DialogTitle from '@mui/material/DialogTitle'
 
-//components
+// components
 import ButtonResetSendEmailVerification from '../../reset-send-email-validation/component'
 import Loader from '../../loader/component'
 import AlertMessage from '../../alert/component'
 
-//services
-import { authServices } from '../../../services/auth-services'
+// services
+import { AuthServices } from '../../../services/auth-services'
 
 export default function LoginForm(props) {
-  //States
+  // States
+  // eslint-disable-next-line no-use-before-define
   const [formData, setFormData] = useState(defaultValueForm())
   const [formError, setFormError] = useState({})
   const [isLoading, setIsLoading] = useState(false)
@@ -28,10 +29,10 @@ export default function LoginForm(props) {
   const [severity, setSeverity] = useState(null)
   const [message, setMessage] = useState(null)
 
-  //props
+  // props
   const { open, handleClose } = props
 
-  //handlers
+  // handlers
   const onChange = (e) => {
     setFormData({
       ...formData,
@@ -42,7 +43,7 @@ export default function LoginForm(props) {
   const onSubmit = (e) => {
     e.preventDefault()
 
-    authServices.login(
+    AuthServices.login(
       setFormError,
       formData,
       setIsLoading,
@@ -51,7 +52,7 @@ export default function LoginForm(props) {
       setUserActive,
       setMessage,
       setAlert,
-      setSeverity
+      setSeverity,
     )
   }
 

@@ -32,29 +32,42 @@ import CardContentComponent from '../card-content/component'
 export default function CardMovies({
   movies, loading, title, className, user,
 }) {
-  const [favorite, setFavorite] = useState([])
   const [favs, setFavs] = useState([])
+  const [credential, setCredential] = useState([])
+  const [isFavorite, setIsFavorite] = useState(false)
 
   const handleFav = (movie) => {
+    setIsFavorite(!isFavorite)
+    console.log('isFavoriteFav', isFavorite)
     FavServices.addFavs(movie.id)
-    setFavorite([...favorite, movie.id])
   }
-  const getMoviesFavs = async () => {
-    if (favs.length > 0) {
-      const unresolvedPromises = favs.map((fav) =>
-        MovieServices.getMovie(fav.credential))
-      const results = await Promise.all(unresolvedPromises)
-      setFavorite(results)
-    }
+
+  const handleRemoveFav = (id) => {
+    setIsFavorite(!isFavorite)
+    const idRemove = favs.findIndex((fav) =>
+      fav.credential === id)
+    FavServices.removeFavs(favs[idRemove].id)
   }
+
   useEffect(() => {
     FavServices.getFavs().then((i) => {
       setFavs(i)
+      setIsFavorite(false)
     })
-  }, [])
+  }, [isFavorite])
+
+  const favoriteMovies = () => {
+    setCredential([])
+    if (favs.length > 0) {
+      favs.map((fav) =>
+        setCredential((prevState) =>
+          [...prevState, fav.credential]))
+      setIsFavorite(false)
+    }
+  }
 
   useEffect(() => {
-    getMoviesFavs()
+    favoriteMovies()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [favs])
 
@@ -73,22 +86,13 @@ export default function CardMovies({
     },
   })
 
-  const favoriteMovies = (index, movie) => {
-    if (favs > 0 && favs[index].credential !== movie.id) {
-      console.log('favs', favs[index].credential)
-      console.log('movies', movie.id)
-      return true
-    }
-    return false
-  }
-
   return (
     <STCardMovies className={className}>
       <Grid sx={{ flexGrow: 1 }}>
         <Grid item xs={12}>
           <h2 className="title">{title}</h2>
           <Grid justifyContent="center" container spacing={2} className="grid">
-            {movies?.map((movie, index) =>
+            {movies?.map((movie) =>
               (
                 <Grid key={movie.id} item>
                   <Card sx={{ maxWidth: 345 }} className="card">
@@ -101,22 +105,27 @@ export default function CardMovies({
                           {user && (
                           <>
                             <ThemeProvider theme={theme}>
-                              {!favoriteMovies(index, movie) ? (
+                              {!credential.includes(movie.id) ? (
                                 <Tooltip title="Añadir a favoritos">
                                   <FavoriteIcon
+                                    key={movie.id}
                                     color="primary"
                                     size="small"
                                     onClick={() => {
                                       handleFav(movie)
+                                      setIsFavorite(!isFavorite)
                                     }}
                                   />
                                 </Tooltip>
                               ) : (
                                 <Tooltip title="Quitar de favoritos">
                                   <FavoriteIcon
+                                    key={movie.id}
                                     color="fav"
                                     size="small"
-                                    onClick={() => {}}
+                                    onClick={() => {
+                                      handleRemoveFav(movie.id)
+                                    }}
                                   />
                                 </Tooltip>
                               )}

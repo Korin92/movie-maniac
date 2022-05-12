@@ -1,11 +1,13 @@
-import { collection, addDoc, doc, deleteDoc, query, getDocs, where } from 'firebase/firestore'
+import {
+  collection, addDoc, doc, deleteDoc, query, getDocs, where,
+} from 'firebase/firestore'
 import { db, auth } from '../utils/firebase'
 
 // Add favorties to the user
 const addMoviesSeen = async (seen) => {
   const q = query(
     collection(db, `users/${auth.currentUser.uid}/movies-seen`),
-    where('credential', '==', seen)
+    where('credential', '==', seen),
   )
   const querySnapshot = await getDocs(q)
 

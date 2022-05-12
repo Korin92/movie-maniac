@@ -30,7 +30,8 @@ export default function Favs() {
 
   const getMoviesFavs = async () => {
     if (favs.length > 0) {
-      const unresolvedPromises = favs.map((fav) => MovieServices.getMovie(fav.credential))
+      const unresolvedPromises = favs.map((fav) =>
+        MovieServices.getMovie(fav.credential))
       const results = await Promise.all(unresolvedPromises)
       setMovies(results)
       setLoading(false)
@@ -49,10 +50,13 @@ export default function Favs() {
   }, [favs])
 
   const handleClick = (id) => {
-    const idRemove = favs.findIndex((fav) => fav.credential === id)
+    const idRemove = favs.findIndex((fav) =>
+      fav.credential === id)
     FavServices.removeFavs(favs[idRemove].id)
 
-    setMovies((prevState) => prevState.filter((movie) => movie.id !== id))
+    setMovies((prevState) =>
+      prevState.filter((movie) =>
+        movie.id !== id))
   }
 
   return (
@@ -61,30 +65,33 @@ export default function Favs() {
         <Grid item xs={12}>
           <h2 className="title">Favoritos</h2>
           <Grid justifyContent="center" container spacing={2} className="grid">
-            {movies?.map((movie) => (
-              <Grid key={movie.id} item>
-                <Card sx={{ maxWidth: 345 }} className="card">
-                  <CardMediaComponent movie={movie} className="skeleton" loading={loading} />
-                  {!loading ? (
-                    <CardActions className="content-buttons">
-                      <Tooltip title='Eliminar de favoritos'>
-                        <DeleteOutlineIcon onClick={() => handleClick(movie.id)} />
-                      </Tooltip>
+            {movies?.map((movie) =>
+              (
+                <Grid key={movie.id} item>
+                  <Card sx={{ maxWidth: 345 }} className="card">
+                    <CardMediaComponent movie={movie} className="skeleton" loading={loading} />
+                    {!loading ? (
+                      <CardActions className="content-buttons">
+                        <Tooltip title="Eliminar de favoritos">
+                          <DeleteOutlineIcon onClick={() =>
+                            handleClick(movie.id)}
+                          />
+                        </Tooltip>
 
-                      <MenuItem as={Link} to={`/details/${movie.id}`}>
-                        <Typography className="more">Saber más</Typography>
-                      </MenuItem>
-                    </CardActions>
-                  ) : (
-                    <Box className="skeleton2" sx={{ pt: 0.5 }}>
-                      <Skeleton variant="circular">
-                        <Avatar />
-                      </Skeleton>
-                    </Box>
-                  )}
-                </Card>
-              </Grid>
-            ))}
+                        <MenuItem as={Link} to={`/details/${movie.id}`}>
+                          <Typography className="more">Saber más</Typography>
+                        </MenuItem>
+                      </CardActions>
+                    ) : (
+                      <Box className="skeleton2" sx={{ pt: 0.5 }}>
+                        <Skeleton variant="circular">
+                          <Avatar />
+                        </Skeleton>
+                      </Box>
+                    )}
+                  </Card>
+                </Grid>
+              ))}
           </Grid>
         </Grid>
       </Grid>

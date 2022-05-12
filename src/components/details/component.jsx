@@ -55,7 +55,8 @@ export default function Details(props) {
   }
   const getVideo = (videoMovie) => {
     if (videoMovie) {
-      const videoKey = video.filter((item) => item.type === 'Trailer')
+      const videoKey = video.filter((item) =>
+        item.type === 'Trailer')
 
       return videoKey[0].key
     }

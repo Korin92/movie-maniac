@@ -22,6 +22,9 @@
     "import/no-extraneous-dependencies": "off",
     "react/jsx-props-no-spreading": "off",
     "import/prefer-default-export": "off",
-    "implicit-arrow-linebreak": [2, "as-beside"]
+    "implicit-arrow-linebreak": ["error", "below"],
+    "no-console": "off",
+    "no-unused-vars": "off",
+    "no-unused-expressions": "off"
   }
 }

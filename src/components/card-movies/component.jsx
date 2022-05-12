@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 
 // MaterialUI
@@ -22,6 +22,7 @@ import { STCardMovies } from './style'
 // Services
 import { FavServices } from '../../services/fav-services'
 import { PendingWatchServices } from '../../services/pending-watch-services'
+import { MovieServices } from '../../services/movies-services'
 
 // Components
 import CardMediaComponent from '../card-media/component'
@@ -31,24 +32,36 @@ import CardContentComponent from '../card-content/component'
 export default function CardMovies({
   movies, loading, title, className, user,
 }) {
-  const [style, setStyle] = useState(false)
+  const [favorite, setFavorite] = useState([])
+  const [favs, setFavs] = useState([])
 
   const handleFav = (movie) => {
     FavServices.addFavs(movie.id)
-
-    setStyle(!style)
+    setFavorite([...favorite, movie.id])
   }
+  const getMoviesFavs = async () => {
+    if (favs.length > 0) {
+      const unresolvedPromises = favs.map((fav) =>
+        MovieServices.getMovie(fav.credential))
+      const results = await Promise.all(unresolvedPromises)
+      setFavorite(results)
+    }
+  }
+  useEffect(() => {
+    FavServices.getFavs().then((i) => {
+      setFavs(i)
+    })
+  }, [])
+
+  useEffect(() => {
+    getMoviesFavs()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [favs])
 
   const handlePending = (movie) => {
     PendingWatchServices.addPending(movie.id)
   }
 
-  const handleButtonFavorite = (movie) => {
-    if (FavServices.findFavs(movie)) {
-      return true
-    }
-    return false
-  }
   const theme = createTheme({
     palette: {
       primary: {
@@ -60,25 +73,35 @@ export default function CardMovies({
     },
   })
 
+  const favoriteMovies = (index, movie) => {
+    if (favs > 0 && favs[index].credential !== movie.id) {
+      console.log('favs', favs[index].credential)
+      console.log('movies', movie.id)
+      return true
+    }
+    return false
+  }
+
   return (
     <STCardMovies className={className}>
       <Grid sx={{ flexGrow: 1 }}>
         <Grid item xs={12}>
           <h2 className="title">{title}</h2>
           <Grid justifyContent="center" container spacing={2} className="grid">
-            {movies?.map((movie) => (
-              <Grid key={movie.id} item>
-                <Card sx={{ maxWidth: 345 }} className="card">
-                  <CardMediaComponent movie={movie} loading={loading} className="skeleton" />
+            {movies?.map((movie, index) =>
+              (
+                <Grid key={movie.id} item>
+                  <Card sx={{ maxWidth: 345 }} className="card">
+                    <CardMediaComponent movie={movie} loading={loading} className="skeleton" />
 
-                  {!loading ? (
-                    <>
-                      <CardContentComponent movie={movie} />
-                      <CardActions className="content-buttons">
-                        {user && (
+                    {!loading ? (
+                      <>
+                        <CardContentComponent movie={movie} />
+                        <CardActions className="content-buttons">
+                          {user && (
                           <>
                             <ThemeProvider theme={theme}>
-                              {handleButtonFavorite(movie.id) ? (
+                              {!favoriteMovies(index, movie) ? (
                                 <Tooltip title="Añadir a favoritos">
                                   <FavoriteIcon
                                     color="primary"
@@ -93,9 +116,7 @@ export default function CardMovies({
                                   <FavoriteIcon
                                     color="fav"
                                     size="small"
-                                    onClick={() => {
-                                      handleFav(movie)
-                                    }}
+                                    onClick={() => {}}
                                   />
                                 </Tooltip>
                               )}
@@ -113,28 +134,28 @@ export default function CardMovies({
                               <RemoveRedEyeIcon />
                             </Tooltip>
                           </>
-                        )}
+                          )}
 
-                        <MenuItem as={Link} to={`/details/${movie.id}`}>
-                          <Typography className="more">Saber más</Typography>
-                        </MenuItem>
-                      </CardActions>
-                    </>
-                  ) : (
-                    <Box className="skeleton-animation" sx={{ pt: 0.5 }}>
-                      <Skeleton />
-                      <Skeleton />
-                      <Skeleton />
-                      <Skeleton width="80%" />
-                      <Skeleton width="60%" />
-                      <Skeleton variant="circular">
-                        <Avatar />
-                      </Skeleton>
-                    </Box>
-                  )}
-                </Card>
-              </Grid>
-            ))}
+                          <MenuItem as={Link} to={`/details/${movie.id}`}>
+                            <Typography className="more">Saber más</Typography>
+                          </MenuItem>
+                        </CardActions>
+                      </>
+                    ) : (
+                      <Box className="skeleton-animation" sx={{ pt: 0.5 }}>
+                        <Skeleton />
+                        <Skeleton />
+                        <Skeleton />
+                        <Skeleton width="80%" />
+                        <Skeleton width="60%" />
+                        <Skeleton variant="circular">
+                          <Avatar />
+                        </Skeleton>
+                      </Box>
+                    )}
+                  </Card>
+                </Grid>
+              ))}
           </Grid>
         </Grid>
       </Grid>

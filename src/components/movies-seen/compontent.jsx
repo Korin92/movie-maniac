@@ -1,4 +1,4 @@
-import React,{useEffect,useState} from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 
 // MaterialUI
@@ -31,8 +31,7 @@ export default function MoviesSeen() {
   const getMoviesWatch = async () => {
     if (watch.length > 0) {
       const unresolvedPromises = watch.map((movieSeen) =>
-        MovieServices.getMovie(movieSeen.credential)
-      )
+        MovieServices.getMovie(movieSeen.credential))
       const results = await Promise.all(unresolvedPromises)
       setMovies(results)
       setLoading(false)
@@ -51,44 +50,50 @@ export default function MoviesSeen() {
   }, [watch])
 
   const handleClick = (id) => {
-    const idRemove = watch.findIndex((movieSeen) => movieSeen.credential === id)
+    const idRemove = watch.findIndex((movieSeen) =>
+      movieSeen.credential === id)
     MoviesSeenServices.removeMovieSeen(watch[idRemove].id)
 
-    setMovies((prevState) => prevState.filter((movie) => movie.id !== id))
+    setMovies((prevState) =>
+      prevState.filter((movie) =>
+        movie.id !== id))
   }
   return (
     <STCardProfile>
-    <Grid sx={{ flexGrow: 1 }}>
-      <Grid item xs={12}>
-        <h2 className="title">Películas vistas</h2>
-        <Grid justifyContent="center" container spacing={2} className="grid">
-          {movies?.map((movie) => (
-            <Grid key={movie.id} item>
-              <Card sx={{ maxWidth: 345 }} className="card">
-                <CardMediaComponent movie={movie} className="skeleton" loading={loading} />
-                {!loading ? (
-                  <CardActions className="content-buttons">
-                    <Tooltip title="Eliminar de vistas">
-                      <DeleteOutlineIcon onClick={() => handleClick(movie.id)} />
-                    </Tooltip>
+      <Grid sx={{ flexGrow: 1 }}>
+        <Grid item xs={12}>
+          <h2 className="title">Películas vistas</h2>
+          <Grid justifyContent="center" container spacing={2} className="grid">
+            {movies?.map((movie) =>
+              (
+                <Grid key={movie.id} item>
+                  <Card sx={{ maxWidth: 345 }} className="card">
+                    <CardMediaComponent movie={movie} className="skeleton" loading={loading} />
+                    {!loading ? (
+                      <CardActions className="content-buttons">
+                        <Tooltip title="Eliminar de vistas">
+                          <DeleteOutlineIcon onClick={() =>
+                            handleClick(movie.id)}
+                          />
+                        </Tooltip>
 
-                    <MenuItem as={Link} to={`/details/${movie.id}`}>
-                      <Typography className="more">Saber más</Typography>
-                    </MenuItem>
-                  </CardActions>
-                ) : (
-                  <Box className="skeleton2" sx={{ pt: 0.5 }}>
-                    <Skeleton variant="circular">
-                      <Avatar />
-                    </Skeleton>
-                  </Box>
-                )}
-              </Card>
-            </Grid>
-          ))}
+                        <MenuItem as={Link} to={`/details/${movie.id}`}>
+                          <Typography className="more">Saber más</Typography>
+                        </MenuItem>
+                      </CardActions>
+                    ) : (
+                      <Box className="skeleton2" sx={{ pt: 0.5 }}>
+                        <Skeleton variant="circular">
+                          <Avatar />
+                        </Skeleton>
+                      </Box>
+                    )}
+                  </Card>
+                </Grid>
+              ))}
+          </Grid>
         </Grid>
       </Grid>
-    </Grid>
-  </STCardProfile>
+    </STCardProfile>
   )
 }

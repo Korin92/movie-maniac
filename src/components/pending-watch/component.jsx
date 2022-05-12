@@ -32,8 +32,7 @@ export default function PendingWatch() {
   const getMoviesPending = async () => {
     if (pending.length > 0) {
       const unresolvedPromises = pending.map((pendingWatch) =>
-        MovieServices.getMovie(pendingWatch.credential)
-      )
+        MovieServices.getMovie(pendingWatch.credential))
       const results = await Promise.all(unresolvedPromises)
       setMovies(results)
       setLoading(false)
@@ -53,10 +52,13 @@ export default function PendingWatch() {
 
   const handleClick = (id) => {
     MoviesSeenServices.addMoviesSeen(id)
-    const idRemove = pending.findIndex((pendingWatch) => pendingWatch.credential === id)
+    const idRemove = pending.findIndex((pendingWatch) =>
+      pendingWatch.credential === id)
     PendingWatchServices.removePending(pending[idRemove].id)
 
-    setMovies((prevState) => prevState.filter((movie) => movie.id !== id))
+    setMovies((prevState) =>
+      prevState.filter((movie) =>
+        movie.id !== id))
   }
 
   return (
@@ -65,30 +67,33 @@ export default function PendingWatch() {
         <Grid item xs={12}>
           <h2 className="title">Pendientes de ver</h2>
           <Grid justifyContent="center" container spacing={2} className="grid">
-            {movies?.map((movie) => (
-              <Grid key={movie.id} item>
-                <Card sx={{ maxWidth: 345 }} className="card">
-                  <CardMediaComponent movie={movie} className="skeleton" loading={loading} />
-                  {!loading ? (
-                    <CardActions className="content-buttons">
-                      <Tooltip title="Añadir a vistas">
-                        <RemoveRedEyeIcon onClick={() => handleClick(movie.id)} />
-                      </Tooltip>
+            {movies?.map((movie) =>
+              (
+                <Grid key={movie.id} item>
+                  <Card sx={{ maxWidth: 345 }} className="card">
+                    <CardMediaComponent movie={movie} className="skeleton" loading={loading} />
+                    {!loading ? (
+                      <CardActions className="content-buttons">
+                        <Tooltip title="Añadir a vistas">
+                          <RemoveRedEyeIcon onClick={() =>
+                            handleClick(movie.id)}
+                          />
+                        </Tooltip>
 
-                      <MenuItem as={Link} to={`/details/${movie.id}`}>
-                        <Typography className="more">Saber más</Typography>
-                      </MenuItem>
-                    </CardActions>
-                  ) : (
-                    <Box className="skeleton2" sx={{ pt: 0.5 }}>
-                      <Skeleton variant="circular">
-                        <Avatar />
-                      </Skeleton>
-                    </Box>
-                  )}
-                </Card>
-              </Grid>
-            ))}
+                        <MenuItem as={Link} to={`/details/${movie.id}`}>
+                          <Typography className="more">Saber más</Typography>
+                        </MenuItem>
+                      </CardActions>
+                    ) : (
+                      <Box className="skeleton2" sx={{ pt: 0.5 }}>
+                        <Skeleton variant="circular">
+                          <Avatar />
+                        </Skeleton>
+                      </Box>
+                    )}
+                  </Card>
+                </Grid>
+              ))}
           </Grid>
         </Grid>
       </Grid>

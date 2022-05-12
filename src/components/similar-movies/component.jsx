@@ -13,14 +13,17 @@ import Avatar from '@mui/material/Avatar'
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye'
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff'
 import Typography from '@mui/material/Typography'
-
-// Services
-import Carousel from 'react-multi-carousel'
-import { MovieServices } from '../../services/movies-services'
-import { FavServices } from '../../services/fav-services'
+import Tooltip from '@mui/material/Tooltip'
 
 // Carousel
+import Carousel from 'react-multi-carousel'
 import 'react-multi-carousel/lib/styles.css'
+
+// Services
+import { MovieServices } from '../../services/movies-services'
+import { FavServices } from '../../services/fav-services'
+import { PendingWatchServices } from '../../services/pending-watch-services'
+import { MoviesSeenServices } from '../../services/movies-seen-services'
 
 // Components
 import { STSimilarMovies } from './style'
@@ -70,14 +73,30 @@ export default function SimilarMovies(props) {
   }
 
   useEffect(() => {
+    let isMounted = true
     MovieServices.getSimilarMovies(movieId).then((film) => {
-      setMovies(film)
-      setLoading(false)
+      if (isMounted) {
+        setMovies(film)
+        setLoading(false)
+      }
+      return null
     })
+      .catch((err) =>
+        console.log(err))
+
+    return () => { isMounted = false }
   }, [movieId])
 
-  const handleClick = (movie) => {
+  const handleFav = (movie) => {
     FavServices.addFavs(movie.id)
+  }
+
+  const handlePending = (movie) => {
+    PendingWatchServices.addPending(movie.id)
+  }
+
+  const handleMovieSeen = (movie) => {
+    MoviesSeenServices.addMoviesSeen(movie.id)
   }
 
   return (
@@ -89,72 +108,84 @@ export default function SimilarMovies(props) {
               <Carousel
                 additionalTransfrom={0}
                 arrows
+                shouldResetAutoplay={false}
                 autoPlaySpeed={3000}
                 centerMode={false}
                 className="container"
                 containerClass="container-with-dots"
                 dotListClass="dotList"
                 draggable
-                focusOnSelect
+                focusOnSelect={false}
                 infinite
-                itemClass=""
                 keyBoardControl
                 minimumTouchDrag={80}
                 renderButtonGroupOutside={false}
                 renderDotsOutside={false}
                 responsive={responsive}
                 showDots={false}
-                sliderClass=""
                 slidesToSlide={1}
                 swipeable
               >
-                {movies?.results.map((movie) => (
-                  <Grid key={movie.id} item className="grid-card">
-                    <Card sx={{ maxWidth: 345 }} className="card">
-                      {!movie ? (
-                        <>
-                          <CardMediaComponent
-                            movie={movie}
-                            className="skeleton"
-                            loading={loading}
-                          />
-                          <Box className="skeleton-animation" sx={{ pt: 0.5 }}>
-                            <Skeleton />
-                            <Skeleton />
-                            <Skeleton />
-                            <Skeleton width="80%" />
-                            <Skeleton width="60%" />
-                            <Skeleton variant="circular">
-                              <Avatar />
-                            </Skeleton>
-                          </Box>
-                        </>
-                      ) : (
-                        <>
-                          <CardMediaComponent movie={movie} loading={loading} />
-                          <CardContentComponent movie={movie} />
-                          <CardActions className="content-buttons">
-                            <FavoriteIcon
-                              className="icon-favourite"
-                              size="small"
-                              onClick={() => {
-                                handleClick(movie)
-                              }}
+                {movies?.results.map((movie) =>
+                  (
+                    <Grid key={movie.id} item className="grid-card">
+                      <Card sx={{ maxWidth: 345 }} className="card">
+                        {!movie ? (
+                          <>
+                            <CardMediaComponent
+                              movie={movie}
+                              className="skeleton"
+                              loading={loading}
                             />
+                            <Box className="skeleton-animation" sx={{ pt: 0.5 }}>
+                              <Skeleton />
+                              <Skeleton />
+                              <Skeleton />
+                              <Skeleton width="80%" />
+                              <Skeleton width="60%" />
+                              <Skeleton variant="circular">
+                                <Avatar />
+                              </Skeleton>
+                            </Box>
+                          </>
+                        ) : (
+                          <>
+                            <CardMediaComponent movie={movie} loading={loading} />
+                            <CardContentComponent movie={movie} />
+                            <CardActions className="content-buttons">
+                              <Tooltip title="Añadir a favoritos">
+                                <FavoriteIcon
+                                  className="icon-favourite"
+                                  size="small"
+                                  onClick={() => {
+                                    handleFav(movie)
+                                  }}
+                                />
+                              </Tooltip>
 
-                            <VisibilityOffIcon />
+                              <Tooltip title="Añadir a pendientes">
+                                <VisibilityOffIcon onClick={() => {
+                                  handlePending(movie)
+                                }}
+                                />
+                              </Tooltip>
 
-                            <RemoveRedEyeIcon />
+                              <Tooltip title="Añadir a vistas">
+                                <RemoveRedEyeIcon onClick={() => {
+                                  handleMovieSeen(movie)
+                                }}
+                                />
+                              </Tooltip>
 
-                            <MenuItem as={Link} to={`/details/${movie.id}`}>
-                              <Typography className="more">Saber más</Typography>
-                            </MenuItem>
-                          </CardActions>
-                        </>
-                      )}
-                    </Card>
-                  </Grid>
-                ))}
+                              <MenuItem as={Link} to={`/details/${movie.id}`}>
+                                <Typography className="more">Saber más</Typography>
+                              </MenuItem>
+                            </CardActions>
+                          </>
+                        )}
+                      </Card>
+                    </Grid>
+                  ))}
               </Carousel>
             </Grid>
           </Grid>

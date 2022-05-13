@@ -23,7 +23,7 @@ import CardMediaComponent from '../card-media/component'
 // Styles
 import { STCardProfile } from '../../styles/card-profile/style'
 
-export default function Favs() {
+export default function Favs({ user }) {
   const [favs, setFavs] = useState([])
   const [movies, setMovies] = useState([])
   const [loading, setLoading] = useState()
@@ -39,10 +39,10 @@ export default function Favs() {
   }
   useEffect(() => {
     setLoading(true)
-    FavServices.getFavs().then((i) => {
+    FavServices.getFavs(user).then((i) => {
       setFavs(i)
     })
-  }, [])
+  }, [user])
 
   useEffect(() => {
     getMoviesFavs()

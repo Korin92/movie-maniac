@@ -31,16 +31,18 @@ const removeMovieSeen = async (seen) => {
 }
 
 // Get all favorties from the user
-const getMovieSeen = async () => {
-  const q = query(collection(db, `users/${auth.currentUser.uid}/movies-seen`))
-  const querySnapshot = await getDocs(q)
+const getMovieSeen = async (user) => {
   const arrayMoviesSeen = []
+  if (user) {
+    const q = query(collection(db, `users/${auth.currentUser.uid}/movies-seen`))
+    const querySnapshot = await getDocs(q)
 
-  querySnapshot?.docs.map((movie) => {
-    const data = movie.data()
-    data.id = movie.id
-    return arrayMoviesSeen.push(data)
-  })
+    querySnapshot?.docs.map((movie) => {
+      const data = movie.data()
+      data.id = movie.id
+      return arrayMoviesSeen.push(data)
+    })
+  }
 
   return arrayMoviesSeen
 }

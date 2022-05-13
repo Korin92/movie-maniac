@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-no-useless-fragment */
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 
@@ -14,6 +15,8 @@ import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye'
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff'
 import Typography from '@mui/material/Typography'
 import Tooltip from '@mui/material/Tooltip'
+import IconButton from '@mui/material/IconButton'
+import DeleteSweepIcon from '@mui/icons-material/DeleteSweep'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
 
 // Styles
@@ -22,7 +25,12 @@ import { STCardMovies } from './style'
 // Services
 import { FavServices } from '../../services/fav-services'
 import { PendingWatchServices } from '../../services/pending-watch-services'
-import { MovieServices } from '../../services/movies-services'
+import { MoviesSeenServices } from '../../services/movies-seen-services'
+
+// Utils
+import { HandlerButtonFav } from '../../utils/handler-buttons-cards/handlerButtonFav'
+import { HandlerButtonPending } from '../../utils/handler-buttons-cards/handlerButtonPending'
+import { HandlerButtonSeen } from '../../utils/handler-buttons-cards/handlerButtonSeen'
 
 // Components
 import CardMediaComponent from '../card-media/component'
@@ -33,47 +41,63 @@ export default function CardMovies({
   movies, loading, title, className, user,
 }) {
   const [favs, setFavs] = useState([])
-  const [credential, setCredential] = useState([])
+  const [credentialFav, setCredentialFav] = useState([])
   const [isFavorite, setIsFavorite] = useState(false)
 
-  const handleFav = (movie) => {
-    setIsFavorite(!isFavorite)
-    console.log('isFavoriteFav', isFavorite)
-    FavServices.addFavs(movie.id)
-  }
+  const [isPending, setIsPending] = useState(false)
+  const [credentialPending, setCredentialPending] = useState([])
+  const [pendings, setPendings] = useState([])
 
-  const handleRemoveFav = (id) => {
-    setIsFavorite(!isFavorite)
-    const idRemove = favs.findIndex((fav) =>
-      fav.credential === id)
-    FavServices.removeFavs(favs[idRemove].id)
-  }
+  const [isSeen, setIsSeen] = useState(false)
+  const [credentialSeen, setCredentialSeen] = useState([])
+  const [seen, setSeen] = useState([])
+
+  const [disabled, setDisabled] = useState(false)
 
   useEffect(() => {
-    FavServices.getFavs().then((i) => {
+    FavServices.getFavs(user).then((i) => {
       setFavs(i)
       setIsFavorite(false)
     })
-  }, [isFavorite])
-
-  const favoriteMovies = () => {
-    setCredential([])
-    if (favs.length > 0) {
-      favs.map((fav) =>
-        setCredential((prevState) =>
-          [...prevState, fav.credential]))
-      setIsFavorite(false)
-    }
-  }
+  }, [isFavorite, user])
 
   useEffect(() => {
-    favoriteMovies()
+    HandlerButtonFav.favoriteMovies(user, favs).then((i) => {
+      setCredentialFav(i)
+      setIsFavorite(false)
+    })
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [favs])
+  }, [favs, user])
 
-  const handlePending = (movie) => {
-    PendingWatchServices.addPending(movie.id)
-  }
+  useEffect(() => {
+    PendingWatchServices.getPending(user).then((i) => {
+      setPendings(i)
+      setIsPending(false)
+    })
+  }, [isPending, user])
+
+  useEffect(() => {
+    HandlerButtonPending.pendingsMovies(user, pendings).then((i) => {
+      setCredentialPending(i)
+      setIsPending(false)
+    })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pendings, user])
+
+  useEffect(() => {
+    HandlerButtonSeen.seenMovies(user, seen).then((i) => {
+      setCredentialSeen(i)
+      setIsSeen(false)
+    })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [seen, user])
+
+  useEffect(() => {
+    MoviesSeenServices.getMovieSeen(user).then((i) => {
+      setSeen(i)
+      setIsSeen(false)
+    })
+  }, [isSeen, user])
 
   const theme = createTheme({
     palette: {
@@ -82,6 +106,9 @@ export default function CardMovies({
       },
       fav: {
         main: '#ff0000',
+      },
+      disabled: {
+        main: '#1976d2',
       },
     },
   })
@@ -92,59 +119,118 @@ export default function CardMovies({
         <Grid item xs={12}>
           <h2 className="title">{title}</h2>
           <Grid justifyContent="center" container spacing={2} className="grid">
-            {movies?.map((movie) =>
+            {movies?.map((movie, index) =>
               (
                 <Grid key={movie.id} item>
                   <Card sx={{ maxWidth: 345 }} className="card">
                     <CardMediaComponent movie={movie} loading={loading} className="skeleton" />
-
                     {!loading ? (
                       <>
                         <CardContentComponent movie={movie} />
                         <CardActions className="content-buttons">
                           {user && (
-                          <>
-                            <ThemeProvider theme={theme}>
-                              {!credential.includes(movie.id) ? (
+                          <ThemeProvider theme={theme}>
+                              {!credentialFav.includes(movie.id) ? (
                                 <Tooltip title="Añadir a favoritos">
-                                  <FavoriteIcon
-                                    key={movie.id}
-                                    color="primary"
-                                    size="small"
-                                    onClick={() => {
-                                      handleFav(movie)
-                                      setIsFavorite(!isFavorite)
-                                    }}
-                                  />
+                                  <IconButton onClick={() => {
+                                    HandlerButtonFav.handleFav(movie)
+                                    setIsFavorite(!isFavorite)
+                                  }}
+                                  >
+                                    <FavoriteIcon
+                                      key={movie.id}
+                                      color="primary"
+                                      size="small"
+                                    />
+                                  </IconButton>
                                 </Tooltip>
                               ) : (
                                 <Tooltip title="Quitar de favoritos">
-                                  <FavoriteIcon
-                                    key={movie.id}
-                                    color="fav"
-                                    size="small"
-                                    onClick={() => {
-                                      handleRemoveFav(movie.id)
-                                    }}
-                                  />
+                                  <IconButton onClick={() => {
+                                    HandlerButtonFav.handleRemoveFav(favs, movie.id)
+                                    setIsFavorite(!isFavorite)
+                                  }}
+                                  >
+                                    <FavoriteIcon
+                                      key={movie.id}
+                                      color="fav"
+                                      size="small"
+                                    />
+                                  </IconButton>
                                 </Tooltip>
                               )}
-                            </ThemeProvider>
 
-                            <Tooltip title="Añadir a pendientes">
-                              <VisibilityOffIcon
-                                onClick={() => {
-                                  handlePending(movie)
-                                }}
-                              />
-                            </Tooltip>
+                            {!credentialPending.includes(movie.id) ? (
+                              <>
+                                <Tooltip title="Añadir a pendientes">
+                                  <IconButton
+                                    disabled={!!credentialSeen.includes(movie.id)}
+                                    onClick={() => {
+                                      HandlerButtonPending.handlePending(movie)
+                                      setIsPending(!isPending)
+                                      setDisabled(!disabled)
+                                    }}
+                                  >
+                                    <VisibilityOffIcon
+                                      color="primary"
+                                      size="small"
+                                    />
+                                  </IconButton>
+                                </Tooltip>
+                              </>
+                            ) : (
+                              <>
+                                <Tooltip title="Borrar de pendientes">
+                                  <IconButton
+                                    disabled={!!credentialSeen.includes(movie.id)}
+                                    onClick={() => {
+                                      HandlerButtonPending.handleRemovePending(pendings, movie.id)
+                                      setIsPending(!isPending)
+                                      setDisabled(!disabled)
+                                    }}
+                                  >
+                                    <DeleteSweepIcon color="disabled" />
+                                  </IconButton>
+                                </Tooltip>
+                              </>
 
-                            <Tooltip title="Añadir a vistas">
-                              <RemoveRedEyeIcon />
-                            </Tooltip>
-                          </>
+                            )}
+                            {!credentialSeen.includes(movie.id) ? (
+                              <>
+                                <Tooltip title="Añadir a vistas">
+                                  <IconButton
+                                    disabled={!!credentialPending.includes(movie.id)}
+                                    onClick={() => {
+                                      HandlerButtonSeen.handleSeen(movie)
+                                      setIsSeen(!isSeen)
+                                      setDisabled(!disabled)
+                                    }}
+                                  >
+                                    <RemoveRedEyeIcon
+                                      color="primary"
+                                      size="small"
+                                    />
+                                  </IconButton>
+                                </Tooltip>
+                              </>
+                            ) : (
+                              <>
+                                <Tooltip title="Borrar de vistas">
+                                  <IconButton
+                                    disabled={!!credentialPending.includes(movie.id)}
+                                    onClick={() => {
+                                      HandlerButtonSeen.handleRemoveSeen(seen, movie.id)
+                                      setIsSeen(!isSeen)
+                                      setDisabled(!disabled)
+                                    }}
+                                  >
+                                    <DeleteSweepIcon color="disabled" />
+                                  </IconButton>
+                                </Tooltip>
+                              </>
+                            )}
+                          </ThemeProvider>
                           )}
-
                           <MenuItem as={Link} to={`/details/${movie.id}`}>
                             <Typography className="more">Saber más</Typography>
                           </MenuItem>

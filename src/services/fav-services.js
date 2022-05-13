@@ -31,16 +31,18 @@ const removeFavs = async (favs) => {
 }
 
 // Get all favorties from the user
-const getFavs = async () => {
-  const q = query(collection(db, `users/${auth.currentUser.uid}/favs`))
-  const querySnapshot = await getDocs(q)
+const getFavs = async (user) => {
   const arrayFavs = []
+  if (user) {
+    const q = query(collection(db, `users/${auth.currentUser.uid}/favs`))
+    const querySnapshot = await getDocs(q)
 
-  querySnapshot?.docs.map((movie) => {
-    const data = movie.data()
-    data.id = movie.id
-    return arrayFavs.push(data)
-  })
+    querySnapshot?.docs.map((movie) => {
+      const data = movie.data()
+      data.id = movie.id
+      return arrayFavs.push(data)
+    })
+  }
 
   return arrayFavs
 }

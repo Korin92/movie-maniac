@@ -21,11 +21,11 @@ export default function ProfilePage(props) {
   const handlerSelected = () => {
     switch (selected) {
       case 'favoritos':
-        return <Favs />
+        return <Favs user={user} />
       case 'pendientes de ver':
-        return <PendingWatch />
+        return <PendingWatch user={user} />
       case 'vistas':
-        return <MoviesSeen />
+        return <MoviesSeen user={user} />
       case 'mi perfil':
         return <Profile user={user} setReloadApp={setReloadApp} />
       default:

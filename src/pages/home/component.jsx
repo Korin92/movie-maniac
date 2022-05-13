@@ -18,8 +18,6 @@ export default function Home(props) {
   useEffect(() => {
     setLoading(true)
     MovieServices.getTrendingsMovies(page).then((film) => {
-      console.log(film.total_pages)
-
       setMovies((prevMovies) =>
         prevMovies.concat(film.results))
       setHasMore(film.page < film.total_pages)

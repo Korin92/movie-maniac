@@ -26,22 +26,26 @@ const addPending = async (pending) => {
 
 // Delete favorties from the user
 const removePending = async (pending) => {
+  if (auth.currentUser === null) {
+    return
+  }
   const pendingRef = doc(db, 'users', auth.currentUser.uid, 'pending', pending)
   await deleteDoc(pendingRef)
 }
 
 // Get all favorties from the user
-const getPending = async () => {
-  const q = query(collection(db, `users/${auth.currentUser.uid}/pending`))
-  const querySnapshot = await getDocs(q)
+const getPending = async (user) => {
   const arrayPending = []
+  if (user) {
+    const q = query(collection(db, `users/${auth.currentUser.uid}/pending`))
+    const querySnapshot = await getDocs(q)
 
-  querySnapshot?.docs.map((movie) => {
-    const data = movie.data()
-    data.id = movie.id
-    return arrayPending.push(data)
-  })
-
+    querySnapshot?.docs.map((movie) => {
+      const data = movie.data()
+      data.id = movie.id
+      return arrayPending.push(data)
+    })
+  }
   return arrayPending
 }
 

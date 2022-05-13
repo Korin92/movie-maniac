@@ -23,7 +23,7 @@ import { MoviesSeenServices } from '../../services/movies-seen-services'
 // Components
 import CardMediaComponent from '../card-media/component'
 
-export default function MoviesSeen() {
+export default function MoviesSeen({ user }) {
   const [watch, setwatch] = useState([])
   const [movies, setMovies] = useState([])
   const [loading, setLoading] = useState()
@@ -39,10 +39,10 @@ export default function MoviesSeen() {
   }
   useEffect(() => {
     setLoading(true)
-    MoviesSeenServices.getMovieSeen().then((i) => {
+    MoviesSeenServices.getMovieSeen(user).then((i) => {
       setwatch(i)
     })
-  }, [])
+  }, [user])
 
   useEffect(() => {
     getMoviesWatch()

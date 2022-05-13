@@ -24,7 +24,7 @@ import { MoviesSeenServices } from '../../services/movies-seen-services'
 // Components
 import CardMediaComponent from '../card-media/component'
 
-export default function PendingWatch() {
+export default function PendingWatch({ user }) {
   const [pending, setPending] = useState([])
   const [movies, setMovies] = useState([])
   const [loading, setLoading] = useState()
@@ -40,10 +40,10 @@ export default function PendingWatch() {
   }
   useEffect(() => {
     setLoading(true)
-    PendingWatchServices.getPending().then((i) => {
+    PendingWatchServices.getPending(user).then((i) => {
       setPending(i)
     })
-  }, [])
+  }, [user])
 
   useEffect(() => {
     getMoviesPending()

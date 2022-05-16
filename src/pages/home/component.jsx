@@ -5,7 +5,8 @@ import CircularProgress from '@mui/material/CircularProgress'
 import { MovieServices } from '../../services/movies-services'
 import CardMovies from '../../components/card-movies/component'
 
-import { STHome } from './style'
+import { STCard } from '../../styles/card-default/style'
+import SearchPage from '../search/component'
 
 export default function Home(props) {
   const [movies, setMovies] = useState([])
@@ -13,7 +14,7 @@ export default function Home(props) {
   const [page, setPage] = useState(1)
   const [hasMore, setHasMore] = useState(false)
 
-  const { user } = props
+  const { user, debounce } = props
 
   useEffect(() => {
     setLoading(true)
@@ -32,7 +33,7 @@ export default function Home(props) {
       prevPage + 1)
   }
   return (
-    <STHome>
+    <STCard>
       <InfiniteScroll
         dataLength={movies.length}
         hasMore={hasMore}
@@ -43,8 +44,12 @@ export default function Home(props) {
           </Box>
 )}
       >
-        <CardMovies movies={movies} loading={loading} title="Las más populares" user={user} />
+        {debounce ? (
+          <SearchPage user={user} debounce={debounce} />
+        ) : (
+          <CardMovies movies={movies} loading={loading} title="Las más populares" user={user} />
+        )}
       </InfiniteScroll>
-    </STHome>
+    </STCard>
   )
 }

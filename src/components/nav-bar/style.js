@@ -20,6 +20,33 @@ export const STnavBar = style.div`
 
   }
 
+  .logo{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 50px;
+    width: 50px;
+    background: #0c0735;
+    color: #f6f6fe;
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.1rem;
+    text-decoration: none;
+    text-align: center;
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+    border: 1px solid #f6f6fe;
+    box-shadow: 0px 0px 10px rgba(0,0,0,0.5);
+    transition: all 0.3s ease-in-out;
+    &:hover{
+      background: #f6f6fe;
+      color: #0c0735;
+      border: 1px solid #0c0735;
+
+    }
+  }
+
 
   .user-container{
     display: flex;

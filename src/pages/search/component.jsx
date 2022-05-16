@@ -7,17 +7,18 @@ import CardMovies from '../../components/card-movies/component'
 
 import { STCard } from '../../styles/card-default/style'
 
-export default function NowPlayingMoviesPage(props) {
+export default function SearchPage({
+  user, debounce,
+}) {
   const [movies, setMovies] = useState([])
   const [loading, setLoading] = useState(true)
+
   const [page, setPage] = useState(1)
   const [hasMore, setHasMore] = useState(false)
 
-  const { user } = props
-
   useEffect(() => {
     setLoading(true)
-    MovieServices.getNowPlayingMovies(page).then((film) => {
+    MovieServices.getSearchMovies(debounce, page).then((film) => {
       setMovies((prevMovies) =>
         prevMovies.concat(film.results))
       setHasMore(film.page < film.total_pages)
@@ -25,7 +26,7 @@ export default function NowPlayingMoviesPage(props) {
     })
       .catch((err) =>
         console.log(err))
-  }, [page])
+  }, [debounce, page])
 
   const handleNextPage = () => {
     setPage((prevPage) =>
@@ -33,6 +34,7 @@ export default function NowPlayingMoviesPage(props) {
   }
 
   return (
+
     <STCard>
       <InfiniteScroll
         dataLength={movies.length}
@@ -44,7 +46,7 @@ export default function NowPlayingMoviesPage(props) {
           </Box>
 )}
       >
-        <CardMovies movies={movies} loading={loading} title="Cartelera" user={user} />
+        <CardMovies movies={movies} loading={loading} title="Tu busqueda: " user={user} />
       </InfiniteScroll>
     </STCard>
   )

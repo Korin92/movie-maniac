@@ -14,6 +14,9 @@ import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye'
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff'
 import Typography from '@mui/material/Typography'
 import Tooltip from '@mui/material/Tooltip'
+import IconButton from '@mui/material/IconButton'
+import DeleteSweepIcon from '@mui/icons-material/DeleteSweep'
+import { createTheme, ThemeProvider } from '@mui/material/styles'
 
 // Carousel
 import Carousel from 'react-multi-carousel'
@@ -25,6 +28,11 @@ import { FavServices } from '../../services/fav-services'
 import { PendingWatchServices } from '../../services/pending-watch-services'
 import { MoviesSeenServices } from '../../services/movies-seen-services'
 
+// Utils
+import { HandlerButtonFav } from '../../utils/handler-buttons-cards/handlerButtonFav'
+import { HandlerButtonPending } from '../../utils/handler-buttons-cards/handlerButtonPending'
+import { HandlerButtonSeen } from '../../utils/handler-buttons-cards/handlerButtonSeen'
+
 // Components
 import { STSimilarMovies } from './style'
 import CardMediaComponent from '../card-media/component'
@@ -34,7 +42,21 @@ export default function SimilarMovies(props) {
   const [movies, setMovies] = useState([])
   const [loading, setLoading] = useState(true)
 
-  const { movieId } = props
+  const [favs, setFavs] = useState([])
+  const [credentialFav, setCredentialFav] = useState([])
+  const [isFavorite, setIsFavorite] = useState(false)
+
+  const [isPending, setIsPending] = useState(false)
+  const [credentialPending, setCredentialPending] = useState([])
+  const [pendings, setPendings] = useState([])
+
+  const [isSeen, setIsSeen] = useState(false)
+  const [credentialSeen, setCredentialSeen] = useState([])
+  const [seen, setSeen] = useState([])
+
+  const [disabled, setDisabled] = useState(false)
+
+  const { user, movieId } = props
 
   const responsive = {
     desktop: {
@@ -87,17 +109,64 @@ export default function SimilarMovies(props) {
     return () => { isMounted = false }
   }, [movieId])
 
-  const handleFav = (movie) => {
-    FavServices.addFavs(movie.id)
-  }
+  useEffect(() => {
+    FavServices.getFavs(user).then((i) => {
+      setFavs(i)
+      setIsFavorite(false)
+    })
+  }, [isFavorite, user])
 
-  const handlePending = (movie) => {
-    PendingWatchServices.addPending(movie.id)
-  }
+  useEffect(() => {
+    HandlerButtonFav.favoriteMovies(user, favs).then((i) => {
+      setCredentialFav(i)
+      setIsFavorite(false)
+    })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [favs, user])
 
-  const handleMovieSeen = (movie) => {
-    MoviesSeenServices.addMoviesSeen(movie.id)
-  }
+  useEffect(() => {
+    PendingWatchServices.getPending(user).then((i) => {
+      setPendings(i)
+      setIsPending(false)
+    })
+  }, [isPending, user])
+
+  useEffect(() => {
+    HandlerButtonPending.pendingsMovies(user, pendings).then((i) => {
+      setCredentialPending(i)
+      setIsPending(false)
+    })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pendings, user])
+
+  useEffect(() => {
+    HandlerButtonSeen.seenMovies(user, seen).then((i) => {
+      setCredentialSeen(i)
+      setIsSeen(false)
+    })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [seen, user])
+
+  useEffect(() => {
+    MoviesSeenServices.getMovieSeen(user).then((i) => {
+      setSeen(i)
+      setIsSeen(false)
+    })
+  }, [isSeen, user])
+
+  const theme = createTheme({
+    palette: {
+      primary: {
+        main: '#0c0735',
+      },
+      fav: {
+        main: '#ff0000',
+      },
+      disabled: {
+        main: '#1976d2',
+      },
+    },
+  })
 
   return (
     !loading && (
@@ -153,29 +222,101 @@ export default function SimilarMovies(props) {
                             <CardMediaComponent movie={movie} loading={loading} />
                             <CardContentComponent movie={movie} />
                             <CardActions className="content-buttons">
-                              <Tooltip title="Añadir a favoritos">
-                                <FavoriteIcon
-                                  className="icon-favourite"
-                                  size="small"
-                                  onClick={() => {
-                                    handleFav(movie)
-                                  }}
-                                />
-                              </Tooltip>
+                              {user && (
+                              <ThemeProvider theme={theme}>
+                                {!credentialFav.includes(movie.id) ? (
+                                  <Tooltip title="Añadir a favoritos">
+                                    <IconButton onClick={() => {
+                                      HandlerButtonFav.handleFav(movie)
+                                      setIsFavorite(!isFavorite)
+                                    }}
+                                    >
+                                      <FavoriteIcon
+                                        key={movie.id}
+                                        color="primary"
+                                        size="small"
+                                      />
+                                    </IconButton>
+                                  </Tooltip>
+                                ) : (
+                                  <Tooltip title="Quitar de favoritos">
+                                    <IconButton onClick={() => {
+                                      HandlerButtonFav.handleRemoveFav(favs, movie.id)
+                                      setIsFavorite(!isFavorite)
+                                    }}
+                                    >
+                                      <FavoriteIcon
+                                        key={movie.id}
+                                        color="fav"
+                                        size="small"
+                                      />
+                                    </IconButton>
+                                  </Tooltip>
+                                )}
 
-                              <Tooltip title="Añadir a pendientes">
-                                <VisibilityOffIcon onClick={() => {
-                                  handlePending(movie)
-                                }}
-                                />
-                              </Tooltip>
+                                {!credentialPending.includes(movie.id) ? (
+                                  <Tooltip title="Añadir a pendientes">
+                                    <IconButton
+                                      disabled={!!credentialSeen.includes(movie.id)}
+                                      onClick={() => {
+                                        HandlerButtonPending.handlePending(movie)
+                                        setIsPending(!isPending)
+                                        setDisabled(!disabled)
+                                      }}
+                                    >
+                                      <VisibilityOffIcon
+                                        color="primary"
+                                        size="small"
+                                      />
+                                    </IconButton>
+                                  </Tooltip>
+                                ) : (
+                                  <Tooltip title="Borrar de pendientes">
+                                    <IconButton
+                                      disabled={!!credentialSeen.includes(movie.id)}
+                                      onClick={() => {
+                                        HandlerButtonPending.handleRemovePending(pendings, movie.id)
+                                        setIsPending(!isPending)
+                                        setDisabled(!disabled)
+                                      }}
+                                    >
+                                      <DeleteSweepIcon color="disabled" />
+                                    </IconButton>
+                                  </Tooltip>
 
-                              <Tooltip title="Añadir a vistas">
-                                <RemoveRedEyeIcon onClick={() => {
-                                  handleMovieSeen(movie)
-                                }}
-                                />
-                              </Tooltip>
+                                )}
+                                {!credentialSeen.includes(movie.id) ? (
+                                  <Tooltip title="Añadir a vistas">
+                                    <IconButton
+                                      disabled={!!credentialPending.includes(movie.id)}
+                                      onClick={() => {
+                                        HandlerButtonSeen.handleSeen(movie)
+                                        setIsSeen(!isSeen)
+                                        setDisabled(!disabled)
+                                      }}
+                                    >
+                                      <RemoveRedEyeIcon
+                                        color="primary"
+                                        size="small"
+                                      />
+                                    </IconButton>
+                                  </Tooltip>
+                                ) : (
+                                  <Tooltip title="Borrar de vistas">
+                                    <IconButton
+                                      disabled={!!credentialPending.includes(movie.id)}
+                                      onClick={() => {
+                                        HandlerButtonSeen.handleRemoveSeen(seen, movie.id)
+                                        setIsSeen(!isSeen)
+                                        setDisabled(!disabled)
+                                      }}
+                                    >
+                                      <DeleteSweepIcon color="disabled" />
+                                    </IconButton>
+                                  </Tooltip>
+                                )}
+                              </ThemeProvider>
+                              )}
 
                               <MenuItem as={Link} to={`/details/${movie.id}`}>
                                 <Typography className="more">Saber más</Typography>

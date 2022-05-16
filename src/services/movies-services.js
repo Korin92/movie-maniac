@@ -3,7 +3,7 @@ import { API_KEY, API_URL } from './setting'
 // get the trending movies
 
 const getTrendingsMovies = async (page) => {
-  const apiUrl = `${API_URL}/popular?api_key=${API_KEY}&language=es-ES&page=${page}&region=ES`
+  const apiUrl = `${API_URL}/movie/popular?api_key=${API_KEY}&language=es-ES&page=${page}&region=ES`
 
   const res = await fetch(apiUrl)
   const apiResponse = await res.json()
@@ -14,7 +14,7 @@ const getTrendingsMovies = async (page) => {
 // get the next movies
 
 const getNextMovies = async () => {
-  const apiUrl = `${API_URL}/upcoming?api_key=${API_KEY}&language=es-ES&page=1?region=spain`
+  const apiUrl = `${API_URL}/movie/upcoming?api_key=${API_KEY}&language=es-ES&page=1?region=spain`
 
   const res = await fetch(apiUrl)
   const apiResponse = await res.json()
@@ -25,7 +25,7 @@ const getNextMovies = async () => {
 // get the now playing movies
 
 const getNowPlayingMovies = async (page) => {
-  const apiUrl = `${API_URL}/now_playing?api_key=${API_KEY}&language=es-ES&page=${page}&region=ES`
+  const apiUrl = `${API_URL}/movie/now_playing?api_key=${API_KEY}&language=es-ES&page=${page}&region=ES`
 
   const res = await fetch(apiUrl)
   const apiResponse = await res.json()
@@ -34,7 +34,7 @@ const getNowPlayingMovies = async (page) => {
 }
 
 const getDetails = async (movieId) => {
-  const apiUrl = `${API_URL}/${movieId}?api_key=${API_KEY}&language=es-ES`
+  const apiUrl = `${API_URL}/movie/${movieId}?api_key=${API_KEY}&language=es-ES`
 
   const res = await fetch(apiUrl)
   const apiResponse = await res.json()
@@ -43,7 +43,7 @@ const getDetails = async (movieId) => {
 }
 
 const getCredits = async (movieId) => {
-  const apiUrl = `${API_URL}/${movieId}/credits?api_key=${API_KEY}&language=es-ES`
+  const apiUrl = `${API_URL}/movie/${movieId}/credits?api_key=${API_KEY}&language=es-ES`
 
   const res = await fetch(apiUrl)
   const apiResponse = await res.json()
@@ -52,7 +52,7 @@ const getCredits = async (movieId) => {
 }
 
 const getVideos = async (movieId) => {
-  const apiUrl = `${API_URL}/${movieId}/videos?api_key=${API_KEY}&language=es-ES`
+  const apiUrl = `${API_URL}/movie/${movieId}/videos?api_key=${API_KEY}&language=es-ES`
 
   const res = await fetch(apiUrl, { credentials: 'omit' })
   const apiResponse = await res.json()
@@ -60,14 +60,14 @@ const getVideos = async (movieId) => {
   if (apiResponse.results.length > 0) {
     return apiResponse
   }
-  const apiUrlEU = `${API_URL}/${movieId}/videos?api_key=${API_KEY}&language=en-US`
+  const apiUrlEU = `${API_URL}/movie/${movieId}/videos?api_key=${API_KEY}&language=en-US`
   const resEU = await fetch(apiUrlEU, { credentials: 'omit' })
   const apiResponseEU = await resEU.json()
   return apiResponseEU
 }
 
 const getProviders = async (movieId) => {
-  const apiUrl = `${API_URL}/${movieId}/watch/providers?api_key=${API_KEY}`
+  const apiUrl = `${API_URL}/movie/${movieId}/watch/providers?api_key=${API_KEY}`
   const res = await fetch(apiUrl)
   const apiResponse = await res.json()
 
@@ -75,7 +75,7 @@ const getProviders = async (movieId) => {
 }
 
 const getSimilarMovies = async (movieId) => {
-  const apiUrl = `${API_URL}/${movieId}/similar?api_key=${API_KEY}&language=es-ES&page=1?region=spain`
+  const apiUrl = `${API_URL}/movie/${movieId}/similar?api_key=${API_KEY}&language=es-ES&page=1&region=ES`
   const res = await fetch(apiUrl)
   const apiResponse = await res.json()
 
@@ -83,9 +83,20 @@ const getSimilarMovies = async (movieId) => {
 }
 
 const getMovie = async (movieId) => {
-  const apiUrl = `${API_URL}/${movieId}?api_key=${API_KEY}&language=es-ES`
+  const apiUrl = `${API_URL}/movie/${movieId}?api_key=${API_KEY}&language=es-ES`
   const res = await fetch(apiUrl)
   const apiResponse = await res.json()
+
+  return apiResponse
+}
+
+const getSearchMovies = async (search, page) => {
+  console.log('search desde movies-services', search)
+  const apiUrl = `${API_URL}/search/movie?api_key=${API_KEY}&language=es-ES&query=${search}&page=${page}&include_adult=false`
+  const res = await fetch(apiUrl)
+  const apiResponse = await res.json()
+
+  console.log('apiResponse desde movies-services', apiResponse)
 
   return apiResponse
 }
@@ -100,4 +111,5 @@ export const MovieServices = {
   getProviders,
   getSimilarMovies,
   getMovie,
+  getSearchMovies,
 }

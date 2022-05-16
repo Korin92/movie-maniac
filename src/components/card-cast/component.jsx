@@ -1,5 +1,4 @@
-import { useState, useEffect } from 'react'
-import { MovieServices } from '../../services/movies-services'
+import React, { useState, useEffect } from 'react'
 
 import Card from '@mui/material/Card'
 import Grid from '@mui/material/Grid'
@@ -8,6 +7,7 @@ import CardMedia from '@mui/material/CardMedia'
 import Typography from '@mui/material/Typography'
 import Skeleton from '@mui/material/Skeleton'
 import Box from '@mui/material/Box'
+import { MovieServices } from '../../services/movies-services'
 
 import NOIMAGE from '../../assets/png/NO-IMAGE1.png'
 
@@ -40,23 +40,24 @@ export default function CardCast(props) {
         <Grid item xs={12}>
           <Grid className="grid-card" justifyContent="center" container spacing={2}>
             {credits.cast
-              .filter((cast, index) => index < 5)
-              .map((item) => (
-                <Grid key={item.id} item>
-                  <Card className="card">
-                    {item ? (
-                      <CardMedia
-                        className="img-actor"
-                        component="img"
-                        alt="image of actor"
-                        image={getImage(item.profile_path)}
-                      />
-                    ) : (
-                      <Skeleton variant="rectangular" width={210} height={118} />
-                    )}
+              .filter((cast, index) =>
+                index < 5)
+              .map((item) =>
+                (
+                  <Grid key={item.id} item>
+                    <Card className="card">
+                      {item ? (
+                        <CardMedia
+                          className="img-actor"
+                          component="img"
+                          alt="image of actor"
+                          image={getImage(item.profile_path)}
+                        />
+                      ) : (
+                        <Skeleton variant="rectangular" width={210} height={118} />
+                      )}
 
-                    {item ? (
-                      <>
+                      {item ? (
                         <CardContent className="description">
                           <Typography
                             className="description-name"
@@ -74,16 +75,15 @@ export default function CardCast(props) {
                             {item.character}
                           </Typography>
                         </CardContent>
-                      </>
-                    ) : (
-                      <Box sx={{ pt: 0.5 }}>
-                        <Skeleton />
-                        <Skeleton width="60%" />
-                      </Box>
-                    )}
-                  </Card>
-                </Grid>
-              ))}
+                      ) : (
+                        <Box sx={{ pt: 0.5 }}>
+                          <Skeleton />
+                          <Skeleton width="60%" />
+                        </Box>
+                      )}
+                    </Card>
+                  </Grid>
+                ))}
             <Typography className="show-more" gutterBottom variant="h5" component="div">
               Ver más
             </Typography>

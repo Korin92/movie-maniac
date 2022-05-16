@@ -25,7 +25,7 @@ export default function Details(props) {
   // States
   const [movie, setMovie] = useState({})
   const [loading, setLoading] = useState(true)
-  const [value, setValue] = React.useState(2)
+  const [value, setValue] = useState(2)
 
   const [video, setVideo] = useState()
 
@@ -125,7 +125,7 @@ export default function Details(props) {
           <Typography className="content-title">¿Dónde encontrarla?</Typography>
           <Providers movieId={movieId} />
           <Typography className="content-title">Películas similares</Typography>
-          <SimilarMovies movieId={movieId} />
+          <SimilarMovies user={user} movieId={movieId} />
         </CardContent>
       </Card>
     </STDetails>

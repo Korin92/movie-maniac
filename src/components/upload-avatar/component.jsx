@@ -32,7 +32,8 @@ export default function UploadAvatar(props) {
     getDownloadURL(ref(storage, `avatar/${user.uid}`))
       .then(async (response) => {
         await updateProfile(auth.currentUser, { photoURL: response })
-        setReloadApp((prevState) => !prevState)
+        setReloadApp((prevState) =>
+          !prevState)
         handleClose()
       })
       .catch(() => {

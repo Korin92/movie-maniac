@@ -1,6 +1,6 @@
 /* eslint-disable no-nested-ternary */
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import AppBar from '@mui/material/AppBar'
 import Box from '@mui/material/Box'
 import Toolbar from '@mui/material/Toolbar'
@@ -13,6 +13,7 @@ import Tooltip from '@mui/material/Tooltip'
 import MenuItem from '@mui/material/MenuItem'
 import SearchIcon from '@mui/icons-material/Search'
 import Autocomplete from '@mui/material/Autocomplete'
+import CardMedia from '@mui/material/CardMedia'
 import { signOut } from 'firebase/auth'
 import {
   Search, SearchIconWrapper, StyledInputBase, STnavBar,
@@ -25,9 +26,12 @@ import RegisterForm from '../auth/register-form/component'
 import ImageAvatar from '../avatar/component'
 
 import defaultAvatar from '../../assets/png/user.png'
+import SearchBar from '../search/component'
+
+import LOGOTIPO from '../../assets/png/LOGOTIPO.png'
 
 export default function NavBar(props) {
-  const { user } = props
+  const { user, search } = props
   // States
   const [anchorElNav, setAnchorElNav] = useState(null)
   const [anchorElUser, setAnchorElUser] = useState(null)
@@ -69,14 +73,12 @@ export default function NavBar(props) {
         <Container maxWidth="xl">
           <Toolbar disableGutters>
             <MenuItem as={Link} to="/">
-              <Typography
-                variant="h6"
-                noWrap
-                component="div"
-                sx={{ mr: 2, display: { xs: 'none', md: 'flex' } }}
-              >
-                LOGO
-              </Typography>
+              <CardMedia
+                className="logo"
+                component="img"
+                alt="logo of website"
+                image={LOGOTIPO}
+              />
             </MenuItem>
 
             <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
@@ -197,17 +199,6 @@ export default function NavBar(props) {
 
             </Box>
 
-            <MenuItem as={Link} to="/">
-              <Typography
-                variant="h6"
-                noWrap
-                component="div"
-                sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}
-              >
-                LOGO
-              </Typography>
-            </MenuItem>
-
             <Box className="links-app" sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
               <MenuItem as={Link} to="/now-playing-movies">
                 <Typography textAlign="center">Cartelera</Typography>
@@ -222,15 +213,7 @@ export default function NavBar(props) {
               </MenuItem>
             </Box>
 
-            <Search>
-              <SearchIconWrapper>
-                <SearchIcon />
-              </SearchIconWrapper>
-              <StyledInputBase
-                placeholder="Buscar película..."
-                inputProps={{ 'aria-label': 'search' }}
-              />
-            </Search>
+            <SearchBar search={search} />
 
             <Box sx={{ flexGrow: 0, display: { xs: 'none', md: 'flex' } }}>
               {!user ? (

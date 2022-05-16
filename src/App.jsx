@@ -1,23 +1,29 @@
-import { useState } from 'react'
-import { BrowserRouter as Router } from 'react-router-dom'
+import React, { useState } from 'react'
+import { useLocation } from 'react-router-dom'
 
-//CSS
+// CSS
 import './App.css'
 
-//Components
+// Components
+import { onAuthStateChanged, signOut } from 'firebase/auth'
 import ScrollToTop from './components/scroll-top/component'
 import NavBar from './components/nav-bar/component'
 import Routes from './routes/Routes'
 import Footer from './components/footer/component'
 
-//Firebase
-import { onAuthStateChanged, signOut } from 'firebase/auth'
+// Firebase
 import { auth } from './utils/firebase'
+import { useDebounce } from './hooks/useDebounce'
 
 function App() {
   const [user, setUser] = useState(null)
   const [isLoading, setIsLoading] = useState(true)
   const [reloadApp, setReloadApp] = useState(false)
+
+  const query = new URLSearchParams(useLocation().search)
+  const search = query.get('search')
+
+  const debounce = useDebounce(search, 300)
 
   onAuthStateChanged(auth, (currentUser) => {
     if (!currentUser?.emailVerified) {
@@ -34,11 +40,9 @@ function App() {
   }
   return (
     <>
-      <Router>
-        <ScrollToTop />
-        <NavBar user={user} />
-        <Routes user={user} setReloadApp={setReloadApp} />
-      </Router>
+      <ScrollToTop />
+      <NavBar user={user} search={search} />
+      <Routes user={user} setReloadApp={setReloadApp} debounce={debounce} />
       <Footer />
     </>
   )

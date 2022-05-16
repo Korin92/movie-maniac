@@ -105,19 +105,96 @@ export default function NavBar(props) {
                 open={Boolean(anchorElNav)}
                 onClose={handleCloseNavMenu}
                 sx={{
-                  display: { xs: 'block', md: 'none' },
+                  display: { xs: 'flex', md: 'none' },
+                  left: '1px',
+
                 }}
               >
-                <MenuItem as={Link} to="/now-playing-movies" onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">Cartelera</Typography>
-                </MenuItem>
-                <MenuItem onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">Pricing</Typography>
-                </MenuItem>
-                <MenuItem onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">Blog</Typography>
-                </MenuItem>
+                <Container sx={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  alignContent: 'center',
+                  backgroundColor: '#b0ceef',
+                }}
+                >
+                  <MenuItem
+                    as={Link}
+                    to="/now-playing-movies"
+                    onClick={handleCloseNavMenu}
+                  >
+                    <Typography textAlign="center">Cartelera</Typography>
+                  </MenuItem>
+                  <MenuItem onClick={handleCloseNavMenu}>
+                    <Typography textAlign="center">Pricing</Typography>
+                  </MenuItem>
+                  <MenuItem onClick={handleCloseNavMenu}>
+                    <Typography textAlign="center">Blog</Typography>
+                  </MenuItem>
+
+                  {!user ? (
+
+                    <Container
+                      open={Boolean(anchorElUser)}
+                    >
+                      <MenuItem onClick={handleUserMenu}>
+                        <Typography textAlign="center">Inicia sesión</Typography>
+                      </MenuItem>
+                      <MenuItem onClick={handleUserMenu}>
+                        <Typography textAlign="center">/ Regístrate</Typography>
+                      </MenuItem>
+
+                    </Container>
+
+                  ) : (
+                    <Container sx={{
+                      display: 'flex',
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      alignContent: 'center',
+                    }}
+                    >
+
+                      <Tooltip title="Open settings">
+                        <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                          <ImageAvatar src={user.photoURL ? user.photoURL : defaultAvatar} />
+                        </IconButton>
+                      </Tooltip>
+                      <Typography className="user-name" variant="h6" noWrap>{user.displayName}</Typography>
+
+                      <Menu
+                        sx={{
+                          mt: '45px',
+
+                        }}
+                        id="menu-appbar"
+                        anchorEl={anchorElUser}
+                        anchorOrigin={{
+                          vertical: 'top',
+                          horizontal: 'right',
+                        }}
+                        keepMounted
+                        transformOrigin={{
+                          vertical: 'top',
+                          horizontal: 'right',
+                        }}
+                        open={Boolean(anchorElUser)}
+                        onClose={handleCloseUserMenu}
+                      >
+                        <MenuItem as={Link} to="/profile" onClick={handleCloseUserMenu}>
+                          <Typography textAlign="center">Mi Perfil</Typography>
+                        </MenuItem>
+                        <MenuItem as={Link} to="/" onClick={handleLogout}>
+                          <Typography textAlign="center">Cerrar sesión</Typography>
+                        </MenuItem>
+
+                      </Menu>
+                    </Container>
+                  // eslint-disable-next-line react/jsx-no-comment-textnodes
+                  )}
+                </Container>
               </Menu>
+
             </Box>
 
             <MenuItem as={Link} to="/">

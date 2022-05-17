@@ -5,7 +5,7 @@ import CircularProgress from '@mui/material/CircularProgress'
 import { MovieServices } from '../../services/movies-services'
 import CardMovies from '../../components/card-movies/component'
 
-import { STCard } from '../../styles/card-default/style'
+import { STHome } from './style'
 import SearchPage from '../search/component'
 
 export default function Home(props) {
@@ -33,7 +33,7 @@ export default function Home(props) {
       prevPage + 1)
   }
   return (
-    <STCard>
+    <STHome>
       <InfiniteScroll
         dataLength={movies.length}
         hasMore={hasMore}
@@ -50,6 +50,6 @@ export default function Home(props) {
           <CardMovies movies={movies} loading={loading} title="Las más populares" user={user} />
         )}
       </InfiniteScroll>
-    </STCard>
+    </STHome>
   )
 }

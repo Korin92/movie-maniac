@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 
@@ -256,63 +257,71 @@ export default function SimilarMovies(props) {
 
                                 {!credentialPending.includes(movie.id) ? (
                                   <Tooltip title="Añadir a pendientes">
-                                    <IconButton
-                                      disabled={!!credentialSeen.includes(movie.id)}
-                                      onClick={() => {
-                                        HandlerButtonPending.handlePending(movie)
-                                        setIsPending(!isPending)
-                                        setDisabled(!disabled)
-                                      }}
-                                    >
-                                      <VisibilityOffIcon
-                                        color="primary"
-                                        size="small"
-                                      />
-                                    </IconButton>
+                                    <span>
+                                      <IconButton
+                                        disabled={!!credentialSeen.includes(movie.id)}
+                                        onClick={() => {
+                                          HandlerButtonPending.handlePending(movie)
+                                          setIsPending(!isPending)
+                                          setDisabled(!disabled)
+                                        }}
+                                      >
+                                        <VisibilityOffIcon
+                                          color="primary"
+                                          size="small"
+                                        />
+                                      </IconButton>
+                                    </span>
                                   </Tooltip>
                                 ) : (
                                   <Tooltip title="Borrar de pendientes">
-                                    <IconButton
-                                      disabled={!!credentialSeen.includes(movie.id)}
-                                      onClick={() => {
-                                        HandlerButtonPending.handleRemovePending(pendings, movie.id)
-                                        setIsPending(!isPending)
-                                        setDisabled(!disabled)
-                                      }}
-                                    >
-                                      <DeleteSweepIcon color="disabled" />
-                                    </IconButton>
+                                    <span>
+                                      <IconButton
+                                        disabled={!!credentialSeen.includes(movie.id)}
+                                        onClick={() => {
+                                          HandlerButtonPending.handleRemovePending(pendings, movie.id)
+                                          setIsPending(!isPending)
+                                          setDisabled(!disabled)
+                                        }}
+                                      >
+                                        <DeleteSweepIcon color="disabled" />
+                                      </IconButton>
+                                    </span>
                                   </Tooltip>
 
                                 )}
                                 {!credentialSeen.includes(movie.id) ? (
                                   <Tooltip title="Añadir a vistas">
-                                    <IconButton
-                                      disabled={!!credentialPending.includes(movie.id)}
-                                      onClick={() => {
-                                        HandlerButtonSeen.handleSeen(movie)
-                                        setIsSeen(!isSeen)
-                                        setDisabled(!disabled)
-                                      }}
-                                    >
-                                      <RemoveRedEyeIcon
-                                        color="primary"
-                                        size="small"
-                                      />
-                                    </IconButton>
+                                    <span>
+                                      <IconButton
+                                        disabled={!!credentialPending.includes(movie.id)}
+                                        onClick={() => {
+                                          HandlerButtonSeen.handleSeen(movie)
+                                          setIsSeen(!isSeen)
+                                          setDisabled(!disabled)
+                                        }}
+                                      >
+                                        <RemoveRedEyeIcon
+                                          color="primary"
+                                          size="small"
+                                        />
+                                      </IconButton>
+                                    </span>
                                   </Tooltip>
                                 ) : (
                                   <Tooltip title="Borrar de vistas">
-                                    <IconButton
-                                      disabled={!!credentialPending.includes(movie.id)}
-                                      onClick={() => {
-                                        HandlerButtonSeen.handleRemoveSeen(seen, movie.id)
-                                        setIsSeen(!isSeen)
-                                        setDisabled(!disabled)
-                                      }}
-                                    >
-                                      <DeleteSweepIcon color="disabled" />
-                                    </IconButton>
+                                    <span>
+                                      <IconButton
+                                        disabled={!!credentialPending.includes(movie.id)}
+                                        onClick={() => {
+                                          HandlerButtonSeen.handleRemoveSeen(seen, movie.id)
+                                          setIsSeen(!isSeen)
+                                          setDisabled(!disabled)
+                                        }}
+                                      >
+                                        <DeleteSweepIcon color="disabled" />
+                                      </IconButton>
+                                    </span>
                                   </Tooltip>
                                 )}
                               </ThemeProvider>

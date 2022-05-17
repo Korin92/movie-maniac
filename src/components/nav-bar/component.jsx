@@ -127,11 +127,8 @@ export default function NavBar(props) {
                   >
                     <Typography textAlign="center">Cartelera</Typography>
                   </MenuItem>
-                  <MenuItem onClick={handleCloseNavMenu}>
-                    <Typography textAlign="center">Pricing</Typography>
-                  </MenuItem>
-                  <MenuItem onClick={handleCloseNavMenu}>
-                    <Typography textAlign="center">Blog</Typography>
+                  <MenuItem as={Link} to="/top-rated" onClick={handleCloseNavMenu}>
+                    <Typography textAlign="center">Mejor valoradas</Typography>
                   </MenuItem>
 
                   {!user ? (
@@ -204,12 +201,8 @@ export default function NavBar(props) {
                 <Typography textAlign="center">Cartelera</Typography>
               </MenuItem>
 
-              <MenuItem>
-                <Typography textAlign="center">Pircing</Typography>
-              </MenuItem>
-
-              <MenuItem>
-                <Typography textAlign="center">Blog</Typography>
+              <MenuItem as={Link} to="/top-rated">
+                <Typography textAlign="center">Mejor valoradas</Typography>
               </MenuItem>
             </Box>
 

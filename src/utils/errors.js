@@ -5,7 +5,7 @@ const handlerErrors = (code, setMessage) => {
       break
     case 'auth/too-many-requests':
       setMessage(
-        'Has enviado demasiadas solicitudes de reenvío de email de confirmación en muy poco tiempo'
+        'Has enviado demasiadas solicitudes de reenvío de email de confirmación en muy poco tiempo',
       )
       break
     case 'auth/user-not-found':

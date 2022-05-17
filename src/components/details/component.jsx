@@ -1,3 +1,5 @@
+/* eslint-disable no-nested-ternary */
+/* eslint-disable camelcase */
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 
@@ -12,9 +14,11 @@ import Rating from '@mui/material/Rating'
 
 // Services
 import { MovieServices } from '../../services/movies-services'
+import { RatingServices } from '../../services/rating-services'
 
 // Styles
 import { STDetails, STPoster } from './style'
+import NOIMAGEFILM from '../../assets/png/no-image-film.png'
 
 // Components
 import CardCast from '../card-cast/component'
@@ -25,12 +29,17 @@ export default function Details(props) {
   // States
   const [movie, setMovie] = useState({})
   const [loading, setLoading] = useState(true)
-  const [value, setValue] = useState(2)
+  const [value, setValue] = useState(0)
+
+  const maxValue = 5
 
   const [video, setVideo] = useState()
 
   const { movieId } = useParams()
   const { user } = props
+
+  const { backdrop_path, poster_path } = movie
+  const image = backdrop_path ? `https://image.tmdb.org/t/p/original${backdrop_path}` : poster_path ? `https://image.tmdb.org/t/p/original${poster_path}` : NOIMAGEFILM
 
   useEffect(() => {
     MovieServices.getDetails(movieId).then((film) => {
@@ -42,10 +51,17 @@ export default function Details(props) {
   useEffect(() => {
     MovieServices.getVideos(movieId).then((film) => {
       setVideo(film.results)
-
       setLoading(false)
     })
   }, [movieId])
+
+  useEffect(() => {
+    RatingServices.getRating(movieId).then((film) => {
+      if (film) {
+        setValue((film.stars / film.votes))
+      }
+    })
+  }, [value, movieId])
 
   const releasedDate = () => {
     if (!movie.release_date) {
@@ -63,13 +79,18 @@ export default function Details(props) {
     return ''
   }
 
-  // const handleStars = (value) => {}
+  const handleStars = (newValue) => {
+    setValue(newValue)
+    console.log('entrando a handleStars')
+    console.log('movieId', movieId)
+    RatingServices.addRating(movieId, newValue)
+  }
 
   return (
     <STDetails>
       <Card className="card-details">
         {!loading ? (
-          <STPoster image={`https://image.tmdb.org/t/p/original/${movie.backdrop_path}`}>
+          <STPoster image={image}>
             <Typography className="title" variant="h5" component="div">
               {movie.title}
               {' '}
@@ -90,8 +111,12 @@ export default function Details(props) {
                   name="simple-controlled"
                   value={value}
                   onChange={(event, newValue) => {
-                    setValue(newValue)
+                    handleStars(newValue)
                   }}
+                  max={maxValue}
+                  precision={0.25}
+                  // onClick={() =>
+                  //   }
                 />
               </Box>
             )}

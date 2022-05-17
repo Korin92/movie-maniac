@@ -13,7 +13,7 @@ export default function CardMediaComponent(props) {
 
   const { backdrop_path, poster_path } = movie
 
-  const image = poster_path ? `https://image.tmdb.org/t/p/w500${poster_path}` : backdrop_path ? `https://image.tmdb.org/t/p/w500${backdrop_path}` : NOIMAGEFILM
+  const image = poster_path ? `https://image.tmdb.org/t/p/original${poster_path}` : backdrop_path ? `https://image.tmdb.org/t/p/original${backdrop_path}` : NOIMAGEFILM
 
   return (
     <STCardMedia>

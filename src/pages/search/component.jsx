@@ -1,11 +1,20 @@
 import React, { useEffect, useState } from 'react'
+
+// Scroller
 import InfiniteScroll from 'react-infinite-scroll-component'
+
+// MaterialUI
 import Box from '@mui/material/Box'
 import CircularProgress from '@mui/material/CircularProgress'
+
+// Services
 import { MovieServices } from '../../services/movies-services'
+
+// Components
 import CardMovies from '../../components/card-movies/component'
 
-import { STCard } from '../../styles/card-default/style'
+// Style
+import { STSearch } from './style'
 
 export default function SearchPage({
   user, debounce,
@@ -35,7 +44,7 @@ export default function SearchPage({
 
   return (
 
-    <STCard>
+    <STSearch>
       <InfiniteScroll
         dataLength={movies.length}
         hasMore={hasMore}
@@ -48,6 +57,6 @@ export default function SearchPage({
       >
         <CardMovies movies={movies} loading={loading} title="Tu busqueda: " user={user} />
       </InfiniteScroll>
-    </STCard>
+    </STSearch>
   )
 }

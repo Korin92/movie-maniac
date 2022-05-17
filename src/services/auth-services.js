@@ -4,7 +4,7 @@ import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
   updateProfile,
-  sendEmailVerification,
+  sendEmailVerification, EmailAuthProvider, reauthenticateWithCredential,
 } from 'firebase/auth'
 import {
   collection,
@@ -137,8 +137,20 @@ const isUserAdmin = async (uid) => {
   return response.exists()
 }
 
+export const reauthenticate = (password) => {
+  const user = auth.currentUser
+
+  const credentials = EmailAuthProvider.credential(
+    user.email,
+    password,
+  )
+
+  return reauthenticateWithCredential(user, credentials)
+}
+
 export const AuthServices = {
   login,
   register,
   isUserAdmin,
+  reauthenticate,
 }

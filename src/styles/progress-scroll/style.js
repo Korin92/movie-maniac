@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-export const STSearch = styled.div`
+export const STProgress = styled.div`
 .progress{
     display: flex; 
     justify-content: center;

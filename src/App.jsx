@@ -39,12 +39,12 @@ function App() {
     return null
   }
   return (
-    <>
+    <div className="content">
       <ScrollToTop />
       <NavBar user={user} search={search} />
       <Routes user={user} setReloadApp={setReloadApp} debounce={debounce} />
       <Footer />
-    </>
+    </div>
   )
 }
 

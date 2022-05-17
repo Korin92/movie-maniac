@@ -6,9 +6,12 @@ import Box from '@mui/material/Box'
 import style from 'styled-components'
 
 export const STnavBar = style.div`
+
 .app-bar {
   background: #0c0735;
   color: #f6f6fe;
+
+
 
   .links-app{
 

@@ -11,6 +11,7 @@ import ImageAvatar from '../avatar/component'
 
 // style
 import { STProfileComponent } from './style'
+import ChangePasswordForm from '../change-password-form/component'
 
 export default function Profile(props) {
   const { user, setReloadApp } = props
@@ -24,14 +25,21 @@ export default function Profile(props) {
     setOpen(false)
   }
 
+  const handleChangePassword = () => {
+    setOpen(true)
+  }
+
   return (
     <STProfileComponent>
       <Container className="container-profile" fixed>
         <Typography className="title-profile" variant="h2">
           {user.displayName}
         </Typography>
-        <ImageAvatar src={user.photoURL} sx={{ width: '150px', height: '150px' }} />
-        <Button onClick={handleUpdateAvatar}>Cambiar avatar</Button>
+        <ImageAvatar className="avatar-image" src={user.photoURL} sx={{ width: '100%', height: '100%' }} />
+      </Container>
+      <Container className="container-menu-profile">
+        <Typography className="title-menu-profile" variant="h4">Ajustes de perfil</Typography>
+        <Button className="button-profile" onClick={handleUpdateAvatar}>Cambiar avatar</Button>
         {open && (
           <UploadAvatar
             user={user}
@@ -39,6 +47,10 @@ export default function Profile(props) {
             setReloadApp={setReloadApp}
             handleClose={handleClose}
           />
+        )}
+        <Button className="button-profile" onClick={handleChangePassword}>Cambiar contraseña</Button>
+        {open && (
+          <ChangePasswordForm user={user} open={open} handleClose={handleClose} />
         )}
       </Container>
     </STProfileComponent>

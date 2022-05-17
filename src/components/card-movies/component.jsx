@@ -21,7 +21,7 @@ import DeleteSweepIcon from '@mui/icons-material/DeleteSweep'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
 
 // Styles
-import { STCardMovies } from './style'
+import { STCard } from '../../styles/card-default/style'
 
 // Services
 import { FavServices } from '../../services/fav-services'
@@ -115,7 +115,7 @@ export default function CardMovies({
   })
 
   return (
-    <STCardMovies className={className}>
+    <STCard className={className}>
       <Grid sx={{ flexGrow: 1 }}>
         <Grid item xs={12}>
           <h2 className="title">{title}</h2>
@@ -263,6 +263,6 @@ export default function CardMovies({
           </Grid>
         </Grid>
       </Grid>
-    </STCardMovies>
+    </STCard>
   )
 }

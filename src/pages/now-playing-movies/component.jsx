@@ -5,7 +5,7 @@ import CircularProgress from '@mui/material/CircularProgress'
 import { MovieServices } from '../../services/movies-services'
 import CardMovies from '../../components/card-movies/component'
 
-import { STCard } from '../../styles/card-default/style'
+import { STNowPlaying } from './style'
 
 export default function NowPlayingMoviesPage(props) {
   const [movies, setMovies] = useState([])
@@ -33,7 +33,7 @@ export default function NowPlayingMoviesPage(props) {
   }
 
   return (
-    <STCard>
+    <STNowPlaying>
       <InfiniteScroll
         dataLength={movies.length}
         hasMore={hasMore}
@@ -46,6 +46,6 @@ export default function NowPlayingMoviesPage(props) {
       >
         <CardMovies movies={movies} loading={loading} title="Cartelera" user={user} />
       </InfiniteScroll>
-    </STCard>
+    </STNowPlaying>
   )
 }

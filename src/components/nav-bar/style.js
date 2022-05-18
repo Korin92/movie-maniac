@@ -17,6 +17,7 @@ justify-content: space-between;
   .links-app{
 
     .css-ov3z8l-MuiMenuItem-root{
+      color: #f6f6fe;
       &:visited{
         color: #f6f6fe;
       }

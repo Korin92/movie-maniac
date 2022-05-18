@@ -11,6 +11,9 @@ const handlerErrors = (code, setMessage) => {
     case 'auth/user-not-found':
       setMessage('El usuario o la contraseña son incorrectos')
       break
+    case 'INVALID_PASSWORD':
+      setMessage('El usuario o la contraseña son incorrectos')
+      break
     case 'auth/email-already-in-use':
       setMessage('El email ya está en uso')
       break

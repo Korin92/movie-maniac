@@ -22,7 +22,7 @@ import {
 
 export default function UploadAvatar(props) {
   const {
-    user, setReloadApp, open, handleClose,
+    user, setReloadApp, openUploadAvatar, handleCloseUploadAvatar,
   } = props
   const [, setAvatarUrl] = useState()
   const [loading, setLoading] = useState(false)
@@ -34,7 +34,7 @@ export default function UploadAvatar(props) {
         await updateProfile(auth.currentUser, { photoURL: response })
         setReloadApp((prevState) =>
           !prevState)
-        handleClose()
+        handleCloseUploadAvatar()
       })
       .catch(() => {
         <AlertMessage severity="error" message="Error al actualizar el avatar" />
@@ -69,16 +69,16 @@ export default function UploadAvatar(props) {
   })
 
   return (
-    <Dialog open={open}>
+    <Dialog open={openUploadAvatar}>
       <STDialogContent {...getRootProps()}>
         <STAddPhotoAlternateIcon />
         <Container {...getInputProps()} />
         <STTypography>Arrastra imagen o haz click encima para actualizar tu avatar</STTypography>
       </STDialogContent>
       <STDialogActions sx={{ justifyContent: 'center' }}>
-        <Button onClick={handleClose}>Cerrar</Button>
+        <Button onClick={handleCloseUploadAvatar}>Cerrar</Button>
       </STDialogActions>
-      {loading && <Loader open={open} />}
+      {loading && <Loader open={openUploadAvatar} />}
     </Dialog>
   )
 }

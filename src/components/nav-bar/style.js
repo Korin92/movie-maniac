@@ -6,12 +6,13 @@ import Box from '@mui/material/Box'
 import style from 'styled-components'
 
 export const STnavBar = style.div`
+display: flex;
+justify-content: space-between;
+
 
 .app-bar {
   background: #0c0735;
   color: #f6f6fe;
-
-
 
   .links-app{
 
@@ -66,6 +67,12 @@ export const STnavBar = style.div`
       padding-left: 5px;
 
     }
+  }
+
+  .menu-auth{
+    display: flex;
+    align-items: center;
+
   }
   
     
@@ -147,21 +154,6 @@ export const STContainer = styled(Container)(({ theme }) =>
     padding: '0 20px',
     backgroundColor: 'rgb(0 0 0 / 93%)',
   }))
-
-// export const STInputBase = styled(InputBase)(({ theme }) =>
-// ({
-//   display: 'flex',
-//   alignItems: 'center',
-//   justifyContent: 'center',
-//   color: '#f6f6fe',
-//   left: '18px',
-//   backgroundColor: 'rgb(0 0 0 / 93%)',
-//   fontSize: '1.5rem',
-//   fontWeight: 'bold',
-//   '&:hover': {
-//     backgroundColor: alpha(theme.palette.primary.main, 0.1),
-//   },
-// }))
 
 export const STInputBase = styled(InputBase)(({ theme }) =>
   ({

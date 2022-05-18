@@ -1,3 +1,4 @@
+/* eslint-disable implicit-arrow-linebreak */
 import styled from 'styled-components'
 
 export const STDetails = styled.div`

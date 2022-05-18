@@ -56,10 +56,12 @@ export default function CardMovies({
   const [disabled, setDisabled] = useState(false)
 
   useEffect(() => {
-    FavServices.getFavs(user).then((i) => {
-      setFavs(i)
-      setIsFavorite(false)
-    })
+    user && (
+      FavServices.getFavs(user).then((i) => {
+        setFavs(i)
+        setIsFavorite(false)
+      })
+    )
   }, [isFavorite, user])
 
   useEffect(() => {
@@ -67,14 +69,17 @@ export default function CardMovies({
       setCredentialFav(i)
       setIsFavorite(false)
     })
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [favs, user])
 
   useEffect(() => {
-    PendingWatchServices.getPending(user).then((i) => {
-      setPendings(i)
-      setIsPending(false)
-    })
+    user && (
+      PendingWatchServices.getPending(user).then((i) => {
+        setPendings(i)
+        setIsPending(false)
+      })
+    )
   }, [isPending, user])
 
   useEffect(() => {
@@ -94,10 +99,12 @@ export default function CardMovies({
   }, [seen, user])
 
   useEffect(() => {
-    MoviesSeenServices.getMovieSeen(user).then((i) => {
-      setSeen(i)
-      setIsSeen(false)
-    })
+    user && (
+      MoviesSeenServices.getMovieSeen(user).then((i) => {
+        setSeen(i)
+        setIsSeen(false)
+      })
+    )
   }, [isSeen, user])
 
   const theme = createTheme({

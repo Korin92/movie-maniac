@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 // MaterialUI
 import Button from '@mui/material/Button'
@@ -56,6 +56,11 @@ export default function LoginForm(props) {
     )
   }
 
+  useEffect(() =>
+    () => {
+      setFormData({}) // This worked for me
+    }, [])
+
   return (
     <div>
       <Dialog open={open}>
@@ -99,7 +104,15 @@ export default function LoginForm(props) {
             )}
           </DialogContent>
           <DialogActions>
-            <Button onClick={handleClose}>Volver</Button>
+            <Button onClick={() => {
+              handleClose()
+              setAlert(false)
+              setFormError({})
+            }}
+            >
+              Volver
+
+            </Button>
             <Button type="submit" variant="contained">
               Iniciar Sesión
             </Button>

@@ -1,8 +1,5 @@
 body {
-  display: flex;
-  min-height: 100vh;
-  flex-direction: column;
-  justify-content: space-between;
+ 
   background: rgb(2, 0, 36);
   background: linear-gradient(
     90deg,
@@ -15,6 +12,11 @@ body {
 
  
 }
+
+.content{
+  min-height: calc(100vh - 100px); 
+ 
+}  
 
 
 

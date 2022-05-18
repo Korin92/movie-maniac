@@ -1,8 +1,12 @@
 import styled from 'styled-components'
 
 export const STMenuProfile = styled.div`
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: center;
   height: 100%;
-  margin: 0 0 0 10px;
+  margin: 80px 0 0 10px;
 
   .box-menu {
     background-color: transparent;

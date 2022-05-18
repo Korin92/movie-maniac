@@ -22,16 +22,11 @@ export default function RegisterForm(props) {
 
   // eslint-disable-next-line no-use-before-define
   const [formData, setFormData] = useState(defaultValueForm())
-  // const [showPassword, setShowPassword] = useState(false)
   const [formError, setFormError] = useState({})
   const [isLoading, setIsLoading] = useState(false)
   const [alert, setAlert] = useState(false)
   const [severity, setSeverity] = useState(null)
   const [message, setMessage] = useState(null)
-
-  // const handlerShowPassword = () => {
-  //   setShowPassword(!showPassword)
-  // }
 
   const onChange = (e) => {
     setFormData({
@@ -68,9 +63,9 @@ export default function RegisterForm(props) {
               error={formError.username}
             />
             {formError.username && (
-              <Typography className="error-text">
+              <span className="error-text">
                 Por favor, introduce un nombre de usuario.
-              </Typography>
+              </span>
             )}
             <TextField
               autoFocus
@@ -84,9 +79,9 @@ export default function RegisterForm(props) {
               error={formError.email}
             />
             {formError.email && (
-              <Typography className="error-text">
+              <span className="error-text">
                 Por favor, introduce un correo electronico válido.
-              </Typography>
+              </span>
             )}
             <TextField
               autoFocus
@@ -100,9 +95,9 @@ export default function RegisterForm(props) {
               error={formError.password}
             />
             {formError.password && (
-              <Typography className="error-text">
+              <span className="error-text">
                 Por favor, elige una contraseña superior a 5 caracteres.
-              </Typography>
+              </span>
             )}
           </DialogContent>
           <DialogActions>
@@ -110,6 +105,7 @@ export default function RegisterForm(props) {
               onClick={() => {
                 handleClose()
                 setAlert(false)
+                setFormError({})
               }}
             >
               Volver

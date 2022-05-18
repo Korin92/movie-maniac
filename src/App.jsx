@@ -39,11 +39,17 @@ function App() {
     return null
   }
   return (
-    <div className="content">
+    <div className="App">
       <ScrollToTop />
-      <NavBar user={user} search={search} />
-      <Routes user={user} setReloadApp={setReloadApp} debounce={debounce} />
-      <Footer />
+      <header>
+        <NavBar user={user} search={search} />
+      </header>
+      <div className="content">
+        <Routes user={user} setReloadApp={setReloadApp} debounce={debounce} />
+      </div>
+      <footer>
+        <Footer />
+      </footer>
     </div>
   )
 }

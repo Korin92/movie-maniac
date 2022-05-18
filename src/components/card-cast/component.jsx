@@ -84,9 +84,6 @@ export default function CardCast(props) {
                     </Card>
                   </Grid>
                 ))}
-            <Typography className="show-more" gutterBottom variant="h5" component="div">
-              Ver más
-            </Typography>
           </Grid>
         </Grid>
       </Grid>

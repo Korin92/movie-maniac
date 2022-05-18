@@ -1,7 +1,7 @@
 import {
   collection, addDoc, doc, updateDoc, query, getDocs, where,
 } from 'firebase/firestore'
-import { db, auth } from '../utils/firebase'
+import { db } from '../utils/firebase'
 
 // Add rating
 const addRating = async (movieId, rating) => {
@@ -58,7 +58,7 @@ const getTopRated = async () => {
       data.id = movie.id
       return arrayRating.push(data)
     })
-    console.log('arrayRating', arrayRating)
+
     return arrayRating
   }
   return null

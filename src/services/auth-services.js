@@ -52,15 +52,14 @@ const login = (
 
         if (!response.user.emailVerified) {
           setSeverity('warning')
-          setAlert(true)
           setMessage('Verifica tu email para acceder')
+          setAlert(true)
         } else {
           handleClose()
         }
       })
       .catch((err) => {
         setSeverity('error')
-        setAlert(true)
         Errors.handlerErrors(err.code, setMessage)
       })
       .finally(() => {

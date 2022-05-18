@@ -1,8 +1,7 @@
 import styled from 'styled-components'
 
 export const STCard = styled.div`
-  margin-top: 7%;
-
+ margin-top: 7%;
 .css-12n0uxm-MuiGrid-root > .MuiGrid-item {
   padding-top: 16px;
 }
@@ -69,6 +68,9 @@ export const STCard = styled.div`
 
 @media (max-width: 750px) {
   margin-top: 15%;
+}
+@media (max-width: 468px) {
+  margin-top: 20%;
 }
 .progress{
     display: flex; 

@@ -1,12 +1,10 @@
 import styled from 'styled-components'
 
 export const STProfileComponent = styled.div`
+  width: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  width: 100%;
-
-  
+  justify-content: space-around;
 
   .container-profile {
     display: flex;
@@ -20,9 +18,9 @@ export const STProfileComponent = styled.div`
       margin: 10px 0 30px 0;
     }
 
-    .avatar-image{
-      width: 100% ;
-      height: 100% ;
+    .avatar-image {
+      width: 80%;
+      height: 80%;
     }
   }
 
@@ -49,14 +47,13 @@ export const STProfileComponent = styled.div`
       }
     }
 
-  @media  (max-width: 768px) {
-    .title-menu-profile {
-      font-size: 2rem;
-    }
-    .button-profile {
-      font-size: 1rem;
+    @media (max-width: 768px) {
+      .title-menu-profile {
+        font-size: 2rem;
+      }
+      .button-profile {
+        font-size: 1rem;
+      }
     }
   }
-}
-
 `

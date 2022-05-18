@@ -1,6 +1,7 @@
 /* eslint-disable no-shadow */
 /* eslint-disable no-use-before-define */
 import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 import Dialog from '@mui/material/Dialog'
 import DialogTitle from '@mui/material/DialogTitle'
@@ -17,12 +18,14 @@ import { AuthServices } from '../../services/auth-services'
 
 import AlertMessage from '../alert/component'
 
-export default function ChangePasswordForm({ open, handleClose }) {
+export default function ChangePasswordForm({ openChangePassword, handleCloseChangePassword }) {
   const [formData, setFormData] = useState(defaultValueForm())
   const [message, setMessage] = useState(null)
   const [alert, setAlert] = useState(false)
   const [severity, setSeverity] = useState(null)
   const [isLoading, setIsLoading] = useState(false)
+
+  const navigate = useNavigate()
 
   // handlers
   const onChange = (e) => {
@@ -66,7 +69,9 @@ export default function ChangePasswordForm({ open, handleClose }) {
           updatePassword(currentUser, formData.newPassword)
             .then(() => {
               setMessage('Contraseña actualizada')
+              setAlert(true)
               setIsLoading(false)
+              navigate('/')
               signOut(auth)
             })
             .catch((err) => {
@@ -83,9 +88,9 @@ export default function ChangePasswordForm({ open, handleClose }) {
 
   return (
     <div>
-      <Dialog open={open}>
+      <Dialog open={openChangePassword}>
         <form onSubmit={onSubmit} onChange={onChange}>
-          <DialogTitle>Inicio de sesión</DialogTitle>
+          <DialogTitle>Cambio de contraseña</DialogTitle>
           {alert ? <AlertMessage severity={severity} message={message} /> : null}
           <DialogContent>
             <DialogContentText>
@@ -133,7 +138,7 @@ export default function ChangePasswordForm({ open, handleClose }) {
             />
           </DialogContent>
           <DialogActions>
-            <Button onClick={handleClose}>Volver</Button>
+            <Button onClick={handleCloseChangePassword}>Volver</Button>
             <Button type="submit" variant="contained">
               Cambiar contraseña
             </Button>

@@ -15,18 +15,22 @@ import ChangePasswordForm from '../change-password-form/component'
 
 export default function Profile(props) {
   const { user, setReloadApp } = props
-  const [open, setOpen] = useState(false)
-
+  const [openChangePassword, setOpenChangePassword] = useState(false)
+  const [openUploadAvatar, setOpenUploadAvatar] = useState(false)
   const handleUpdateAvatar = () => {
-    setOpen(true)
+    setOpenUploadAvatar(true)
   }
 
-  const handleClose = () => {
-    setOpen(false)
+  const handleCloseChangePassword = () => {
+    setOpenChangePassword(false)
+  }
+
+  const handleCloseUploadAvatar = () => {
+    setOpenUploadAvatar(false)
   }
 
   const handleChangePassword = () => {
-    setOpen(true)
+    setOpenChangePassword(true)
   }
 
   return (
@@ -35,22 +39,26 @@ export default function Profile(props) {
         <Typography className="title-profile" variant="h2">
           {user.displayName}
         </Typography>
-        <ImageAvatar className="avatar-image" src={user.photoURL} sx={{ width: '100%', height: '100%' }} />
+        <ImageAvatar className="avatar-image" src={user.photoURL} sx={{ width: '80%', height: '80%' }} />
       </Container>
       <Container className="container-menu-profile">
         <Typography className="title-menu-profile" variant="h4">Ajustes de perfil</Typography>
         <Button className="button-profile" onClick={handleUpdateAvatar}>Cambiar avatar</Button>
-        {open && (
+        {openUploadAvatar && (
           <UploadAvatar
             user={user}
-            open={open}
+            openUploadAvatar={openUploadAvatar}
             setReloadApp={setReloadApp}
-            handleClose={handleClose}
+            handleCloseUploadAvatar={handleCloseUploadAvatar}
           />
         )}
         <Button className="button-profile" onClick={handleChangePassword}>Cambiar contraseña</Button>
-        {open && (
-          <ChangePasswordForm user={user} open={open} handleClose={handleClose} />
+        {openChangePassword && (
+          <ChangePasswordForm
+            user={user}
+            openChangePassword={openChangePassword}
+            handleCloseChangePassword={handleCloseChangePassword}
+          />
         )}
       </Container>
     </STProfileComponent>

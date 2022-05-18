@@ -123,7 +123,6 @@ export default function TopRated(props) {
     }
   }
   useEffect(() => {
-    console.log('TopRated')
     RatingServices.getTopRated().then((film) => {
       setTopRated(film)
     })

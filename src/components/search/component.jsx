@@ -1,10 +1,9 @@
 import React from 'react'
 
-import { useLocation, useNavigate } from 'react-router'
+import { useNavigate } from 'react-router'
 
 // MaterialUI
 import SearchIcon from '@mui/icons-material/Search'
-import Button from '@mui/material/Button'
 import { Search, SearchIconWrapper, StyledInputBase } from './style'
 
 export default function SearchBar({ search }) {

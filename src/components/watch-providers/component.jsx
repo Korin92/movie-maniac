@@ -1,10 +1,11 @@
+/* eslint-disable consistent-return */
 import React, { useEffect, useState } from 'react'
-import { MovieServices } from '../../services/movies-services'
 
 import Paper from '@mui/material/Paper'
 import CardMedia from '@mui/material/CardMedia'
 import Typography from '@mui/material/Typography'
 import Container from '@mui/material/Container'
+import { MovieServices } from '../../services/movies-services'
 import { STProviders } from './style'
 
 export default function Providers(props) {
@@ -41,19 +42,20 @@ export default function Providers(props) {
           Actualmente no se encuentra disponible en ninguna plataforma
         </Typography>
       )}
-      {getProviders()?.map((item) => (
-        <Container key={item.provider_id} className="container-item">
-          <Paper className="item" elevation={3}>
-            <CardMedia
-              className="img-providers"
-              component="img"
-              alt="image of actor"
-              image={`https://image.tmdb.org/t/p/original/${item.logo_path}`}
-            />
-          </Paper>
-          <Typography className="item-name">{item.provider_name}</Typography>
-        </Container>
-      ))}
+      {getProviders()?.map((item) =>
+        (
+          <Container key={item.provider_id} className="container-item">
+            <Paper className="item" elevation={3}>
+              <CardMedia
+                className="img-providers"
+                component="img"
+                alt="image of actor"
+                image={`https://image.tmdb.org/t/p/original/${item.logo_path}`}
+              />
+            </Paper>
+            <Typography className="item-name">{item.provider_name}</Typography>
+          </Container>
+        ))}
     </STProviders>
   ) : (
     <div>Loading...</div>

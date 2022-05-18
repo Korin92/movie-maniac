@@ -1,16 +1,14 @@
-import { forwardRef } from 'react'
+import React, { forwardRef } from 'react'
 
 import MuiAlert from '@mui/material/Alert'
 
 import { STAlert } from './style'
 
-const Alert = forwardRef(function Alert(props, ref) {
-  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />
-})
+const Alert = forwardRef((props, ref) =>
+  <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />)
 
 export default function AlertMessage(props) {
   const { severity, message } = props
-
 
   return (
     <STAlert>

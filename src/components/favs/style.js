@@ -4,7 +4,6 @@ export const STCardFav = styled.div`
   display: flex;
   justify-content: flex-start;
   align-items: flex-start;
-  margin-top: 50px;
   /* margin: 0 25px 8px 25px; */
 
   .card {

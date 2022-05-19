@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
 export const STCard = styled.div`
- margin-top: 7%;
+
 .css-12n0uxm-MuiGrid-root > .MuiGrid-item {
   padding-top: 16px;
 }

@@ -12,12 +12,12 @@ export const STSimilarMovies = styled.div`
     margin: 0 23px;
   }
 
-  .react-multi-carousel-list{
-      position: initial;
-    }
-    .react-multi-carousel-track{
-      padding: revert;
-    }
+  .react-multi-carousel-list {
+    position: initial;
+  }
+  .react-multi-carousel-track {
+    padding: revert;
+  }
 
   .container {
     width: 100%;
@@ -35,7 +35,6 @@ export const STSimilarMovies = styled.div`
     &:hover {
       box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.9);
     }
-    
 
     .content-buttons {
       display: flex;
@@ -86,6 +85,32 @@ export const STSimilarMovies = styled.div`
         overflow: hidden;
         text-overflow: ellipsis;
         line-height: 1.5;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .poster {
+        width: 100%;
+        height: 200px;
+      }
+      .description {
+        height: 40px;
+
+        .css-h93ljk-MuiTypography-root {
+          font-size: 0.8rem;
+        }
+      }
+
+      .content-buttons {
+        button {
+          svg {
+            font-size: 0.8rem;
+          }
+        }
+
+        .more {
+          font-size: 0.7rem;
+        }
       }
     }
   }

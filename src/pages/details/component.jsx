@@ -7,8 +7,8 @@ import { STDetailsPage } from './style'
 export default function DetailsPage(props) {
   const { user } = props
   return (
-    <STDetailsPage>
-      <Details user={user} />
+    <STDetailsPage sx={{ m: '0' }}>
+      <Details sx={{ m: '0' }} user={user} />
     </STDetailsPage>
   )
 }

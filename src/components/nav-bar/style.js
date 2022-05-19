@@ -16,7 +16,7 @@ height: 60px;
   color: #f6f6fe;
 
   .links-app{
-
+    color: #f6f6fe;
     .css-ov3z8l-MuiMenuItem-root{
       color: #f6f6fe;
       &:visited{
@@ -51,6 +51,13 @@ height: 60px;
       border: 1px solid #0c0735;
 
     }
+    &:click{
+      background: #0c0735;
+    }
+    &:click{
+      background: #0c0735;
+    }
+
   }
 
 

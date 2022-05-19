@@ -63,7 +63,7 @@ export default function MoviesSeen({ user }) {
       <Grid sx={{ flexGrow: 1 }}>
         <Grid item xs={12}>
           <h2 className="title">Películas vistas</h2>
-          <Grid justifyContent="center" container spacing={2} className="grid">
+          <Grid container spacing={2} className="grid">
             {movies?.map((movie) =>
               (
                 <Grid key={movie.id} item>

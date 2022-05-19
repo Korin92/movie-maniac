@@ -9,8 +9,9 @@ export const STDetailsPage = styled.div`
   height: 100%;
   margin-top: 60px;
   background-color: transparent;
+  margin: auto;
 
-  // RESPONSIVE
+  /* // RESPONSIVE
   //========================================================================= //
 
   // Móviles en horizontal o tablets en vertical
@@ -32,5 +33,5 @@ export const STDetailsPage = styled.div`
   //------------------------------------------------------------------------- //
   @media (min-width: 1200px) {
     margin-top: 61px;
-  }
+  } */
 `

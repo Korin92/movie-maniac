@@ -39,7 +39,7 @@ export default function Profile(props) {
         <Typography className="title-profile" variant="h2">
           {user.displayName}
         </Typography>
-        <ImageAvatar className="avatar-image" src={user.photoURL} sx={{ width: '80%', height: '80%' }} />
+        <ImageAvatar src={user.photoURL} sx={{ width: '80%', height: '80%' }} />
       </Container>
       <Container className="container-menu-profile">
         <Typography className="title-menu-profile" variant="h4">Ajustes de perfil</Typography>

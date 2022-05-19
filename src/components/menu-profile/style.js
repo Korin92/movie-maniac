@@ -1,14 +1,18 @@
 import styled from 'styled-components'
 
 export const STMenuProfile = styled.div`
-display: flex;
-flex-direction: column;
-align-items: center;
-justify-content: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   height: 100%;
-  margin: 80px 0 0 10px;
+  margin: 20px 0 0 10px;
 
   .box-menu {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     background-color: transparent;
     width: 100%;
     height: 100%;
@@ -16,7 +20,26 @@ justify-content: center;
     border-radius: 0;
     box-shadow: none;
     border: none;
-    padding: 0 10px 0 0;
+
+    .bottom-navigation {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      margin-right: 30px;
+      border-radius: 0;
+      box-shadow: none;
+      border: none;
+      padding: 0;
+      background-color: transparent;
+
+      span {
+        color: #f6f6fe;
+      }
+    }
 
     .css-cveggr-MuiListItemIcon-root {
       min-width: 30px;
@@ -27,10 +50,20 @@ justify-content: center;
     }
 
     .icon-menu-profile {
-      color: #f6f6fe;
-      width: 20px;
+      width: 2em;
+      height: 3em;
       margin: 0;
       padding: 0;
+
+      @media screen and (max-width: 600px) {
+        width: 1.5em;
+        height: 2em;
+      }
+
+      @media screen and (max-width: 468px) {
+        width: 1em;
+        height: 1.5em;
+      }
     }
   }
 `

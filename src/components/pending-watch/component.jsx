@@ -66,7 +66,7 @@ export default function PendingWatch({ user }) {
       <Grid sx={{ flexGrow: 1 }}>
         <Grid item xs={12}>
           <h2 className="title">Pendientes de ver</h2>
-          <Grid justifyContent="center" container spacing={2} className="grid">
+          <Grid container spacing={2} className="grid">
             {movies?.map((movie) =>
               (
                 <Grid key={movie.id} item>

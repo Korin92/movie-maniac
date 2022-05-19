@@ -64,6 +64,11 @@ export const STDetails = styled.div`
         height: 300px;
       } */
     }
+    @media (max-width: 860px) {
+      .content-title {
+        font-size: 1.5rem;
+      }
+    }
   }
 `
 
@@ -88,5 +93,32 @@ export const STPoster = styled.div`
     margin-bottom: 1.5%;
     margin-left: 3%;
     display: flex;
+  }
+  @media (max-width: 860px) {
+    height: 500px;
+    .title {
+      font-size: 2rem;
+    }
+  }
+
+  @media (max-width: 600px) {
+    height: 450px;
+    .title {
+      font-size: 1.5rem;
+    }
+  }
+
+  @media (max-width: 498px) {
+    height: 400px;
+    .title {
+      font-size: 1rem;
+    }
+  }
+
+  @media (max-width: 390px) {
+    height: 250px;
+    .title {
+      font-size: 1rem;
+    }
   }
 `

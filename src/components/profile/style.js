@@ -11,16 +11,27 @@ export const STProfileComponent = styled.div`
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    padding:0;
 
     .title-profile {
       font-size: 3.5rem;
       font-weight: bold;
       margin: 10px 0 30px 0;
+
+      @media screen and (max-width: 600px) {
+        font-size: 2.5rem;
+      }
+
+      @media screen and (max-width: 468px) {
+        font-size: 2rem;
+      }
     }
 
-    .avatar-image {
-      width: 80%;
-      height: 80%;
+    .css-e53awj-MuiStack-root{
+      display: flex;
+      justify-content: center;
+      width: 40vh;
+      height: 40vh;
     }
   }
 
@@ -54,6 +65,33 @@ export const STProfileComponent = styled.div`
       .button-profile {
         font-size: 1rem;
       }
+    }
+
+    @media screen and (max-width: 600px) {
+      .title-profile {
+        font-size: 2.5rem;
+      }
+
+      .title-menu-profile {
+        font-size: 1.5rem;
+      }
+
+      .button-profile {
+        font-size: 1rem;
+      }
+    }
+
+    @media screen and (max-width: 468px) {
+      .title-profile {
+        font-size: 2rem;
+      }
+      .title-menu-profile {
+        font-size: 1rem;
+      }
+      .button-profile {
+        font-size: 0.7rem;
+      }
+
     }
   }
 `

@@ -8,6 +8,8 @@ import FavoriteIcon from '@mui/icons-material/Favorite'
 import AccountCircleIcon from '@mui/icons-material/AccountCircle'
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye'
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff'
+import BottomNavigation from '@mui/material/BottomNavigation'
+import BottomNavigationAction from '@mui/material/BottomNavigationAction'
 
 import { AuthServices } from '../../services/auth-services'
 
@@ -17,6 +19,7 @@ export default function MenuProfile(props) {
   const [selectedIndex, setSelectedIndex] = useState(1)
   const [userAdmin, setUserAdmin] = useState(false)
   const { user, setSelected } = props
+  const [value, setValue] = React.useState(3)
 
   const handleListItemClick = (event, index) => {
     setSelectedIndex(index)
@@ -31,70 +34,62 @@ export default function MenuProfile(props) {
   return (
     <STMenuProfile>
       <Box className="box-menu" sx={{ width: '100%', maxWidth: 360 }}>
-        <List component="nav" aria-label="main mailbox folders">
-          <ListItemButton
+        <BottomNavigation
+          className="bottom-navigation"
+          showLabels
+          value={value}
+          onChange={(event, newValue) => {
+            setValue(newValue)
+          }}
+        >
+          <BottomNavigationAction
             selected={selectedIndex === 0}
             onClick={(event) => {
               handleListItemClick(event, 0)
               setSelected('favoritos')
             }}
-          >
-            <ListItemIcon>
-              <FavoriteIcon className="icon-menu-profile" />
-            </ListItemIcon>
-            <ListItemText primary="Favoritos" />
-          </ListItemButton>
-          <ListItemButton
+            label="Favoritos"
+            icon={<FavoriteIcon className="icon-menu-profile" />}
+          />
+          <BottomNavigationAction
             selected={selectedIndex === 1}
             onClick={(event) => {
               handleListItemClick(event, 1)
               setSelected('pendientes de ver')
             }}
-          >
-            <ListItemIcon>
-              <VisibilityOffIcon className="icon-menu-profile" />
-            </ListItemIcon>
-            <ListItemText primary="Pendientes de ver" />
-          </ListItemButton>
-          <ListItemButton
+            label="Pendientes"
+            icon={<VisibilityOffIcon className="icon-menu-profile" />}
+          />
+          <BottomNavigationAction
             selected={selectedIndex === 2}
             onClick={(event) => {
               handleListItemClick(event, 2)
               setSelected('vistas')
             }}
-          >
-            <ListItemIcon>
-              <RemoveRedEyeIcon className="icon-menu-profile" />
-            </ListItemIcon>
-            <ListItemText primary="Vistas" />
-          </ListItemButton>
-          <ListItemButton
+            label="Vistas"
+            icon={<RemoveRedEyeIcon className="icon-menu-profile" />}
+          />
+          <BottomNavigationAction
             selected={selectedIndex === 3}
             onClick={(event) => {
               handleListItemClick(event, 3)
               setSelected('mi perfil')
             }}
-          >
-            <ListItemIcon>
-              <AccountCircleIcon className="icon-menu-profile" />
-            </ListItemIcon>
-            <ListItemText primary="Mi perfil" />
-          </ListItemButton>
+            label="Perfil"
+            icon={<AccountCircleIcon className="icon-menu-profile" />}
+          />
           {userAdmin && (
-            <ListItemButton
-              selected={selectedIndex === 3}
+            <BottomNavigationAction
+              selected={selectedIndex === 4}
               onClick={(event) => {
-                handleListItemClick(event, 3)
+                handleListItemClick(event, 4)
                 setSelected('administrar')
               }}
-            >
-              <ListItemIcon>
-                <AccountCircleIcon className="icon-menu-profile" />
-              </ListItemIcon>
-              <ListItemText primary="Administrar" />
-            </ListItemButton>
+              label="Administrar"
+              icon={<AccountCircleIcon className="icon-menu-profile" />}
+            />
           )}
-        </List>
+        </BottomNavigation>
       </Box>
     </STMenuProfile>
   )

@@ -73,7 +73,7 @@ export default function UploadAvatar(props) {
     <Dialog open={openUploadAvatar}>
       <STDialogContent {...getRootProps()}>
         <STAddPhotoAlternateIcon />
-        <Container {...getInputProps()} />
+        <input {...getInputProps()} />
         <STTypography>Arrastra imagen o haz click encima para actualizar tu avatar</STTypography>
       </STDialogContent>
       <STDialogActions sx={{ justifyContent: 'center' }}>

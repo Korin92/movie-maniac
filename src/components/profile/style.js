@@ -33,6 +33,14 @@ export const STProfileComponent = styled.div`
       width: 40vh;
       height: 40vh;
     }
+
+    .image-avatar{
+      display: flex;
+      justify-content: center;
+      width: 40vh;
+      height: 40vh;
+
+    }
   }
 
   .container-menu-profile {

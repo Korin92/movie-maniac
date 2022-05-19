@@ -2,9 +2,10 @@ import styled from 'styled-components'
 
 export const STCardFav = styled.div`
   display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 0 25px 8px 25px;
+  justify-content: flex-start;
+  align-items: flex-start;
+  margin-top: 50px;
+  /* margin: 0 25px 8px 25px; */
 
   .card {
     width: 100%;

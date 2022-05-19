@@ -8,6 +8,7 @@ import style from 'styled-components'
 export const STnavBar = style.div`
 display: flex;
 justify-content: space-between;
+height: 60px;
 
 
 .app-bar {

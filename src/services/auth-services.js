@@ -1,15 +1,17 @@
+/* eslint-disable no-use-before-define */
 /* eslint-disable no-shadow */
 // Utils
 import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
   updateProfile,
-  sendEmailVerification, EmailAuthProvider, reauthenticateWithCredential,
+  sendEmailVerification, EmailAuthProvider, reauthenticateWithCredential, sendPasswordResetEmail,
 } from 'firebase/auth'
 import {
   collection,
   getDoc,
   doc,
+  setDoc,
 } from 'firebase/firestore'
 import { validateEmail } from '../utils/validations'
 import { Errors } from '../utils/errors'
@@ -56,11 +58,14 @@ const login = (
           setAlert(true)
         } else {
           handleClose()
+          addUser()
         }
       })
       .catch((err) => {
+        console.log(err)
         setSeverity('error')
         Errors.handlerErrors(err.code, setMessage)
+        setAlert(true)
       })
       .finally(() => {
         setIsLoading(false)
@@ -147,9 +152,43 @@ export const reauthenticate = (password) => {
   return reauthenticateWithCredential(user, credentials)
 }
 
+const recoverPassword = (email, setAlert, setMessage, setSeverity, setIsLoading) => {
+  sendPasswordResetEmail(auth, email)
+    .then(() => {
+      setAlert(true)
+      setMessage('Email enviado. Por favor, comprueba tu bandeja de entrada')
+      setSeverity('success')
+    }).catch((error) => {
+      Errors.handlerErrors(error.code, setMessage)
+      setSeverity('error')
+      setIsLoading(false)
+    }).finally(() => {
+      setAlert(true)
+      setIsLoading(false)
+    })
+}
+
+const addUser = async () => {
+  const user = auth.currentUser
+
+  try {
+    await setDoc(doc(db, 'users', user.uid), {
+      uid: user.uid,
+      email: user.email,
+      displayName: user.displayName,
+      emailVerified: user.emailVerified,
+      createdAt: user.metadata.creationTime,
+    })
+  } catch (e) {
+    console.error('Error adding document: ', e)
+  }
+}
+
 export const AuthServices = {
   login,
   register,
   isUserAdmin,
   reauthenticate,
+  recoverPassword,
+  addUser,
 }

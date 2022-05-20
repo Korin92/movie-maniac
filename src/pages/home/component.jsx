@@ -7,6 +7,7 @@ import CardMovies from '../../components/card-movies/component'
 
 import { STHome } from './style'
 import SearchPage from '../search/component'
+import AlertMessage from '../../components/alert/component'
 
 export default function Home(props) {
   const [movies, setMovies] = useState([])
@@ -14,7 +15,7 @@ export default function Home(props) {
   const [page, setPage] = useState(1)
   const [hasMore, setHasMore] = useState(false)
 
-  const { user, debounce } = props
+  const { user, debounce, changePassword } = props
 
   useEffect(() => {
     setLoading(true)
@@ -34,6 +35,7 @@ export default function Home(props) {
   }
   return (
     <STHome>
+      {changePassword ? <AlertMessage severity="success" message="Contraseña actualizada" /> : null}
       <InfiniteScroll
         dataLength={movies.length}
         hasMore={hasMore}

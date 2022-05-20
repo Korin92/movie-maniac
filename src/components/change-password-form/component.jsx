@@ -18,7 +18,10 @@ import { AuthServices } from '../../services/auth-services'
 
 import AlertMessage from '../alert/component'
 
-export default function ChangePasswordForm({ openChangePassword, handleCloseChangePassword }) {
+export default function ChangePasswordForm({
+  openChangePassword,
+  handleCloseChangePassword,
+}) {
   const [formData, setFormData] = useState(defaultValueForm())
   const [message, setMessage] = useState(null)
   const [alert, setAlert] = useState(false)

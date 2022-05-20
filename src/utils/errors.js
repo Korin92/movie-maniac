@@ -17,7 +17,15 @@ const handlerErrors = (code, setMessage) => {
     case 'auth/email-already-in-use':
       setMessage('El email ya está en uso')
       break
-
+    case 'auth/missing-email':
+      setMessage('El email es obligatorio')
+      break
+    case 'auth/invalid-email':
+      setMessage('El email no es válido')
+      break
+    case 'EMAIL_NOT_FOUND':
+      setMessage('El email no está registrado')
+      break
     default:
       break
   }

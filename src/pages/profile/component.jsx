@@ -12,6 +12,7 @@ import MenuProfile from '../../components/menu-profile/component'
 import Favs from '../../components/favs/component'
 import PendingWatch from '../../components/pending-watch/component'
 import MoviesSeen from '../../components/movies-seen/compontent'
+import Admin from '../../components/admin/component'
 
 export default function ProfilePage(props) {
   const { user, setReloadApp } = props
@@ -28,6 +29,8 @@ export default function ProfilePage(props) {
         return <MoviesSeen user={user} />
       case 'mi perfil':
         return <Profile user={user} setReloadApp={setReloadApp} />
+      case 'administrar':
+        return <Admin />
       default:
         return <Profile user={user} setReloadApp={setReloadApp} />
     }

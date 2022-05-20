@@ -1,3 +1,5 @@
+/* eslint-disable max-len */
+/* eslint-disable no-use-before-define */
 import React, { useEffect, useState } from 'react'
 
 // MaterialUI
@@ -16,6 +18,7 @@ import AlertMessage from '../../alert/component'
 
 // services
 import { AuthServices } from '../../../services/auth-services'
+import RecoverPassword from '../recover-password-form/component'
 
 export default function LoginForm(props) {
   // States
@@ -28,6 +31,7 @@ export default function LoginForm(props) {
   const [alert, setAlert] = useState(false)
   const [severity, setSeverity] = useState(null)
   const [message, setMessage] = useState(null)
+  const [openRecoverPassword, setOpenRecoverPassword] = useState(false)
 
   // props
   const { open, handleClose } = props
@@ -40,9 +44,7 @@ export default function LoginForm(props) {
     })
   }
 
-  const onSubmit = (e) => {
-    e.preventDefault()
-
+  const login = () => {
     AuthServices.login(
       setFormError,
       formData,
@@ -54,6 +56,19 @@ export default function LoginForm(props) {
       setAlert,
       setSeverity,
     )
+  }
+
+  const onSubmit = (e) => {
+    e.preventDefault()
+    login()
+  }
+
+  const handleOpenRecoverPassword = () => {
+    setOpenRecoverPassword(true)
+  }
+
+  const handleCloseRecoverPassword = () => {
+    setOpenRecoverPassword(false)
   }
 
   useEffect(() =>
@@ -102,16 +117,29 @@ export default function LoginForm(props) {
                 Por favor, elige una contraseña superior a 5 caracteres.
               </span>
             )}
+            <DialogContentText>
+              ¿No recuerdas tu contraseña?
+              {' '}
+              <Button onClick={() => {
+                handleOpenRecoverPassword()
+                handleClose()
+              }}
+              >
+                Haz click aquí
+              </Button>
+            </DialogContentText>
+
           </DialogContent>
+
           <DialogActions>
             <Button onClick={() => {
+              handleCloseRecoverPassword()
               handleClose()
               setAlert(false)
               setFormError({})
             }}
             >
               Volver
-
             </Button>
             <Button type="submit" variant="contained">
               Iniciar Sesión
@@ -130,6 +158,9 @@ export default function LoginForm(props) {
           />
         )}
       </Dialog>
+      {openRecoverPassword && (
+      <RecoverPassword openRecoverPassword={openRecoverPassword} handleCloseRecoverPassword={handleCloseRecoverPassword} />
+      )}
     </div>
   )
 }

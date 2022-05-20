@@ -45,7 +45,11 @@ function App() {
         <NavBar user={user} search={search} />
       </header>
       <div className="content">
-        <Routes user={user} setReloadApp={setReloadApp} debounce={debounce} />
+        <Routes
+          user={user}
+          setReloadApp={setReloadApp}
+          debounce={debounce}
+        />
       </div>
       <footer>
         <Footer />

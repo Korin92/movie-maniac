@@ -16,7 +16,7 @@ import Autocomplete from '@mui/material/Autocomplete'
 import CardMedia from '@mui/material/CardMedia'
 import { signOut } from 'firebase/auth'
 import {
-  Search, SearchIconWrapper, StyledInputBase, STnavBar,
+  STnavBar,
 } from '../nav-bar/style'
 
 import { auth } from '../../utils/firebase'
@@ -112,13 +112,14 @@ export default function NavBarLogged(props) {
                 onClose={handleCloseNavMenu}
                 sx={{
                   display: { xs: 'block', md: 'none' },
+                  color: '#fff',
                 }}
               >
-                <MenuItem as={Link} to="/now-playing-movies" sx={{ my: 2, color: 'blue', display: 'block' }}>
+                <MenuItem className="menuItem" as={Link} to="/now-playing-movies" sx={{ my: 2, color: 'blue', display: 'block' }}>
                   <Typography textAlign="center">Cartelera</Typography>
                 </MenuItem>
 
-                <MenuItem as={Link} to="/top-rated" sx={{ my: 2, color: 'blue', display: 'block' }}>
+                <MenuItem className="menuItem" as={Link} to="/top-rated" sx={{ my: 2, color: 'blue', display: 'block' }}>
                   <Typography textAlign="center">Mejor valoradas</Typography>
                 </MenuItem>
               </Menu>
@@ -151,7 +152,10 @@ export default function NavBarLogged(props) {
             </Box>
 
             <SearchBar search={search} />
-            <Box sx={{ flexGrow: 0 }}>
+            <Box sx={{
+              flexGrow: 0,
+            }}
+            >
               <Tooltip title="Open settings">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 2 }}>
                   <ImageAvatar src={user.photoURL ? user.photoURL : defaultAvatar} />
@@ -166,6 +170,9 @@ export default function NavBarLogged(props) {
                   horizontal: 'left',
                 }}
                 keepMounted
+                MenuListProps={{
+                  disablePadding: true,
+                }}
                 transformOrigin={{
                   vertical: 'top',
                   horizontal: 'left',
@@ -173,12 +180,50 @@ export default function NavBarLogged(props) {
                 open={Boolean(anchorElUser)}
                 onClose={handleCloseUserMenu}
               >
-                <MenuItem as={Link} to="/profile" onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">Mi Perfil</Typography>
-                </MenuItem>
-                <MenuItem as={Link} to="/" onClick={handleLogout}>
-                  <Typography textAlign="center">Cerrar sesión</Typography>
-                </MenuItem>
+                <Container sx={{
+                  backgroundColor: '#0c0735',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  color: '#f6f6fe',
+                  ':visited': {
+                    color: '#f6f6fe',
+                  },
+                }}
+                >
+                  <MenuItem
+                    sx={{
+                      color: '#f6f6fe',
+                      ':visited': {
+                        color: '#f6f6fe',
+                      },
+                      ' :hover': {
+                        color: '#c0bec8',
+                      },
+                    }}
+                    as={Link}
+                    to="/profile"
+                    onClick={handleCloseUserMenu}
+                  >
+                    <Typography textAlign="center">Mi Perfil</Typography>
+                  </MenuItem>
+                  <MenuItem
+                    sx={{
+                      color: '#f6f6fe',
+                      ':visited': {
+                        color: '#f6f6fe',
+                      },
+                      ' :hover': {
+                        color: '#c0bec8',
+                      },
+                    }}
+                    as={Link}
+                    to="/"
+                    onClick={handleLogout}
+                  >
+                    <Typography textAlign="center">Cerrar sesión</Typography>
+                  </MenuItem>
+                </Container>
               </Menu>
               {textContent ? (
                 textContent === 'Inicia sesión' ? (

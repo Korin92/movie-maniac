@@ -58,7 +58,10 @@ export default function NavBarLogout(props) {
               />
             </MenuItem>
 
-            <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+            <Box sx={{
+              flexGrow: 1, display: { xs: 'flex', md: 'none' },
+            }}
+            >
               <IconButton
                 size="large"
                 aria-label="account of current user"
@@ -84,35 +87,94 @@ export default function NavBarLogout(props) {
                 }}
                 open={Boolean(anchorElNav)}
                 onClose={handleCloseNavMenu}
+                MenuListProps={{
+                  disablePadding: true,
+                }}
                 sx={{
                   display: { xs: 'flex', md: 'none' },
                   left: '1px',
+                  color: '#fff',
 
                 }}
               >
-                <Container sx={{
-                  display: 'flex',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  alignContent: 'center',
-                  backgroundColor: '#b0ceef',
-                }}
+                <Container
+                  disablePadding
+                  sx={{
+                    backgroundColor: '#0c0735',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    color: '#f6f6fe',
+                    ':visited': {
+                      color: '#f6f6fe',
+                    },
+                  }}
                 >
                   <MenuItem
+                    className="menu-item"
                     as={Link}
                     to="/now-playing-movies"
                     onClick={handleCloseNavMenu}
+                    disablePadding
+                    sx={{
+                      display: 'flex',
+                      flexDirection: 'column',
+                      alignItems: 'center',
+                      color: '#f6f6fe',
+                      ':visited': {
+                        color: '#f6f6fe',
+                      },
+                      ' :hover': {
+                        color: '#c0bec8',
+                      },
+                    }}
                   >
                     <Typography textAlign="center">Cartelera</Typography>
                   </MenuItem>
-                  <MenuItem as={Link} to="/top-rated" onClick={handleCloseNavMenu}>
+                  <MenuItem
+                    className="menu-item"
+                    sx={{
+                      display: 'flex',
+                      flexDirection: 'column',
+                      alignItems: 'center',
+                      color: '#f6f6fe',
+                      ':visited': {
+                        color: '#f6f6fe',
+                      },
+                      ' :hover': {
+                        color: '#c0bec8',
+                      },
+                    }}
+                    as={Link}
+                    to="/top-rated"
+                    onClick={handleCloseNavMenu}
+                  >
                     <Typography textAlign="center">Mejor valoradas</Typography>
                   </MenuItem>
-                  <Container>
-                    <MenuItem onClick={handleUserMenu}>
+                  <Container sx={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                  }}
+                  >
+                    <MenuItem
+                      sx={{
+                        ' :hover': {
+                          color: '#c0bec8',
+                        },
+                      }}
+                      onClick={handleUserMenu}
+                    >
                       <Typography textAlign="center">Inicia sesión</Typography>
                     </MenuItem>
-                    <MenuItem onClick={handleUserMenu}>
+                    <MenuItem
+                      sx={{
+                        ' :hover': {
+                          color: '#c0bec8',
+                        },
+                      }}
+                      onClick={handleUserMenu}
+                    >
                       <Typography textAlign="center">Regístrate</Typography>
                     </MenuItem>
 

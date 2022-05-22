@@ -11,12 +11,11 @@ import MenuIcon from '@mui/icons-material/Menu'
 import Container from '@mui/material/Container'
 import Tooltip from '@mui/material/Tooltip'
 import MenuItem from '@mui/material/MenuItem'
-import SearchIcon from '@mui/icons-material/Search'
-import Autocomplete from '@mui/material/Autocomplete'
 import CardMedia from '@mui/material/CardMedia'
+import { ThemeProvider } from '@mui/material/styles'
 import { signOut } from 'firebase/auth'
 import {
-  STnavBar,
+  STnavBar, themeLogged,
 } from '../nav-bar/style'
 
 import { auth } from '../../utils/firebase'
@@ -110,18 +109,38 @@ export default function NavBarLogged(props) {
                 }}
                 open={Boolean(anchorElNav)}
                 onClose={handleCloseNavMenu}
+                MenuListProps={{
+                  disablePadding: true,
+                }}
                 sx={{
                   display: { xs: 'block', md: 'none' },
-                  color: '#fff',
                 }}
               >
-                <MenuItem className="menuItem" as={Link} to="/now-playing-movies" sx={{ my: 2, color: 'blue', display: 'block' }}>
-                  <Typography textAlign="center">Cartelera</Typography>
-                </MenuItem>
+                <Container sx={{
+                  backgroundColor: '#0c0735',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
 
-                <MenuItem className="menuItem" as={Link} to="/top-rated" sx={{ my: 2, color: 'blue', display: 'block' }}>
-                  <Typography textAlign="center">Mejor valoradas</Typography>
-                </MenuItem>
+                }}
+                >
+                  <ThemeProvider theme={themeLogged}>
+                    <MenuItem
+                      as={Link}
+                      to="/"
+                      className="menuItem"
+                    >
+                      <Typography textAlign="center">Inicio</Typography>
+                    </MenuItem>
+                    <MenuItem className="menuItem" as={Link} to="/now-playing-movies">
+                      <Typography textAlign="center">Cartelera</Typography>
+                    </MenuItem>
+
+                    <MenuItem className="menuItem" as={Link} to="/top-rated">
+                      <Typography textAlign="center">Mejor valoradas</Typography>
+                    </MenuItem>
+                  </ThemeProvider>
+                </Container>
               </Menu>
             </Box>
             <MenuItem
@@ -132,20 +151,11 @@ export default function NavBarLogged(props) {
                 display: { xs: 'flex', md: 'none' },
                 flexGrow: 1,
               }}
-            >
-              <CardMedia
-                className="logo"
-                component="img"
-                alt="logo of website"
-                image={LOGOTIPO}
-              />
-            </MenuItem>
-
+            />
             <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
               <MenuItem as={Link} to="/now-playing-movies" sx={{ my: 2, color: 'white', display: 'block' }}>
                 <Typography textAlign="center">Cartelera</Typography>
               </MenuItem>
-
               <MenuItem as={Link} to="/top-rated" sx={{ my: 2, color: 'white', display: 'block' }}>
                 <Typography textAlign="center">Mejor valoradas</Typography>
               </MenuItem>
@@ -161,6 +171,7 @@ export default function NavBarLogged(props) {
                   <ImageAvatar src={user.photoURL ? user.photoURL : defaultAvatar} />
                 </IconButton>
               </Tooltip>
+
               <Menu
                 sx={{ mt: '45px' }}
                 id="menu-appbar"
@@ -180,51 +191,35 @@ export default function NavBarLogged(props) {
                 open={Boolean(anchorElUser)}
                 onClose={handleCloseUserMenu}
               >
+
                 <Container sx={{
                   backgroundColor: '#0c0735',
                   display: 'flex',
                   flexDirection: 'column',
                   alignItems: 'center',
-                  color: '#f6f6fe',
-                  ':visited': {
-                    color: '#f6f6fe',
-                  },
+
                 }}
                 >
-                  <MenuItem
-                    sx={{
-                      color: '#f6f6fe',
-                      ':visited': {
-                        color: '#f6f6fe',
-                      },
-                      ' :hover': {
-                        color: '#c0bec8',
-                      },
-                    }}
-                    as={Link}
-                    to="/profile"
-                    onClick={handleCloseUserMenu}
-                  >
-                    <Typography textAlign="center">Mi Perfil</Typography>
-                  </MenuItem>
-                  <MenuItem
-                    sx={{
-                      color: '#f6f6fe',
-                      ':visited': {
-                        color: '#f6f6fe',
-                      },
-                      ' :hover': {
-                        color: '#c0bec8',
-                      },
-                    }}
-                    as={Link}
-                    to="/"
-                    onClick={handleLogout}
-                  >
-                    <Typography textAlign="center">Cerrar sesión</Typography>
-                  </MenuItem>
+                  <ThemeProvider theme={themeLogged}>
+                    <MenuItem
+                      as={Link}
+                      to="/profile"
+                      onClick={handleCloseUserMenu}
+                    >
+                      <Typography textAlign="center">Mi Perfil</Typography>
+                    </MenuItem>
+                    <MenuItem
+                      as={Link}
+                      to="/"
+                      onClick={handleLogout}
+                    >
+                      <Typography textAlign="center">Cerrar sesión</Typography>
+                    </MenuItem>
+                  </ThemeProvider>
                 </Container>
+
               </Menu>
+
               {textContent ? (
                 textContent === 'Inicia sesión' ? (
                   <LoginForm open={open} handleClose={handleClose} />

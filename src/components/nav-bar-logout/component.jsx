@@ -11,7 +11,8 @@ import MenuIcon from '@mui/icons-material/Menu'
 import Container from '@mui/material/Container'
 import MenuItem from '@mui/material/MenuItem'
 import CardMedia from '@mui/material/CardMedia'
-import { STnavBar } from '../nav-bar/style'
+import { ThemeProvider } from '@mui/material/styles'
+import { STnavBar, themeLogout } from '../nav-bar/style'
 
 import LoginForm from '../auth/login-form/component'
 import RegisterForm from '../auth/register-form/component'
@@ -110,76 +111,44 @@ export default function NavBarLogout(props) {
                     },
                   }}
                 >
-                  <MenuItem
-                    className="menu-item"
-                    as={Link}
-                    to="/now-playing-movies"
-                    onClick={handleCloseNavMenu}
-                    disablePadding
-                    sx={{
+                  <ThemeProvider theme={themeLogout}>
+                    <MenuItem
+                      className="menu-item"
+                      as={Link}
+                      to="/now-playing-movies"
+                      onClick={handleCloseNavMenu}
+                      disablePadding
+                    >
+                      <Typography textAlign="center">Cartelera</Typography>
+                    </MenuItem>
+                    <MenuItem
+                      className="menu-item"
+                      as={Link}
+                      to="/top-rated"
+                      onClick={handleCloseNavMenu}
+                    >
+                      <Typography textAlign="center">Mejor valoradas</Typography>
+                    </MenuItem>
+                    <Container sx={{
                       display: 'flex',
                       flexDirection: 'column',
                       alignItems: 'center',
-                      color: '#f6f6fe',
-                      ':visited': {
-                        color: '#f6f6fe',
-                      },
-                      ' :hover': {
-                        color: '#c0bec8',
-                      },
                     }}
-                  >
-                    <Typography textAlign="center">Cartelera</Typography>
-                  </MenuItem>
-                  <MenuItem
-                    className="menu-item"
-                    sx={{
-                      display: 'flex',
-                      flexDirection: 'column',
-                      alignItems: 'center',
-                      color: '#f6f6fe',
-                      ':visited': {
-                        color: '#f6f6fe',
-                      },
-                      ' :hover': {
-                        color: '#c0bec8',
-                      },
-                    }}
-                    as={Link}
-                    to="/top-rated"
-                    onClick={handleCloseNavMenu}
-                  >
-                    <Typography textAlign="center">Mejor valoradas</Typography>
-                  </MenuItem>
-                  <Container sx={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                  }}
-                  >
-                    <MenuItem
-                      sx={{
-                        ' :hover': {
-                          color: '#c0bec8',
-                        },
-                      }}
-                      onClick={handleUserMenu}
                     >
-                      <Typography textAlign="center">Inicia sesión</Typography>
-                    </MenuItem>
-                    <MenuItem
-                      sx={{
-                        ' :hover': {
-                          color: '#c0bec8',
-                        },
-                      }}
-                      onClick={handleUserMenu}
-                    >
-                      <Typography textAlign="center">Regístrate</Typography>
-                    </MenuItem>
+                      <MenuItem
+                        onClick={handleUserMenu}
+                      >
+                        <Typography textAlign="center">Inicia sesión</Typography>
+                      </MenuItem>
+                      <MenuItem
+                        onClick={handleUserMenu}
+                      >
+                        <Typography textAlign="center">Regístrate</Typography>
+                      </MenuItem>
 
-                  </Container>
+                    </Container>
 
+                  </ThemeProvider>
                 </Container>
               </Menu>
 

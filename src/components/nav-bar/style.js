@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { createTheme, ThemeProvider } from '@mui/material/styles'
 
 export const STnavBar = styled.div`
   display: flex;
@@ -70,3 +71,38 @@ export const STnavBar = styled.div`
   }
   
 `
+
+export const themeLogged = createTheme({
+  components: {
+    MuiMenuItem: {
+      styleOverrides: {
+        root: {
+          color: '#f6f6fe',
+          transition: 'all 0.3s ease-in-out',
+          '&:hover': {
+            color: '#9c96c7',
+          },
+        },
+      },
+    },
+  },
+})
+
+export const themeLogout = createTheme({
+  components: {
+    MuiMenuItem: {
+      styleOverrides: {
+        root: {
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          color: '#f6f6fe',
+          transition: 'all 0.3s ease-in-out',
+          ' :hover': {
+            color: '#9c96c7',
+          },
+        },
+      },
+    },
+  },
+})

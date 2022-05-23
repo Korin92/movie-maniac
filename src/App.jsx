@@ -10,6 +10,8 @@ import ScrollToTop from './components/scroll-top/component'
 import NavBar from './components/nav-bar/component'
 import Routes from './routes/Routes'
 import Footer from './components/footer/component'
+import SearchContext from './components/search/context'
+import { useSearch } from './hooks/useSearch'
 
 // Firebase
 import { auth } from './utils/firebase'
@@ -24,6 +26,7 @@ function App() {
   const search = query.get('search')
 
   const debounce = useDebounce(search, 300)
+  const searchText = useSearch()
 
   onAuthStateChanged(auth, (currentUser) => {
     if (!currentUser?.emailVerified) {
@@ -41,16 +44,18 @@ function App() {
   return (
     <div className="App">
       <ScrollToTop />
-      <header>
-        <NavBar user={user} search={search} />
-      </header>
-      <div className="content">
-        <Routes
-          user={user}
-          setReloadApp={setReloadApp}
-          debounce={debounce}
-        />
-      </div>
+      <SearchContext.Provider value={searchText}>
+        <header>
+          <NavBar user={user} />
+        </header>
+        <div className="content">
+          <Routes
+            user={user}
+            setReloadApp={setReloadApp}
+            searchText={searchText}
+          />
+        </div>
+      </SearchContext.Provider>
       <footer>
         <Footer />
       </footer>

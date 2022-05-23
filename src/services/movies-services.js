@@ -90,8 +90,7 @@ const getMovie = async (movieId) => {
   return apiResponse
 }
 
-const getSearchMovies = async (search, page) => {
-  console.log('search desde movies-services', search)
+const getSearchMovies = async (search, page = 1) => {
   const apiUrl = `${API_URL}/search/movie?api_key=${API_KEY}&language=es-ES&query=${search}&page=${page}&include_adult=false`
   const res = await fetch(apiUrl)
   const apiResponse = await res.json()

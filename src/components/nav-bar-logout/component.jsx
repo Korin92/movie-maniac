@@ -1,6 +1,6 @@
 /* eslint-disable no-nested-ternary */
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 // MaterialUI
 import AppBar from '@mui/material/AppBar'
@@ -36,6 +36,8 @@ export default function NavBarLogout(props) {
   const [textContent, setTextContent] = useState('')
   const [open, setOpen] = useState(false)
 
+  const navigate = useNavigate()
+
   // Handlers
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget)
@@ -54,12 +56,21 @@ export default function NavBarLogout(props) {
     setOpen(false)
   }
 
+  const reloadApp = () => {
+    navigate('/')
+    window.location.reload()
+  }
+
   return (
     <STnavBar>
       <AppBar className="app-bar">
         <Container maxWidth="xl">
           <Toolbar disableGutters>
-            <MenuItem as={Link} to="/">
+            <MenuItem
+              onClick={() => {
+                reloadApp()
+              }}
+            >
               <CardMedia
                 className="logo"
                 component="img"
@@ -139,7 +150,7 @@ export default function NavBarLogout(props) {
               </ThemeProvider>
             </Box>
 
-            <SearchBar search={search} />
+            <SearchBar />
 
             <Box sx={{ flexGrow: 0, display: { xs: 'none', md: 'flex' } }}>
 

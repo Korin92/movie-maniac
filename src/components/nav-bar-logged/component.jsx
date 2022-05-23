@@ -1,6 +1,6 @@
 /* eslint-disable no-nested-ternary */
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 // MaterialUI
 import AppBar from '@mui/material/AppBar'
@@ -37,6 +37,8 @@ export default function NavBarLogged(props) {
   // props
   const { user, search } = props
 
+  const navigate = useNavigate()
+
   // States
   const [anchorElNav, setAnchorElNav] = useState(null)
   const [anchorElUser, setAnchorElUser] = useState(null)
@@ -60,14 +62,20 @@ export default function NavBarLogged(props) {
     signOut(auth)
   }
 
+  const reloadApp = () => {
+    navigate('/')
+    window.location.reload()
+  }
+
   return (
     <STnavBar>
       <AppBar className="app-bar">
         <Container maxWidth="xl">
           <Toolbar disableGutters>
             <MenuItem
-              as={Link}
-              to="/"
+              onClick={() => {
+                reloadApp()
+              }}
               sx={{
                 mr: 2,
                 display: { xs: 'none', md: 'flex' },

@@ -38,11 +38,11 @@ export default function NowPlayingMoviesPage(props) {
         dataLength={movies.length}
         hasMore={hasMore}
         next={handleNextPage}
-        loader={(
+        loader={loading ? (
           <Box className="progress" sx={{ display: 'flex' }}>
             <CircularProgress />
           </Box>
-)}
+        ) : null}
       >
         <CardMovies movies={movies} loading={loading} title="Cartelera" user={user} />
       </InfiniteScroll>

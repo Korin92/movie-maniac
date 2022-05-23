@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useRef, useContext } from 'react'
 import { useNavigate } from 'react-router'
 
 // MaterialUI
@@ -6,15 +6,15 @@ import SearchIcon from '@mui/icons-material/Search'
 
 // Styles
 import { Search, SearchIconWrapper, StyledInputBase } from './style'
+import SearchContext from './context'
 
-export default function SearchBar({ search }) {
-  // hooks
-  const navigate = useNavigate()
+export default function SearchBar() {
+  const [value, setValue] = React.useState('')
+  const inputRef = useRef(null)
 
-  // handlers
-  const handleChange = (event) => {
-    navigate(`/?search=${event.target.value}`)
-  }
+  const { searchInput, updateSearchInput } = useContext(SearchContext)
+
+  console.log(searchInput)
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -29,8 +29,10 @@ export default function SearchBar({ search }) {
         <StyledInputBase
           placeholder="Buscar película..."
           inputProps={{ 'aria-label': 'search' }}
-          value={search ?? ''}
-          onChange={handleChange}
+          value={searchInput}
+          ref={inputRef}
+          onChange={(e) =>
+            updateSearchInput(e.currentTarget.value)}
         />
 
       </Search>

@@ -15,7 +15,7 @@ export default function Home(props) {
   const [page, setPage] = useState(1)
   const [hasMore, setHasMore] = useState(false)
 
-  const { user, debounce, changePassword } = props
+  const { user, searchText, changePassword } = props
 
   useEffect(() => {
     setLoading(true)
@@ -40,14 +40,14 @@ export default function Home(props) {
         dataLength={movies.length}
         hasMore={hasMore}
         next={handleNextPage}
-        loader={(
+        loader={loading ? (
           <Box className="progress" sx={{ display: 'flex' }}>
             <CircularProgress />
           </Box>
-)}
+        ) : null}
       >
-        {debounce ? (
-          <SearchPage user={user} debounce={debounce} />
+        {searchText.searchInput !== '' ? (
+          <SearchPage user={user} />
         ) : (
           <CardMovies movies={movies} loading={loading} title="Las más populares" user={user} />
         )}

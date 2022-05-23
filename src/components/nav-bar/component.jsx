@@ -1,6 +1,7 @@
 /* eslint-disable no-nested-ternary */
 import React from 'react'
 
+// Components
 import NavBarLogout from '../nav-bar-logout/component'
 import NavBarLogged from '../nav-bar-logged/component'
 

@@ -1,6 +1,8 @@
 /* eslint-disable no-nested-ternary */
 import React, { useState } from 'react'
-import { Link, useLocation } from 'react-router-dom'
+import { Link } from 'react-router-dom'
+
+// MaterialUI
 import AppBar from '@mui/material/AppBar'
 import Box from '@mui/material/Box'
 import Toolbar from '@mui/material/Toolbar'
@@ -13,31 +15,33 @@ import Tooltip from '@mui/material/Tooltip'
 import MenuItem from '@mui/material/MenuItem'
 import CardMedia from '@mui/material/CardMedia'
 import { ThemeProvider } from '@mui/material/styles'
-import { signOut } from 'firebase/auth'
-import {
-  STnavBar, themeLogged,
-} from '../nav-bar/style'
 
+// Firebase
+import { signOut } from 'firebase/auth'
 import { auth } from '../../utils/firebase'
 
-import LoginForm from '../auth/login-form/component'
-import RegisterForm from '../auth/register-form/component'
-import ImageAvatar from '../avatar/component'
+// Styles
+import {
+  STnavBar, themeLogged, themeContainer, themeMenuRight, themeMenuTopLeft,
+} from '../nav-bar/style'
 
-import defaultAvatar from '../../assets/png/user.png'
+// Components
+import ImageAvatar from '../avatar/component'
 import SearchBar from '../search/component'
 
+// Images
+import defaultAvatar from '../../assets/png/user.png'
 import LOGOTIPO from '../../assets/png/LOGOTIPO.png'
 
 export default function NavBarLogged(props) {
+  // props
   const { user, search } = props
+
   // States
   const [anchorElNav, setAnchorElNav] = useState(null)
   const [anchorElUser, setAnchorElUser] = useState(null)
 
-  const [textContent, setTextContent] = useState('')
-  const [open, setOpen] = useState(false)
-
+  // Handlers
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget)
   }
@@ -52,18 +56,10 @@ export default function NavBarLogged(props) {
     setAnchorElUser(null)
   }
 
-  const handleUserMenu = (event) => {
-    setTextContent(event.currentTarget.textContent)
-    setOpen(true)
-  }
-
-  const handleClose = () => {
-    setOpen(false)
-  }
-
   const handleLogout = () => {
     signOut(auth)
   }
+
   return (
     <STnavBar>
       <AppBar className="app-bar">
@@ -97,46 +93,23 @@ export default function NavBarLogged(props) {
               </IconButton>
               <Menu
                 id="menu-appbar"
+                theme={themeMenuRight}
                 anchorEl={anchorElNav}
-                anchorOrigin={{
-                  vertical: 'bottom',
-                  horizontal: 'right',
-                }}
-                keepMounted
-                transformOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
-                }}
                 open={Boolean(anchorElNav)}
                 onClose={handleCloseNavMenu}
                 MenuListProps={{
                   disablePadding: true,
                 }}
-                sx={{
-                  display: { xs: 'block', md: 'none' },
-                }}
               >
-                <Container sx={{
-                  backgroundColor: '#0c0735',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'center',
-
-                }}
-                >
+                <Container theme={themeContainer}>
                   <ThemeProvider theme={themeLogged}>
-                    <MenuItem
-                      as={Link}
-                      to="/"
-                      className="menuItem"
-                    >
+                    <MenuItem as={Link} to="/">
                       <Typography textAlign="center">Inicio</Typography>
                     </MenuItem>
-                    <MenuItem className="menuItem" as={Link} to="/now-playing-movies">
+                    <MenuItem as={Link} to="/now-playing-movies">
                       <Typography textAlign="center">Cartelera</Typography>
                     </MenuItem>
-
-                    <MenuItem className="menuItem" as={Link} to="/top-rated">
+                    <MenuItem as={Link} to="/top-rated">
                       <Typography textAlign="center">Mejor valoradas</Typography>
                     </MenuItem>
                   </ThemeProvider>
@@ -153,12 +126,14 @@ export default function NavBarLogged(props) {
               }}
             />
             <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-              <MenuItem as={Link} to="/now-playing-movies" sx={{ my: 2, color: 'white', display: 'block' }}>
-                <Typography textAlign="center">Cartelera</Typography>
-              </MenuItem>
-              <MenuItem as={Link} to="/top-rated" sx={{ my: 2, color: 'white', display: 'block' }}>
-                <Typography textAlign="center">Mejor valoradas</Typography>
-              </MenuItem>
+              <ThemeProvider theme={themeLogged}>
+                <MenuItem as={Link} to="/now-playing-movies">
+                  <Typography textAlign="center">Cartelera</Typography>
+                </MenuItem>
+                <MenuItem as={Link} to="/top-rated">
+                  <Typography textAlign="center">Mejor valoradas</Typography>
+                </MenuItem>
+              </ThemeProvider>
             </Box>
 
             <SearchBar search={search} />
@@ -171,35 +146,18 @@ export default function NavBarLogged(props) {
                   <ImageAvatar src={user.photoURL ? user.photoURL : defaultAvatar} />
                 </IconButton>
               </Tooltip>
-
               <Menu
-                sx={{ mt: '45px' }}
+                theme={themeMenuTopLeft}
                 id="menu-appbar"
                 anchorEl={anchorElUser}
-                anchorOrigin={{
-                  vertical: 'top',
-                  horizontal: 'left',
-                }}
                 keepMounted
                 MenuListProps={{
                   disablePadding: true,
                 }}
-                transformOrigin={{
-                  vertical: 'top',
-                  horizontal: 'left',
-                }}
                 open={Boolean(anchorElUser)}
                 onClose={handleCloseUserMenu}
               >
-
-                <Container sx={{
-                  backgroundColor: '#0c0735',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'center',
-
-                }}
-                >
+                <Container theme={themeContainer}>
                   <ThemeProvider theme={themeLogged}>
                     <MenuItem
                       as={Link}
@@ -217,16 +175,7 @@ export default function NavBarLogged(props) {
                     </MenuItem>
                   </ThemeProvider>
                 </Container>
-
               </Menu>
-
-              {textContent ? (
-                textContent === 'Inicia sesión' ? (
-                  <LoginForm open={open} handleClose={handleClose} />
-                ) : (
-                  <RegisterForm open={open} handleClose={handleClose} />
-                )
-              ) : null}
             </Box>
           </Toolbar>
         </Container>

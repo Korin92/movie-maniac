@@ -18,10 +18,10 @@ import Typography from '@mui/material/Typography'
 import Tooltip from '@mui/material/Tooltip'
 import IconButton from '@mui/material/IconButton'
 import DeleteSweepIcon from '@mui/icons-material/DeleteSweep'
-import { createTheme, ThemeProvider } from '@mui/material/styles'
+import { ThemeProvider } from '@mui/material/styles'
 
 // Styles
-import { STCard } from '../../styles/card-default/style'
+import { STCard, theme, themeMenuItem } from '../../styles/card-default/style'
 
 // Services
 import { FavServices } from '../../services/fav-services'
@@ -41,6 +41,7 @@ import CardContentComponent from '../card-content/component'
 export default function CardMovies({
   movies, loading, title, className, user,
 }) {
+  // States
   const [favs, setFavs] = useState([])
   const [credentialFav, setCredentialFav] = useState([])
   const [isFavorite, setIsFavorite] = useState(false)
@@ -55,6 +56,9 @@ export default function CardMovies({
 
   const [disabled, setDisabled] = useState(false)
 
+  // Effects
+
+  //* * get favorite list and update state of favs */
   useEffect(() => {
     user && (
       FavServices.getFavs(user).then((i) => {
@@ -64,6 +68,8 @@ export default function CardMovies({
     )
   }, [isFavorite, user])
 
+  //* * from favorite movies, get credential of movies
+  // and update state of credentials favs, control the favorites button */
   useEffect(() => {
     HandlerButtonFav.favoriteMovies(user, favs).then((i) => {
       setCredentialFav(i)
@@ -73,6 +79,7 @@ export default function CardMovies({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [favs, user])
 
+  //* * get pending list and update state of pendings */
   useEffect(() => {
     user && (
       PendingWatchServices.getPending(user).then((i) => {
@@ -82,6 +89,8 @@ export default function CardMovies({
     )
   }, [isPending, user])
 
+  //* * from pending movies, get credential of movies
+  // and update state of credentials pendings, control the pending button */
   useEffect(() => {
     HandlerButtonPending.pendingsMovies(user, pendings).then((i) => {
       setCredentialPending(i)
@@ -90,6 +99,7 @@ export default function CardMovies({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pendings, user])
 
+  //* * get seen list and update state of seen */
   useEffect(() => {
     HandlerButtonSeen.seenMovies(user, seen).then((i) => {
       setCredentialSeen(i)
@@ -98,6 +108,8 @@ export default function CardMovies({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [seen, user])
 
+  //* * from seen movies, get credential of movies
+  // and update state of credentials seen, control the seen button */
   useEffect(() => {
     user && (
       MoviesSeenServices.getMovieSeen(user).then((i) => {
@@ -106,20 +118,6 @@ export default function CardMovies({
       })
     )
   }, [isSeen, user])
-
-  const theme = createTheme({
-    palette: {
-      primary: {
-        main: '#0c0735',
-      },
-      fav: {
-        main: '#ff0000',
-      },
-      disabled: {
-        main: '#1976d2',
-      },
-    },
-  })
 
   return (
     <STCard className={className}>
@@ -247,9 +245,11 @@ export default function CardMovies({
                             )}
                           </ThemeProvider>
                           )}
-                          <MenuItem as={Link} to={`/details/${movie.id}`}>
-                            <Typography className="more">Saber más</Typography>
-                          </MenuItem>
+                          <ThemeProvider theme={themeMenuItem}>
+                            <MenuItem as={Link} to={`/details/${movie.id}`}>
+                              <Typography className="more">Saber más</Typography>
+                            </MenuItem>
+                          </ThemeProvider>
                         </CardActions>
                       </>
                     ) : (

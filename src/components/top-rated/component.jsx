@@ -31,7 +31,7 @@ import { HandlerButtonSeen } from '../../utils/handler-buttons-cards/handlerButt
 import CardMediaComponent from '../card-media/component'
 import CardContentComponent from '../card-content/component'
 
-import { STCard } from '../../styles/card-default/style'
+import { STCard, theme, themeMenuItem } from '../../styles/card-default/style'
 
 export default function TopRated(props) {
   const [movies, setMovies] = useState([])
@@ -98,20 +98,6 @@ export default function TopRated(props) {
       setIsSeen(false)
     })
   }, [isSeen, user])
-
-  const theme = createTheme({
-    palette: {
-      primary: {
-        main: '#0c0735',
-      },
-      fav: {
-        main: '#ff0000',
-      },
-      disabled: {
-        main: '#1976d2',
-      },
-    },
-  })
 
   const getMoviesTopRated = async () => {
     if (topRated.length > 0) {
@@ -251,10 +237,11 @@ export default function TopRated(props) {
                             )}
                           </ThemeProvider>
                           )}
-
-                          <MenuItem as={Link} to={`/details/${movie.id}`}>
-                            <Typography className="more">Saber más</Typography>
-                          </MenuItem>
+                          <ThemeProvider theme={themeMenuItem}>
+                            <MenuItem as={Link} to={`/details/${movie.id}`}>
+                              <Typography className="more">Saber más</Typography>
+                            </MenuItem>
+                          </ThemeProvider>
                         </CardActions>
 
                       </>

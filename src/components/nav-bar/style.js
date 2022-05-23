@@ -1,31 +1,13 @@
 import styled from 'styled-components'
-import { createTheme, ThemeProvider } from '@mui/material/styles'
+import { createTheme } from '@mui/material/styles'
 
 export const STnavBar = styled.div`
   display: flex;
   justify-content: space-between;
   height: 60px;
-  color: #f6f6fe;
-
-  :visited{
-    color: #f6f6fe;
-  }
-
 
   .app-bar {
     background: #0c0735;
-    color: #f6f6fe;
-
-    .menu-item{
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      color: #f6f6fe;
-
-      &:visited{
-        color: #f6f6fe;
-      }
-    }
 
     .logo {
       display: flex;
@@ -53,6 +35,13 @@ export const STnavBar = styled.div`
       }
     }
 
+    .container-menu {
+      background-color: '#0c0735';
+      display: 'flex';
+      flex-direction: 'column';
+      align-items: 'center';
+    }
+
     .user-container {
       display: flex;
       align-items: center;
@@ -67,9 +56,7 @@ export const STnavBar = styled.div`
         padding-left: 5px;
       }
     }
-   
   }
-  
 `
 
 export const themeLogged = createTheme({
@@ -100,6 +87,88 @@ export const themeLogout = createTheme({
           transition: 'all 0.3s ease-in-out',
           ' :hover': {
             color: '#9c96c7',
+          },
+        },
+      },
+    },
+  },
+})
+
+export const themeContainer = createTheme({
+  components: {
+    MuiContainer: {
+      styleOverrides: {
+        root: {
+          background: '#0c0735',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+        },
+      },
+    },
+  },
+})
+
+export const themeMenuRight = createTheme({
+  components: {
+    MuiMenu: {
+      styleOverrides: {
+        root: {
+          anchorOrigin: {
+            vertical: 'bottom',
+            horizontal: 'right',
+          },
+          transformOrigin: {
+            vertical: 'top',
+            horizontal: 'right',
+          },
+          display: {
+            xs: 'block',
+            md: 'none',
+          },
+        },
+      },
+    },
+  },
+})
+
+export const themeMenuTopLeft = createTheme({
+  components: {
+    MuiMenu: {
+      styleOverrides: {
+        root: {
+          anchorOrigin: {
+            vertical: 'top',
+            horizontal: 'left',
+          },
+          transformOrigin: {
+            vertical: 'top',
+            horizontal: 'left',
+          },
+          mt: '45px',
+        },
+      },
+    },
+  },
+})
+
+export const themeMenuLeft = createTheme({
+  components: {
+    MuiMenu: {
+      styleOverrides: {
+        root: {
+          anchorOrigin: {
+            vertical: 'bottom',
+            horizontal: 'left',
+          },
+          transformOrigin: {
+            vertical: 'top',
+            horizontal: 'left',
+          },
+          display: {
+            xs: 'flex',
+            md: 'none',
+            left: '1px',
           },
         },
       },

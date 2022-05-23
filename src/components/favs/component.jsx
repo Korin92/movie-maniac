@@ -24,10 +24,12 @@ import CardMediaComponent from '../card-media/component'
 import { STCardProfile } from '../../styles/card-profile/style'
 
 export default function Favs({ user }) {
+  // States
   const [favs, setFavs] = useState([])
   const [movies, setMovies] = useState([])
   const [loading, setLoading] = useState()
 
+  // Functions
   const getMoviesFavs = async () => {
     if (favs.length > 0) {
       const unresolvedPromises = favs.map((fav) =>
@@ -37,6 +39,9 @@ export default function Favs({ user }) {
       setLoading(false)
     }
   }
+
+  // Effects
+  //* * get favs list and update state of favs */
   useEffect(() => {
     setLoading(true)
     FavServices.getFavs(user).then((i) => {
@@ -49,6 +54,7 @@ export default function Favs({ user }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [favs])
 
+  // Handlers
   const handleClick = (id) => {
     const idRemove = favs.findIndex((fav) =>
       fav.credential === id)

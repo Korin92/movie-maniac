@@ -1,14 +1,17 @@
 import React from 'react'
-
 import { useNavigate } from 'react-router'
 
 // MaterialUI
 import SearchIcon from '@mui/icons-material/Search'
+
+// Styles
 import { Search, SearchIconWrapper, StyledInputBase } from './style'
 
 export default function SearchBar({ search }) {
+  // hooks
   const navigate = useNavigate()
 
+  // handlers
   const handleChange = (event) => {
     navigate(`/?search=${event.target.value}`)
   }

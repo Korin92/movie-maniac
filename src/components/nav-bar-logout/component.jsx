@@ -1,6 +1,8 @@
 /* eslint-disable no-nested-ternary */
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
+
+// MaterialUI
 import AppBar from '@mui/material/AppBar'
 import Box from '@mui/material/Box'
 import Toolbar from '@mui/material/Toolbar'
@@ -12,22 +14,29 @@ import Container from '@mui/material/Container'
 import MenuItem from '@mui/material/MenuItem'
 import CardMedia from '@mui/material/CardMedia'
 import { ThemeProvider } from '@mui/material/styles'
-import { STnavBar, themeLogout } from '../nav-bar/style'
 
+// Styles
+import {
+  STnavBar, themeLogout, themeContainer, themeMenuLeft,
+} from '../nav-bar/style'
+
+// Components
 import LoginForm from '../auth/login-form/component'
 import RegisterForm from '../auth/register-form/component'
 import SearchBar from '../search/component'
 
+// Images
 import LOGOTIPO from '../../assets/png/LOGOTIPO.png'
 
 export default function NavBarLogout(props) {
+  // props
   const { search } = props
   // States
   const [anchorElNav, setAnchorElNav] = useState(null)
-
   const [textContent, setTextContent] = useState('')
   const [open, setOpen] = useState(false)
 
+  // Handlers
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget)
   }
@@ -75,66 +84,33 @@ export default function NavBarLogout(props) {
                 <MenuIcon />
               </IconButton>
               <Menu
+                theme={themeMenuLeft}
                 id="menu-appbar"
                 anchorEl={anchorElNav}
-                anchorOrigin={{
-                  vertical: 'bottom',
-                  horizontal: 'left',
-                }}
                 keepMounted
-                transformOrigin={{
-                  vertical: 'top',
-                  horizontal: 'left',
-                }}
                 open={Boolean(anchorElNav)}
                 onClose={handleCloseNavMenu}
                 MenuListProps={{
                   disablePadding: true,
                 }}
-                sx={{
-                  display: { xs: 'flex', md: 'none' },
-                  left: '1px',
-                  color: '#fff',
-
-                }}
               >
-                <Container
-                  disablePadding
-                  sx={{
-                    backgroundColor: '#0c0735',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                    color: '#f6f6fe',
-                    ':visited': {
-                      color: '#f6f6fe',
-                    },
-                  }}
-                >
+                <Container theme={themeContainer}>
                   <ThemeProvider theme={themeLogout}>
                     <MenuItem
-                      className="menu-item"
                       as={Link}
                       to="/now-playing-movies"
                       onClick={handleCloseNavMenu}
-                      disablePadding
                     >
                       <Typography textAlign="center">Cartelera</Typography>
                     </MenuItem>
                     <MenuItem
-                      className="menu-item"
                       as={Link}
                       to="/top-rated"
                       onClick={handleCloseNavMenu}
                     >
                       <Typography textAlign="center">Mejor valoradas</Typography>
                     </MenuItem>
-                    <Container sx={{
-                      display: 'flex',
-                      flexDirection: 'column',
-                      alignItems: 'center',
-                    }}
-                    >
+                    <Container>
                       <MenuItem
                         onClick={handleUserMenu}
                       >
@@ -145,36 +121,36 @@ export default function NavBarLogout(props) {
                       >
                         <Typography textAlign="center">Regístrate</Typography>
                       </MenuItem>
-
                     </Container>
-
                   </ThemeProvider>
                 </Container>
               </Menu>
-
             </Box>
 
             <Box className="links-app" sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-              <MenuItem as={Link} to="/now-playing-movies">
-                <Typography textAlign="center">Cartelera</Typography>
-              </MenuItem>
+              <ThemeProvider theme={themeLogout}>
+                <MenuItem as={Link} to="/now-playing-movies">
+                  <Typography textAlign="center">Cartelera</Typography>
+                </MenuItem>
 
-              <MenuItem as={Link} to="/top-rated">
-                <Typography textAlign="center">Mejor valoradas</Typography>
-              </MenuItem>
+                <MenuItem as={Link} to="/top-rated">
+                  <Typography textAlign="center">Mejor valoradas</Typography>
+                </MenuItem>
+              </ThemeProvider>
             </Box>
 
             <SearchBar search={search} />
 
             <Box sx={{ flexGrow: 0, display: { xs: 'none', md: 'flex' } }}>
 
-              <MenuItem onClick={handleUserMenu}>
-                <span className="menu-auth">Inicia sesión</span>
-              </MenuItem>
-              <span>/</span>
-              <MenuItem onClick={handleUserMenu}>
-                <span className="menu-auth">Regístrate</span>
-              </MenuItem>
+              <ThemeProvider theme={themeLogout}>
+                <MenuItem onClick={handleUserMenu}>
+                  <span>Inicia sesión</span>
+                </MenuItem>
+                <MenuItem onClick={handleUserMenu}>
+                  <span>Regístrate</span>
+                </MenuItem>
+              </ThemeProvider>
 
               {textContent ? (
                 textContent === 'Inicia sesión' ? (

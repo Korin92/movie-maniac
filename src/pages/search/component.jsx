@@ -75,13 +75,16 @@ export default function SearchPage({
         hasMore={totalPages}
         next={() =>
           hashMorePage(context.searchInput)}
-        loader={loading && (
+        loader={(
           <Box className="progress" sx={{ display: 'flex' }}>
-            <CircularProgress />
+            {loading && <CircularProgress />}
           </Box>
         )}
       >
-        <CardMovies movies={movies} loading={loading} title="Tu busqueda " user={user} />
+        {totalPages.length > 0 ? (
+          <CardMovies movies={movies} loading={loading} title="Tu busqueda " user={user} />
+        ) : (
+          <div className="no-results">Sin resultados =(</div>)}
       </InfiniteScroll>
     </STSearch>
   )

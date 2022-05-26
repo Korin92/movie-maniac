@@ -15,15 +15,15 @@ export default function Footer() {
           <Grid container item spacing={3}>
             <Grid className="container-grid" item xs={4}>
               <InstagramIcon className="icon" />
-              <Typography variant="subtitle1" className="text">@ClaquetaFilm</Typography>
+              <Typography className="text">@ClaquetaFilm</Typography>
             </Grid>
             <Grid className="container-grid" item xs={4}>
               <FacebookIcon className="icon" />
-              <Typography variant="subtitle1" className="text">ClaquetaFilm</Typography>
+              <Typography className="text">ClaquetaFilm</Typography>
             </Grid>
             <Grid className="container-grid" item xs={4}>
               <TwitterIcon className="icon" />
-              <Typography variant="subtitle1" className="text">@ClaquetaFilm</Typography>
+              <Typography className="text">@ClaquetaFilm</Typography>
             </Grid>
           </Grid>
         </Grid>

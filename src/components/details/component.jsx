@@ -81,8 +81,6 @@ export default function Details(props) {
 
   const handleStars = (newValue) => {
     setValue(newValue)
-    console.log('entrando a handleStars')
-    console.log('movieId', movieId)
     RatingServices.addRating(movieId, newValue)
   }
 
@@ -91,7 +89,7 @@ export default function Details(props) {
       <Card className="card-details">
         {!loading ? (
           <STPoster image={image}>
-            <Typography className="title" variant="h5" component="div">
+            <Typography className="title" variant="h1">
               {movie.title}
               {' '}
               (
@@ -100,25 +98,28 @@ export default function Details(props) {
             </Typography>
 
             {user && (
-              <Box
-                sx={{
-                  '& > legend': { mt: 2 },
-                }}
-                className="container-title"
-              >
-                <Rating
-                  className="stars"
-                  name="simple-controlled"
-                  value={value}
-                  onChange={(event, newValue) => {
-                    handleStars(newValue)
-                  }}
-                  max={maxValue}
-                  precision={0.25}
-                  // onClick={() =>
-                  //   }
-                />
-              </Box>
+            <Box
+              sx={{
+                '& > legend': { mt: 2 },
+              }}
+              className="container-title"
+              role="group"
+            >
+              <fieldset className="group-rating">
+                <legend>
+                  <Rating
+                    className="stars"
+                    name="simple-controlled"
+                    value={value}
+                    onChange={(event, newValue) => {
+                      handleStars(newValue)
+                    }}
+                    max={maxValue}
+                    precision={0.25}
+                  />
+                </legend>
+              </fieldset>
+            </Box>
             )}
           </STPoster>
         ) : (
@@ -128,11 +129,11 @@ export default function Details(props) {
           </Box>
         )}
         <CardContent className="content">
-          <Typography className="content-title">Sinopsis</Typography>
-          <Typography>{movie.overview}</Typography>
-          <Typography className="content-title">Reparto principal</Typography>
+          <Typography variant="h2" className="content-title">Sinopsis</Typography>
+          <Typography className="text-sinopsis">{movie.overview}</Typography>
+          <Typography variant="h2" className="content-title">Reparto principal</Typography>
           <CardCast movieId={movieId} />
-          <Typography className="content-title">Tráiler</Typography>
+          <Typography variant="h2" className="content-title">Tráiler</Typography>
           {video !== undefined && video.length > 0 ? (
             <CardMedia
               className="trailer"
@@ -140,16 +141,15 @@ export default function Details(props) {
               alt="trailer of movie"
               src={`https://www.youtube.com/embed/${getVideo(video)}`}
               controls
-              autoPlay
               allowFullScreen
             />
           ) : (
             <Typography>No hay tráiler</Typography>
           )}
 
-          <Typography className="content-title">¿Dónde encontrarla?</Typography>
+          <Typography variant="h2" className="content-title">¿Dónde encontrarla?</Typography>
           <Providers movieId={movieId} />
-          <Typography className="content-title">Películas similares</Typography>
+          <Typography variant="h2" className="content-title">Películas similares</Typography>
           <SimilarMovies user={user} movieId={movieId} />
         </CardContent>
       </Card>

@@ -8,7 +8,7 @@ export const STFooter = styled.div`
   display: grid;
   align-items: center;
   justify-content: space-around;
-  margin-top: 70px;
+
 
   .icon{
     color: #f6f6fe;

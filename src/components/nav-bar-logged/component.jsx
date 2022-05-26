@@ -80,6 +80,7 @@ export default function NavBarLogged(props) {
                 mr: 2,
                 display: { xs: 'none', md: 'flex' },
               }}
+              aria-label="logo"
             >
               <CardMedia
                 className="logo"
@@ -111,7 +112,7 @@ export default function NavBarLogged(props) {
               >
                 <Container theme={themeContainer}>
                   <ThemeProvider theme={themeLogged}>
-                    <MenuItem as={Link} to="/">
+                    <MenuItem as={Link} to="/" aria-label="home">
                       <Typography textAlign="center">Inicio</Typography>
                     </MenuItem>
                     <MenuItem as={Link} to="/now-playing-movies">
@@ -132,6 +133,7 @@ export default function NavBarLogged(props) {
                 display: { xs: 'flex', md: 'none' },
                 flexGrow: 1,
               }}
+              aria-label="home"
             />
             <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
               <ThemeProvider theme={themeLogged}>

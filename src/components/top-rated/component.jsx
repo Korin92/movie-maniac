@@ -123,7 +123,7 @@ export default function TopRated(props) {
     <STCard>
       <Grid sx={{ flexGrow: 1 }}>
         <Grid item xs={12}>
-          <h2 className="title">Mejor valoradas</h2>
+          <h1 className="title">Mejor valoradas</h1>
           <Grid justifyContent="center" container spacing={2} className="grid">
             {movies?.map((movie) =>
               (
@@ -138,10 +138,12 @@ export default function TopRated(props) {
                           <ThemeProvider theme={theme}>
                             {!credentialFav.includes(movie.id) ? (
                               <Tooltip title="Añadir a favoritos">
-                                <IconButton onClick={() => {
-                                  HandlerButtonFav.handleFav(movie)
-                                  setIsFavorite(!isFavorite)
-                                }}
+                                <IconButton
+                                  onClick={() => {
+                                    HandlerButtonFav.handleFav(movie)
+                                    setIsFavorite(!isFavorite)
+                                  }}
+                                  aria-label="add to favorites"
                                 >
                                   <FavoriteIcon
                                     key={movie.id}
@@ -152,10 +154,12 @@ export default function TopRated(props) {
                               </Tooltip>
                             ) : (
                               <Tooltip title="Quitar de favoritos">
-                                <IconButton onClick={() => {
-                                  HandlerButtonFav.handleRemoveFav(favs, movie.id)
-                                  setIsFavorite(!isFavorite)
-                                }}
+                                <IconButton
+                                  onClick={() => {
+                                    HandlerButtonFav.handleRemoveFav(favs, movie.id)
+                                    setIsFavorite(!isFavorite)
+                                  }}
+                                  aria-label="remove to favorites"
                                 >
                                   <FavoriteIcon
                                     key={movie.id}
@@ -176,6 +180,7 @@ export default function TopRated(props) {
                                       setIsPending(!isPending)
                                       setDisabled(!disabled)
                                     }}
+                                    aria-label="add to pending"
                                   >
                                     <VisibilityOffIcon
                                       color="primary"
@@ -194,6 +199,7 @@ export default function TopRated(props) {
                                       setIsPending(!isPending)
                                       setDisabled(!disabled)
                                     }}
+                                    aria-label="remove to pending"
                                   >
                                     <DeleteSweepIcon color="disabled" />
                                   </IconButton>
@@ -211,6 +217,7 @@ export default function TopRated(props) {
                                       setIsSeen(!isSeen)
                                       setDisabled(!disabled)
                                     }}
+                                    aria-label="add to seen"
                                   >
                                     <RemoveRedEyeIcon
                                       color="primary"
@@ -229,6 +236,7 @@ export default function TopRated(props) {
                                       setIsSeen(!isSeen)
                                       setDisabled(!disabled)
                                     }}
+                                    aria-label="remove to seen"
                                   >
                                     <DeleteSweepIcon color="disabled" />
                                   </IconButton>

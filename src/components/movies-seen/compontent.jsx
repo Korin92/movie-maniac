@@ -62,7 +62,7 @@ export default function MoviesSeen({ user }) {
     <STCardProfile>
       <Grid sx={{ flexGrow: 1 }}>
         <Grid item xs={12}>
-          <h2 className="title">Películas vistas</h2>
+          <h1 className="title">Películas vistas</h1>
           <Grid container spacing={2} className="grid">
             {movies?.map((movie) =>
               (

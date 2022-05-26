@@ -50,7 +50,7 @@ export default function CardCast(props) {
                         <CardMedia
                           className="img-actor"
                           component="img"
-                          alt="image of actor"
+                          alt={`imagen of the actor ${item.name}`}
                           image={getImage(item.profile_path)}
                         />
                       ) : (

@@ -3,6 +3,7 @@ import DialogContent from '@mui/material/DialogContent'
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate'
 import Typography from '@mui/material/Typography'
 import DialogActions from '@mui/material/DialogActions'
+import Button from '@mui/material/Button'
 
 export const STDialogContent = styled(DialogContent)(({ theme }) =>
   ({
@@ -32,3 +33,12 @@ export const STDialogActions = styled(DialogActions)(({ theme }) =>
     justifyContent: 'center',
     background: theme.palette.mode === 'dark' ? '#1c1c1c' : '#fafafa',
   }))
+
+export const STButton = styled(Button)({
+  color: 'rgb(2, 0, 36)',
+
+  '&:hover': {
+    color: 'rgb(2, 0, 89)',
+  },
+
+})

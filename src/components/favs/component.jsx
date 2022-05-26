@@ -69,7 +69,7 @@ export default function Favs({ user }) {
     <STCardProfile>
       <Grid sx={{ flexGrow: 1 }}>
         <Grid item xs={12}>
-          <h2 className="title">Favoritos</h2>
+          <h1 className="title">Favoritos</h1>
           <Grid container spacing={2} className="grid">
             {movies?.map((movie) =>
               (

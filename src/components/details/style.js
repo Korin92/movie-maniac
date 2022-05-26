@@ -9,6 +9,10 @@ export const STDetails = styled.div`
   .card-details {
     background-color: rgb(0 0 0 / 78%);
 
+    .group-rating{
+      border:none;
+    }
+
     .skeleton {
       background-color: #b7b4b4a6;
       width: 100%;
@@ -41,7 +45,6 @@ export const STDetails = styled.div`
 
   .content {
     color: #f6f6fe;
-    text-align: justify;
 
     .content-title {
       font-size: 2rem;

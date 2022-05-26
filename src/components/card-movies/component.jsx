@@ -123,7 +123,7 @@ export default function CardMovies({
     <STCard className={className}>
       <Grid sx={{ flexGrow: 1 }}>
         <Grid item xs={12}>
-          <h2 className="title">{title}</h2>
+          <h1 className="title">{title}</h1>
           <Grid justifyContent="center" container spacing={2} className="grid">
             {movies?.map((movie, index) =>
               (
@@ -138,10 +138,13 @@ export default function CardMovies({
                           <ThemeProvider theme={theme}>
                               {!credentialFav.includes(movie.id) ? (
                                 <Tooltip title="Añadir a favoritos">
-                                  <IconButton onClick={() => {
-                                    HandlerButtonFav.handleFav(movie)
-                                    setIsFavorite(!isFavorite)
-                                  }}
+                                  <IconButton
+                                    onClick={() => {
+                                      HandlerButtonFav.handleFav(movie)
+                                      setIsFavorite(!isFavorite)
+                                    }}
+                                    type="button"
+                                    aria-label="add to favorites"
                                   >
                                     <FavoriteIcon
                                       key={movie.id}
@@ -152,10 +155,13 @@ export default function CardMovies({
                                 </Tooltip>
                               ) : (
                                 <Tooltip title="Quitar de favoritos">
-                                  <IconButton onClick={() => {
-                                    HandlerButtonFav.handleRemoveFav(favs, movie.id)
-                                    setIsFavorite(!isFavorite)
-                                  }}
+                                  <IconButton
+                                    onClick={() => {
+                                      HandlerButtonFav.handleRemoveFav(favs, movie.id)
+                                      setIsFavorite(!isFavorite)
+                                    }}
+                                    type="button"
+                                    aria-label="remove to favorites"
                                   >
                                     <FavoriteIcon
                                       key={movie.id}
@@ -177,6 +183,8 @@ export default function CardMovies({
                                         setIsPending(!isPending)
                                         setDisabled(!disabled)
                                       }}
+                                      type="button"
+                                      aria-label="add to pending"
                                     >
                                       <VisibilityOffIcon
                                         color="primary"
@@ -197,6 +205,8 @@ export default function CardMovies({
                                         setIsPending(!isPending)
                                         setDisabled(!disabled)
                                       }}
+                                      type="button"
+                                      aria-label="remove to pending"
                                     >
                                       <DeleteSweepIcon color="disabled" />
                                     </IconButton>
@@ -216,6 +226,8 @@ export default function CardMovies({
                                         setIsSeen(!isSeen)
                                         setDisabled(!disabled)
                                       }}
+                                      type="button"
+                                      aria-label="add to seen"
                                     >
                                       <RemoveRedEyeIcon
                                         color="primary"
@@ -236,6 +248,8 @@ export default function CardMovies({
                                         setIsSeen(!isSeen)
                                         setDisabled(!disabled)
                                       }}
+                                      type="button"
+                                      aria-label="remove to seen"
                                     >
                                       <DeleteSweepIcon color="disabled" />
                                     </IconButton>

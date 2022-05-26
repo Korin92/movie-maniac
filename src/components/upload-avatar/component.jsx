@@ -18,7 +18,7 @@ import Loader from '../loader/component'
 import AlertMessage from '../alert/component'
 
 import {
-  STDialogContent, STAddPhotoAlternateIcon, STTypography, STDialogActions,
+  STDialogContent, STAddPhotoAlternateIcon, STTypography, STDialogActions, STButton,
 } from './style'
 
 export default function UploadAvatar(props) {
@@ -71,13 +71,13 @@ export default function UploadAvatar(props) {
 
   return (
     <Dialog open={openUploadAvatar}>
-      <STDialogContent {...getRootProps()}>
+      <STDialogContent {...getRootProps()} id="mui-2">
         <STAddPhotoAlternateIcon />
-        <input {...getInputProps()} />
+        <input {...getInputProps()} alt="input for upload avatar" aria-label="input for upload avatar" />
         <STTypography>Arrastra imagen o haz click encima para actualizar tu avatar</STTypography>
       </STDialogContent>
       <STDialogActions sx={{ justifyContent: 'center' }}>
-        <Button onClick={handleCloseUploadAvatar}>Cerrar</Button>
+        <STButton onClick={handleCloseUploadAvatar}>Cerrar</STButton>
       </STDialogActions>
       {loading && <Loader open={openUploadAvatar} />}
     </Dialog>

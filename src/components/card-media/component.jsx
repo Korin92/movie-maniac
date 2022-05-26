@@ -21,7 +21,7 @@ export default function CardMediaComponent(props) {
         <CardMedia
           className="poster"
           component="img"
-          alt="image of film"
+          alt={`poster of the movie ${movie.title}`}
           image={image}
         />
       ) : (

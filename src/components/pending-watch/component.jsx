@@ -65,7 +65,7 @@ export default function PendingWatch({ user }) {
     <STCardProfile>
       <Grid sx={{ flexGrow: 1 }}>
         <Grid item xs={12}>
-          <h2 className="title">Pendientes de ver</h2>
+          <h1 className="title">Pendientes de ver</h1>
           <Grid container spacing={2} className="grid">
             {movies?.map((movie) =>
               (

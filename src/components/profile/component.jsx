@@ -36,13 +36,13 @@ export default function Profile(props) {
   return (
     <STProfileComponent>
       <Container className="container-profile" fixed>
-        <Typography className="title-profile" variant="h2">
+        <Typography className="title-profile" variant="h1">
           {user.displayName}
         </Typography>
         <ImageAvatar className="image-avatar" src={user.photoURL} sx={{ justifyContent: 'center', width: '30vh', height: '30vh' }} />
       </Container>
       <Container className="container-menu-profile">
-        <Typography className="title-menu-profile" variant="h4">Ajustes de perfil</Typography>
+        <Typography className="title-menu-profile" variant="h2">Ajustes de perfil</Typography>
         <Button className="button-profile" onClick={handleUpdateAvatar}>Cambiar avatar</Button>
         {openUploadAvatar && (
           <UploadAvatar

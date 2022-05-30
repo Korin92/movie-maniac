@@ -17,7 +17,7 @@ import Typography from '@mui/material/Typography'
 import Tooltip from '@mui/material/Tooltip'
 import IconButton from '@mui/material/IconButton'
 import DeleteSweepIcon from '@mui/icons-material/DeleteSweep'
-import { createTheme, ThemeProvider } from '@mui/material/styles'
+import { ThemeProvider } from '@mui/material/styles'
 
 // Carousel
 import Carousel from 'react-multi-carousel'
@@ -35,7 +35,7 @@ import { HandlerButtonPending } from '../../utils/handler-buttons-cards/handlerB
 import { HandlerButtonSeen } from '../../utils/handler-buttons-cards/handlerButtonSeen'
 
 // Components
-import { STSimilarMovies, themeMenuItem } from './style'
+import { STSimilarMovies, themeMenuItem, theme } from './style'
 import CardMediaComponent from '../card-media/component'
 import CardContentComponent from '../card-content/component'
 
@@ -154,20 +154,6 @@ export default function SimilarMovies(props) {
       setIsSeen(false)
     })
   }, [isSeen, user])
-
-  const theme = createTheme({
-    palette: {
-      primary: {
-        main: '#0c0735',
-      },
-      fav: {
-        main: '#ff0000',
-      },
-      disabled: {
-        main: '#1976d2',
-      },
-    },
-  })
 
   return (
     !loading && (

@@ -89,7 +89,7 @@ export const STSimilarMovies = styled.div`
       }
     }
 
-    @media (max-width: 890px) {
+    @media screen and (max-width: 890px) {
       margin-top: 8px;
       .poster {
         width: 100%;
@@ -134,6 +134,20 @@ export const themeMenuItem = createTheme({
           },
         },
       },
+    },
+  },
+})
+
+export const theme = createTheme({
+  palette: {
+    primary: {
+      main: '#0c0735',
+    },
+    fav: {
+      main: '#ff0000',
+    },
+    disabled: {
+      main: '#1976d2',
     },
   },
 })

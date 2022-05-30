@@ -44,8 +44,8 @@ export default function TableUsers({ users }) {
   }, [admin])
 
   return (
-    <TableContainer sx={{ width: 'auto' }} component={Paper}>
-      <Table sx={{ minWidth: 400, width: 'auto' }} aria-label="simple table">
+    <TableContainer component={Paper}>
+      <Table aria-label="simple table">
         <TableHead>
           <TableRow>
             <TableCell>Nombre de usuario</TableCell>

@@ -96,9 +96,13 @@ export const STSimilarMovies = styled.div`
         height: 200px;
       }
       .description {
-        height: 20px;
+        height: 30px;
 
         .css-h93ljk-MuiTypography-root {
+          font-size: 0.8rem;
+        }
+
+        .text-description {
           font-size: 0.8rem;
         }
       }

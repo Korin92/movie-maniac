@@ -44,6 +44,19 @@ const getRating = async (movieId) => {
   return null
 }
 
+const getRatings = async () => {
+  const q = query(
+    collection(db, 'rating'),
+  )
+  const querySnapshot = await getDocs(q)
+
+  if (!querySnapshot.empty) {
+    return querySnapshot.docs.map((document) =>
+      document.data())
+  }
+  return null
+}
+
 const getTopRated = async () => {
   const q = query(
     collection(db, 'rating'),
@@ -68,4 +81,5 @@ export const RatingServices = {
   addRating,
   getRating,
   getTopRated,
+  getRatings,
 }

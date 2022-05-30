@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import { useLocation } from 'react-router-dom'
 
 // CSS
 import './App.css'
@@ -15,17 +14,12 @@ import { useSearch } from './hooks/useSearch'
 
 // Firebase
 import { auth } from './utils/firebase'
-import { useDebounce } from './hooks/useDebounce'
 
 function App() {
   const [user, setUser] = useState(null)
   const [isLoading, setIsLoading] = useState(true)
   const [reloadApp, setReloadApp] = useState(false)
 
-  const query = new URLSearchParams(useLocation().search)
-  const search = query.get('search')
-
-  const debounce = useDebounce(search, 300)
   const searchText = useSearch()
 
   onAuthStateChanged(auth, (currentUser) => {

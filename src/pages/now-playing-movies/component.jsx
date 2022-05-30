@@ -4,6 +4,7 @@ import Box from '@mui/material/Box'
 import CircularProgress from '@mui/material/CircularProgress'
 import { MovieServices } from '../../services/movies-services'
 import CardMovies from '../../components/card-movies/component'
+import SearchPage from '../search/component'
 
 import { STNowPlaying } from './style'
 
@@ -13,7 +14,7 @@ export default function NowPlayingMoviesPage(props) {
   const [page, setPage] = useState(1)
   const [hasMore, setHasMore] = useState(false)
 
-  const { user } = props
+  const { user, searchText } = props
 
   useEffect(() => {
     setLoading(true)
@@ -44,7 +45,11 @@ export default function NowPlayingMoviesPage(props) {
           </Box>
         ) : null}
       >
-        <CardMovies movies={movies} loading={loading} title="Cartelera" user={user} />
+        {searchText.searchInput !== '' ? (
+          <SearchPage user={user} />
+        ) : (
+          <CardMovies movies={movies} loading={loading} title="Cartelera" user={user} />
+        )}
       </InfiniteScroll>
     </STNowPlaying>
   )

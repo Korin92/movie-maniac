@@ -19,10 +19,19 @@ export const STCardCast = styled.div`
     }
   }
 
-  .show-more {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-left: 50px;
+  @media (max-width: 860px) {
+    .card {
+      width: 120px;
+    }
+    .img-actor {
+      height: 160px;
+    }
+    .description {
+      height: 70px;
+      .description-name {
+        font-size: 0.8rem;
+
+      }
+    }
   }
 `

@@ -23,8 +23,6 @@ export default function RecoverPassword({ openRecoverPassword, handleCloseRecove
   const [message, setMessage] = useState(null)
   const [alert, setAlert] = useState(false)
 
-  console.log('formData', formData)
-
   // handlers
   const onChange = (e) => {
     setFormData({

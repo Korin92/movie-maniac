@@ -9,8 +9,21 @@ export const STDetails = styled.div`
   .card-details {
     background-color: rgb(0 0 0 / 78%);
 
-    .group-rating{
-      border:none;
+    .group-rating {
+      border: none;
+    }
+
+    .info-rating {
+      display: flex;
+      color: #f6f6fe;
+      align-items: center;
+
+      .text-rating {
+        margin-right: 10px;
+        font-size: 1.5rem;
+        text-shadow: 0 0 5px #f6f6fe, 0 0 10px #f6f6fe, 0 0 15px #f6f6fe, 0 0 20px #2814ca,
+          0 0 30px #2814ca, 0 0 40px #2814ca, 0 0 55px #2814ca, 0 0 75px #2814ca;
+      }
     }
 
     .skeleton {
@@ -36,9 +49,10 @@ export const STDetails = styled.div`
         font-size: 2.5rem;
         font-weight: bold;
         .css-1c99szj-MuiRating-icon {
-          color: #b7b4b4a6;
-          filter: drop-shadow(7px 5px 4px rgb(0 0 0 / 75%));
+          color: #253059e3;
+          /* filter: drop-shadow(7px 5px 4px rgb(0 0 0 / 75%)); */
         }
+        filter: drop-shadow(-1px 0px 3px #f6f6fe);
       }
     }
   }

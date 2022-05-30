@@ -14,16 +14,22 @@ export default function Footer() {
         <Grid container spacing={1}>
           <Grid container item spacing={3}>
             <Grid className="container-grid" item xs={4}>
-              <InstagramIcon className="icon" />
-              <Typography className="text">@ClaquetaFilm</Typography>
+              <a className="icon" href="https://www.instagram.com/claquetafilmucam/" target="_blank" rel="noopener noreferrer">
+                <InstagramIcon className="icon" />
+                <Typography className="text">@ClaquetaFilm</Typography>
+              </a>
             </Grid>
             <Grid className="container-grid" item xs={4}>
-              <FacebookIcon className="icon" />
-              <Typography className="text">ClaquetaFilm</Typography>
+              <a className="icon" href="https://www.facebook.com/profile.php?id=100081726879599" target="_blank" rel="noopener noreferrer">
+                <FacebookIcon className="icon" />
+                <Typography className="text">ClaquetaFilm</Typography>
+              </a>
             </Grid>
             <Grid className="container-grid" item xs={4}>
-              <TwitterIcon className="icon" />
-              <Typography className="text">@ClaquetaFilm</Typography>
+              <a className="icon" href="https://twitter.com/claquetaFilm" target="_blank" rel="noopener noreferrer">
+                <TwitterIcon className="icon" />
+                <Typography className="text">@ClaquetaFilm</Typography>
+              </a>
             </Grid>
           </Grid>
         </Grid>

@@ -5,7 +5,8 @@ import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
   updateProfile,
-  sendEmailVerification, EmailAuthProvider, reauthenticateWithCredential, sendPasswordResetEmail,
+  sendEmailVerification,
+  EmailAuthProvider, reauthenticateWithCredential, sendPasswordResetEmail, signOut, updatePassword,
 } from 'firebase/auth'
 import {
   collection,
@@ -13,6 +14,7 @@ import {
   doc,
   setDoc,
 } from 'firebase/firestore'
+
 import { validateEmail } from '../utils/validations'
 import { Errors } from '../utils/errors'
 
@@ -155,7 +157,6 @@ export const reauthenticate = (password) => {
 const recoverPassword = (email, setAlert, setMessage, setSeverity, setIsLoading) => {
   sendPasswordResetEmail(auth, email)
     .then(() => {
-      setAlert(true)
       setMessage('Email enviado. Por favor, comprueba tu bandeja de entrada')
       setSeverity('success')
     }).catch((error) => {
@@ -166,6 +167,69 @@ const recoverPassword = (email, setAlert, setMessage, setSeverity, setIsLoading)
       setAlert(true)
       setIsLoading(false)
     })
+}
+
+const changePassword = (
+  formData,
+  setIsLoading,
+  setAlert,
+  setSeverity,
+  setMessage,
+) => {
+  if (
+    !formData.currentPassword
+    || !formData.newPassword
+    || !formData.repeatNewPassword
+  ) {
+    setMessage('Los campos no pueden estar vacíos')
+    setSeverity('warning')
+    setAlert(true)
+  } else if (formData.currentPassword === formData.newPassword) {
+    setMessage('La nueva contraseña no puede ser igual a la actual')
+    setSeverity('warning')
+    setAlert(true)
+  } else if (formData.newPassword !== formData.repeatNewPassword) {
+    setMessage('La nueva contraseña no coincide')
+    setSeverity('warning')
+    setAlert(true)
+  } else if (formData.newPassword.length < 6) {
+    setMessage(
+      'La contraseña tiene que tener una longitud mínima de 6 caracteres',
+    )
+    setSeverity('warning')
+    setAlert(true)
+  } else {
+    setAlert(false)
+    setIsLoading(true)
+    reauthenticate(formData.currentPassword)
+      .then(() => {
+        const { currentUser } = auth
+
+        updatePassword(currentUser, formData.newPassword)
+          .then(() => {
+            setMessage('Contraseña actualizada')
+            setAlert(true)
+            setIsLoading(false)
+            return true
+          })
+          .catch((err) => {
+            console.log(err)
+            setIsLoading(false)
+            setSeverity('error')
+            Errors.handlerErrors(err.code, setMessage)
+            setAlert(true)
+            return false
+          })
+      })
+      .catch((err) => {
+        console.log(err.code)
+        Errors.handlerErrors(err.code, setMessage)
+        setIsLoading(false)
+        setSeverity('error')
+        setAlert(true)
+        return false
+      })
+  }
 }
 
 const addUser = async () => {
@@ -191,4 +255,5 @@ export const AuthServices = {
   reauthenticate,
   recoverPassword,
   addUser,
+  changePassword,
 }

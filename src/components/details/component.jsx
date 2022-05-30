@@ -30,6 +30,8 @@ export default function Details(props) {
   const [movie, setMovie] = useState({})
   const [loading, setLoading] = useState(true)
   const [value, setValue] = useState(0)
+  const [stars, setStars] = useState(0)
+  const [votes, setVotes] = useState(0)
 
   const maxValue = 5
 
@@ -58,6 +60,8 @@ export default function Details(props) {
   useEffect(() => {
     RatingServices.getRating(movieId).then((film) => {
       if (film) {
+        setStars(film.stars)
+        setVotes(film.votes)
         setValue((film.stars / film.votes))
       }
     })
@@ -119,6 +123,18 @@ export default function Details(props) {
                   />
                 </legend>
               </fieldset>
+              <div className="info-rating">
+                <Typography className="text-rating">
+                  votos:
+                  {' '}
+                  {votes}
+                </Typography>
+                <Typography className="text-rating">
+                  valoración media:
+                  {' '}
+                  {stars}
+                </Typography>
+              </div>
             </Box>
             )}
           </STPoster>

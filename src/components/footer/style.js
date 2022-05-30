@@ -8,28 +8,26 @@ export const STFooter = styled.div`
   display: grid;
   align-items: center;
   justify-content: space-around;
+  text-align: center;
 
-
-  .icon{
+  .icon {
     color: #f6f6fe;
     font-size: 1.5rem;
     margin-left: 3%;
-    width: 60px;
-    height: 60px;
+    width: 50px;
+    height: 50px;
     cursor: pointer;
+    text-decoration: none;
 
     transition: all 0.3s ease;
-    &:hover{
-      color: #120a52ad;
+    &:hover {
+      color: #00a5c7;
+    }
+
+    .container-grid {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
   }
-
-  .container-grid{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-}
-
-
-
 `

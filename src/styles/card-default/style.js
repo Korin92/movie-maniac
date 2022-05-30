@@ -6,6 +6,13 @@ export const STCard = styled.div`
     padding-top: 16px;
   }
 
+  .grid{
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+
+  }
+
   .title {
     font-size: 2.5rem;
     font-weight: bold;
@@ -48,15 +55,11 @@ export const STCard = styled.div`
   }
 
   @media (max-width: 950px) {
-    margin-top: 9%;
+    .title{
+      font-size: 2rem;
+    }
   }
-
-  @media (max-width: 750px) {
-    margin-top: 15%;
-  }
-  @media (max-width: 468px) {
-    margin-top: 20%;
-  }
+ 
   .progress {
     display: flex;
     justify-content: center;

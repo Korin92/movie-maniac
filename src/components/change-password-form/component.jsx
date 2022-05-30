@@ -17,6 +17,7 @@ import { auth } from '../../utils/firebase'
 import { AuthServices } from '../../services/auth-services'
 
 import AlertMessage from '../alert/component'
+import { Errors } from '../../utils/errors'
 
 export default function ChangePasswordForm({
   openChangePassword,
@@ -40,53 +41,13 @@ export default function ChangePasswordForm({
 
   const onSubmit = (e) => {
     e.preventDefault()
-    if (
-      !formData.currentPassword
-      || !formData.newPassword
-      || !formData.repeatNewPassword
-    ) {
-      setMessage('Los campos no pueden estar vacíos')
-      setSeverity('warning')
-      setAlert(true)
-    } else if (formData.currentPassword === formData.newPassword) {
-      setMessage('La nueva contraseña no puede ser igual a la actual')
-      setSeverity('warning')
-      setAlert(true)
-    } else if (formData.newPassword !== formData.repeatNewPassword) {
-      setMessage('La nueva contraseña no coincide')
-      setSeverity('warning')
-      setAlert(true)
-    } else if (formData.newPassword.length < 6) {
-      setMessage(
-        'La contraseña tiene que tener una longitud mínima de 6 caracteres',
-      )
-      setSeverity('warning')
-      setAlert(true)
-    } else {
-      setAlert(false)
-      setIsLoading(true)
-      AuthServices.reauthenticate(formData.currentPassword)
-        .then(() => {
-          const { currentUser } = auth
-
-          updatePassword(currentUser, formData.newPassword)
-            .then(() => {
-              setMessage('Contraseña actualizada')
-              setAlert(true)
-              setIsLoading(false)
-              navigate('/')
-              signOut(auth)
-            })
-            .catch((err) => {
-              console.log(err)
-              setIsLoading(false)
-            })
-        })
-        .catch((err) => {
-          console.log(err)
-          setIsLoading(false)
-        })
-    }
+    AuthServices.changePassword(
+      formData,
+      setIsLoading,
+      setAlert,
+      setSeverity,
+      setMessage,
+    ) ? navigate('/') : null
   }
 
   return (

@@ -46,4 +46,6 @@ export const STCardFav = styled.div`
       }
     }
   }
+
+
 `

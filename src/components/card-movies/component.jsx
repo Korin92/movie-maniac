@@ -260,7 +260,7 @@ export default function CardMovies({
                           </ThemeProvider>
                           )}
                           <ThemeProvider theme={themeMenuItem}>
-                            <MenuItem as={Link} to={`/details/${movie.id}`}>
+                            <MenuItem as={Link} to={`/details/${movie.id}`} role="button">
                               <Typography className="more">Saber más</Typography>
                             </MenuItem>
                           </ThemeProvider>

@@ -13,9 +13,10 @@ import Favs from '../../components/favs/component'
 import PendingWatch from '../../components/pending-watch/component'
 import MoviesSeen from '../../components/movies-seen/compontent'
 import Admin from '../../components/admin/component'
+import SearchPage from '../search/component'
 
 export default function ProfilePage(props) {
-  const { user, setReloadApp } = props
+  const { user, setReloadApp, searchText } = props
 
   const [selected, setSelected] = useState(null)
 
@@ -37,10 +38,14 @@ export default function ProfilePage(props) {
   }
 
   return (
-    <STProfile>
-      <MenuProfile user={user} setSelected={setSelected} />
-      <Divider className="divider" orientation="vertical" flexItem />
-      {handlerSelected()}
-    </STProfile>
+    searchText.searchInput !== '' ? (
+      <SearchPage user={user} />
+    ) : (
+      <STProfile>
+        <MenuProfile user={user} setSelected={setSelected} />
+        <Divider className="divider" orientation="vertical" flexItem />
+        {handlerSelected()}
+      </STProfile>
+    )
   )
 }

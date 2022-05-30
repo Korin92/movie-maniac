@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { createTheme } from '@mui/material/styles'
 
 export const STSimilarMovies = styled.div`
   width: 90%;
@@ -27,8 +28,8 @@ export const STSimilarMovies = styled.div`
   }
 
   .card {
-    width: 80%;
-    height: 100%;
+    width: 65%;
+    height: 65%;
     border-radius: 10px;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
     transition: all 0.3s ease;
@@ -65,7 +66,7 @@ export const STSimilarMovies = styled.div`
     }
 
     .description {
-      height: 67px;
+      height: 50px;
 
       .css-h93ljk-MuiTypography-root {
         margin: 0;
@@ -88,13 +89,14 @@ export const STSimilarMovies = styled.div`
       }
     }
 
-    @media (max-width: 768px) {
+    @media (max-width: 890px) {
+      margin-top: 8px;
       .poster {
         width: 100%;
         height: 200px;
       }
       .description {
-        height: 40px;
+        height: 20px;
 
         .css-h93ljk-MuiTypography-root {
           font-size: 0.8rem;
@@ -104,7 +106,7 @@ export const STSimilarMovies = styled.div`
       .content-buttons {
         button {
           svg {
-            font-size: 0.8rem;
+            font-size: 0.7rem;
           }
         }
 
@@ -115,3 +117,19 @@ export const STSimilarMovies = styled.div`
     }
   }
 `
+
+export const themeMenuItem = createTheme({
+  components: {
+    MuiMenuItem: {
+      styleOverrides: {
+        root: {
+          color: '#0c0735',
+          transition: 'all 0.3s ease-in-out',
+          '&:hover': {
+            color: '#1976d2',
+          },
+        },
+      },
+    },
+  },
+})

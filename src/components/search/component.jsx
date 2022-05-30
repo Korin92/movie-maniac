@@ -9,7 +9,6 @@ import { Search, SearchIconWrapper, StyledInputBase } from './style'
 import SearchContext from './context'
 
 export default function SearchBar() {
-  const [value, setValue] = React.useState('')
   const inputRef = useRef(null)
 
   const { searchInput, updateSearchInput } = useContext(SearchContext)

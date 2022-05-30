@@ -81,7 +81,7 @@ export default function SearchPage({
           </Box>
         )}
       >
-        {totalPages.length > 0 ? (
+        {totalPages ? (
           <CardMovies movies={movies} loading={loading} title="Tu busqueda " user={user} />
         ) : (
           <div className="no-results">Sin resultados =(</div>)}

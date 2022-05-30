@@ -70,6 +70,7 @@ export default function NavBarLogout(props) {
               onClick={() => {
                 reloadApp()
               }}
+              role="button"
             >
               <CardMedia
                 className="logo"
@@ -96,7 +97,6 @@ export default function NavBarLogout(props) {
               </IconButton>
               <Menu
                 theme={themeMenuLeft}
-                id="menu-appbar"
                 anchorEl={anchorElNav}
                 keepMounted
                 open={Boolean(anchorElNav)}
@@ -118,17 +118,20 @@ export default function NavBarLogout(props) {
                       as={Link}
                       to="/top-rated"
                       onClick={handleCloseNavMenu}
+                      role="button"
                     >
                       <Typography textAlign="center">Mejor valoradas</Typography>
                     </MenuItem>
                     <Container>
                       <MenuItem
                         onClick={handleUserMenu}
+                        role="button"
                       >
                         <Typography textAlign="center">Inicia sesión</Typography>
                       </MenuItem>
                       <MenuItem
                         onClick={handleUserMenu}
+                        role="button"
                       >
                         <Typography textAlign="center">Regístrate</Typography>
                       </MenuItem>
@@ -140,11 +143,11 @@ export default function NavBarLogout(props) {
 
             <Box className="links-app" sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
               <ThemeProvider theme={themeLogout}>
-                <MenuItem as={Link} to="/now-playing-movies">
+                <MenuItem as={Link} to="/now-playing-movies" role="button">
                   <Typography textAlign="center">Cartelera</Typography>
                 </MenuItem>
 
-                <MenuItem as={Link} to="/top-rated">
+                <MenuItem as={Link} to="/top-rated" role="button">
                   <Typography textAlign="center">Mejor valoradas</Typography>
                 </MenuItem>
               </ThemeProvider>
@@ -155,10 +158,10 @@ export default function NavBarLogout(props) {
             <Box sx={{ flexGrow: 0, display: { xs: 'none', md: 'flex' } }}>
 
               <ThemeProvider theme={themeLogout}>
-                <MenuItem onClick={handleUserMenu}>
+                <MenuItem onClick={handleUserMenu} role="button">
                   <span>Inicia sesión</span>
                 </MenuItem>
-                <MenuItem onClick={handleUserMenu}>
+                <MenuItem onClick={handleUserMenu} role="button">
                   <span>Regístrate</span>
                 </MenuItem>
               </ThemeProvider>

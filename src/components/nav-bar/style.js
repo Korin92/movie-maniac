@@ -13,8 +13,8 @@ export const STnavBar = styled.div`
       display: flex;
       align-items: center;
       justify-content: center;
-      height: 50px;
-      width: 50px;
+      height: 48px;
+      width: 48px;
       background: #0c0735;
       color: #f6f6fe;
       font-size: 1.5rem;

@@ -35,7 +35,7 @@ import { HandlerButtonPending } from '../../utils/handler-buttons-cards/handlerB
 import { HandlerButtonSeen } from '../../utils/handler-buttons-cards/handlerButtonSeen'
 
 // Components
-import { STSimilarMovies } from './style'
+import { STSimilarMovies, themeMenuItem } from './style'
 import CardMediaComponent from '../card-media/component'
 import CardContentComponent from '../card-content/component'
 
@@ -335,9 +335,11 @@ export default function SimilarMovies(props) {
                               </ThemeProvider>
                               )}
 
-                              <MenuItem as={Link} to={`/details/${movie.id}`}>
-                                <Typography className="more">Saber más</Typography>
-                              </MenuItem>
+                              <ThemeProvider theme={themeMenuItem}>
+                                <MenuItem as={Link} to={`/details/${movie.id}`}>
+                                  <Typography className="more">Saber más</Typography>
+                                </MenuItem>
+                              </ThemeProvider>
                             </CardActions>
                           </>
                         )}

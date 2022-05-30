@@ -55,4 +55,26 @@ export const STCardProfile = styled.div`
       }
     }
   }
+
+  @media (max-width: 768px) {
+    .title{
+      font-size: 1.5rem;
+    }
+    .card {
+      width: 90%;
+
+      .poster {
+        height: 100px;
+      }
+
+      .content-buttons {
+        .css-i4bv87-MuiSvgIcon-root {
+        font-size: 0.9rem;
+        }
+        .more {
+          font-size: 0.5rem;
+        }
+      }
+    }
+  }
 `

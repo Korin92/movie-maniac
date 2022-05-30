@@ -18,10 +18,10 @@ export default function routes(props) {
     <div>
       <Routes>
         <Route path="/" element={<Home user={user} searchText={searchText} setReloadApp={setReloadApp} />} />
-        <Route path="/now-playing-movies" element={<NowPlayingMoviesPage user={user} />} />
-        <Route path="/profile" element={<ProfilePage user={user} setReloadApp={setReloadApp} />} />
-        <Route path="/details/:movieId" element={<DetailsPage user={user} />} />
-        <Route path="/top-rated" element={<TopRatedPage user={user} />} />
+        <Route path="/now-playing-movies" element={<NowPlayingMoviesPage user={user} searchText={searchText} />} />
+        <Route path="/profile" element={<ProfilePage user={user} setReloadApp={setReloadApp} searchText={searchText} />} />
+        <Route path="/details/:movieId" element={<DetailsPage user={user} searchText={searchText} />} />
+        <Route path="/top-rated" element={<TopRatedPage user={user} searchText={searchText} />} />
       </Routes>
     </div>
   )

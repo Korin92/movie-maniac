@@ -11,18 +11,21 @@ import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import Tooltip from '@mui/material/Tooltip'
 import Avatar from '@mui/material/Avatar'
-import { createTheme, ThemeProvider } from '@mui/material/styles'
+import { ThemeProvider } from '@mui/material/styles'
 import IconButton from '@mui/material/IconButton'
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff'
 import DeleteSweepIcon from '@mui/icons-material/DeleteSweep'
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye'
 import FavoriteIcon from '@mui/icons-material/Favorite'
 
+// Services
 import { RatingServices } from '../../services/rating-services'
 import { MovieServices } from '../../services/movies-services'
 import { FavServices } from '../../services/fav-services'
 import { PendingWatchServices } from '../../services/pending-watch-services'
 import { MoviesSeenServices } from '../../services/movies-seen-services'
+
+// Utils
 import { HandlerButtonFav } from '../../utils/handler-buttons-cards/handlerButtonFav'
 import { HandlerButtonPending } from '../../utils/handler-buttons-cards/handlerButtonPending'
 import { HandlerButtonSeen } from '../../utils/handler-buttons-cards/handlerButtonSeen'
@@ -31,9 +34,11 @@ import { HandlerButtonSeen } from '../../utils/handler-buttons-cards/handlerButt
 import CardMediaComponent from '../card-media/component'
 import CardContentComponent from '../card-content/component'
 
+// Styles
 import { STCard, theme, themeMenuItem } from '../../styles/card-default/style'
 
 export default function TopRated(props) {
+  // States
   const [movies, setMovies] = useState([])
   const [topRated, setTopRated] = useState([])
   const [loading, setLoading] = useState(true)
@@ -52,8 +57,12 @@ export default function TopRated(props) {
 
   const [disabled, setDisabled] = useState(false)
 
+  // props
   const { user, movieId } = props
 
+  // Effects
+
+  // Effect to get the favorites movies
   useEffect(() => {
     FavServices.getFavs(user).then((i) => {
       setFavs(i)
@@ -61,6 +70,7 @@ export default function TopRated(props) {
     })
   }, [isFavorite, user])
 
+  // Effect to get the credentials of favorites movies
   useEffect(() => {
     HandlerButtonFav.favoriteMovies(user, favs).then((i) => {
       setCredentialFav(i)
@@ -69,6 +79,7 @@ export default function TopRated(props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [favs, user])
 
+  // Effect to get pending movies
   useEffect(() => {
     PendingWatchServices.getPending(user).then((i) => {
       setPendings(i)
@@ -76,6 +87,7 @@ export default function TopRated(props) {
     })
   }, [isPending, user])
 
+  // Effect to get credentials of pending movies
   useEffect(() => {
     HandlerButtonPending.pendingsMovies(user, pendings).then((i) => {
       setCredentialPending(i)
@@ -84,6 +96,7 @@ export default function TopRated(props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pendings, user])
 
+  // Effect to get credentials of seen movies
   useEffect(() => {
     HandlerButtonSeen.seenMovies(user, seen).then((i) => {
       setCredentialSeen(i)
@@ -92,6 +105,7 @@ export default function TopRated(props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [seen, user])
 
+  // Effect to get the seen movies
   useEffect(() => {
     MoviesSeenServices.getMovieSeen(user).then((i) => {
       setSeen(i)
@@ -99,6 +113,7 @@ export default function TopRated(props) {
     })
   }, [isSeen, user])
 
+  // Function to get the top rated movies
   const getMoviesTopRated = async () => {
     if (topRated.length > 0) {
       const unresolvedPromises = topRated.map((top) =>
@@ -108,12 +123,15 @@ export default function TopRated(props) {
       setLoading(false)
     }
   }
+
+  // Effect to get the top rated movies
   useEffect(() => {
     RatingServices.getTopRated().then((film) => {
       setTopRated(film)
     })
   }, [])
 
+  // Effect call the function to get the top rated movies
   useEffect(() => {
     getMoviesTopRated()
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -124,7 +142,7 @@ export default function TopRated(props) {
       <Grid sx={{ flexGrow: 1 }}>
         <Grid item xs={12}>
           <h1 className="title">Mejor valoradas</h1>
-          <Grid justifyContent="center" container spacing={2} className="grid">
+          <Grid container spacing={2} className="grid">
             {movies?.map((movie) =>
               (
                 <Grid key={movie.id} item>

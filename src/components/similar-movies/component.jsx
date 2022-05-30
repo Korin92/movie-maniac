@@ -158,9 +158,9 @@ export default function SimilarMovies(props) {
   return (
     !loading && (
       <STSimilarMovies>
-        <Grid sx={{ flexGrow: 1 }}>
+        <Grid sx={{ flexGrow: 1, marginTop: '4%' }}>
           <Grid item xs={12}>
-            <Grid justifyContent="center" container spacing={2}>
+            <Grid sx={{ margin: '0' }} justifyContent="center" container spacing={2}>
               <Carousel
                 additionalTransfrom={0}
                 arrows
@@ -184,7 +184,7 @@ export default function SimilarMovies(props) {
               >
                 {movies?.results.map((movie) =>
                   (
-                    <Grid key={movie.id} item className="grid-card">
+                    <Grid sx={{ margin: '0 23px' }} key={movie.id} item className="grid-card">
                       <Card sx={{ maxWidth: 345 }} className="card">
                         {!movie ? (
                           <>

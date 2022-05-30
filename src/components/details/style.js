@@ -50,7 +50,6 @@ export const STDetails = styled.div`
         font-weight: bold;
         .css-1c99szj-MuiRating-icon {
           color: #253059e3;
-          /* filter: drop-shadow(7px 5px 4px rgb(0 0 0 / 75%)); */
         }
         filter: drop-shadow(-1px 0px 3px #f6f6fe);
       }
@@ -77,9 +76,6 @@ export const STDetails = styled.div`
       @media (max-width: 450px) {
         height: 200px;
       }
-      /* @media (max-width: 450px) {
-        height: 300px;
-      } */
     }
     @media (max-width: 860px) {
       .content-title {

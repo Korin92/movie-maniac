@@ -20,7 +20,7 @@ export const STCard = styled.div`
     margin-bottom: 2%;
     margin-left: 3%;
   }
-
+  
   .card {
     width: 100%;
     height: 100%;

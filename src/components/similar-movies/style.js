@@ -5,14 +5,6 @@ export const STSimilarMovies = styled.div`
   width: 90%;
   margin: 0 auto;
 
-  .css-1t74jcg-MuiGrid-root {
-    margin-top: 4%;
-  }
-
-  .css-13i4rnv-MuiGrid-root {
-    margin: 0 23px;
-  }
-
   .react-multi-carousel-list {
     position: initial;
   }
@@ -22,6 +14,7 @@ export const STSimilarMovies = styled.div`
 
   .container {
     width: 100%;
+    margin: 0;
   }
   .dotList {
     margin: 0;
@@ -65,46 +58,11 @@ export const STSimilarMovies = styled.div`
       height: 342px;
     }
 
-    .description {
-      height: 50px;
-
-      .css-h93ljk-MuiTypography-root {
-        margin: 0;
-        font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
-        font-weight: 400;
-        font-size: 1rem;
-        line-height: 1.334;
-        letter-spacing: 0em;
-        margin-bottom: 0.35em;
-      }
-
-      .text-description {
-        display: -webkit-box;
-        height: 24px;
-        -webkit-line-clamp: 1;
-        -webkit-box-orient: vertical;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        line-height: 1.5;
-      }
-    }
-
     @media screen and (max-width: 890px) {
       margin-top: 8px;
       .poster {
         width: 100%;
         height: 200px;
-      }
-      .description {
-        height: 30px;
-
-        .css-h93ljk-MuiTypography-root {
-          font-size: 0.8rem;
-        }
-
-        .text-description {
-          font-size: 0.8rem;
-        }
       }
 
       .content-buttons {

@@ -9,7 +9,7 @@ export default function CardContentComponent(props) {
   return (
     <STCardContent>
       <CardContent className="description">
-        <Typography className="title">
+        <Typography variant="h2" className="title">
           {movie.title}
         </Typography>
         <Typography className="text-description" color="text.secondary">

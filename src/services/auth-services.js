@@ -207,10 +207,10 @@ const changePassword = (
 
         updatePassword(currentUser, formData.newPassword)
           .then(() => {
-            setMessage('Contraseña actualizada')
-            setAlert(true)
-            setIsLoading(false)
-            return true
+            setMessage('Contraseña cambiada')
+            setSeverity('success')
+            signOut(auth)
+            console.log('Contraseña cambiada')
           })
           .catch((err) => {
             console.log(err)
@@ -218,16 +218,14 @@ const changePassword = (
             setSeverity('error')
             Errors.handlerErrors(err.code, setMessage)
             setAlert(true)
-            return false
           })
       })
       .catch((err) => {
-        console.log(err.code)
+        console.log(err)
         Errors.handlerErrors(err.code, setMessage)
         setIsLoading(false)
         setSeverity('error')
         setAlert(true)
-        return false
       })
   }
 }

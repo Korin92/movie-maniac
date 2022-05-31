@@ -49,11 +49,11 @@ export default function Providers(props) {
               <CardMedia
                 className="img-providers"
                 component="img"
-                alt="image of actor"
+                alt={`logo of ${item.provider_name}`}
                 image={`https://image.tmdb.org/t/p/original/${item.logo_path}`}
               />
             </Paper>
-            <Typography className="item-name">{item.provider_name}</Typography>
+            <Typography variant="h2" className="item-name">{item.provider_name}</Typography>
           </Container>
         ))}
     </STProviders>

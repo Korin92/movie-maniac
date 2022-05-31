@@ -124,12 +124,12 @@ export default function Details(props) {
                 </legend>
               </fieldset>
               <div className="info-rating">
-                <Typography className="text-rating">
+                <Typography variant="h2" className="text-rating">
                   votos:
                   {' '}
                   {votes}
                 </Typography>
-                <Typography className="text-rating">
+                <Typography variant="h2" className="text-rating">
                   valoración media:
                   {' '}
                   {stars}

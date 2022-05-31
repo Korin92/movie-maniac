@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable max-len */
-import React, { Routes, Route, HashRouter } from 'react-router-dom'
+import React, { Routes, Route, useState } from 'react-router-dom'
 
 // Pages
 import Home from '../pages/home/component'

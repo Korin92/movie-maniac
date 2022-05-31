@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-no-constructed-context-values */
 import React, { useState } from 'react'
 
 // CSS
@@ -11,6 +12,7 @@ import Routes from './routes/Routes'
 import Footer from './components/footer/component'
 import SearchContext from './components/search/context'
 import { useSearch } from './hooks/useSearch'
+import { MyEstadoGlobalContext } from './utils/globalState'
 
 // Firebase
 import { auth } from './utils/firebase'
@@ -19,6 +21,7 @@ function App() {
   const [user, setUser] = useState(null)
   const [isLoading, setIsLoading] = useState(true)
   const [reloadApp, setReloadApp] = useState(false)
+  const [mostrar, setMostrar] = useState(false)
 
   const searchText = useSearch()
 
@@ -38,18 +41,20 @@ function App() {
   return (
     <div className="App">
       <ScrollToTop />
-      <SearchContext.Provider value={searchText}>
-        <header>
-          <NavBar user={user} />
-        </header>
-        <div className="content">
-          <Routes
-            user={user}
-            setReloadApp={setReloadApp}
-            searchText={searchText}
-          />
-        </div>
-      </SearchContext.Provider>
+      <MyEstadoGlobalContext.Provider value={{ mostrar, setMostrar }}>
+        <SearchContext.Provider value={searchText}>
+          <header>
+            <NavBar user={user} />
+          </header>
+          <div className="content">
+            <Routes
+              user={user}
+              setReloadApp={setReloadApp}
+              searchText={searchText}
+            />
+          </div>
+        </SearchContext.Provider>
+      </MyEstadoGlobalContext.Provider>
       <footer>
         <Footer />
       </footer>

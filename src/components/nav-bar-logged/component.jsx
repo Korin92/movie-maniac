@@ -59,6 +59,7 @@ export default function NavBarLogged(props) {
   }
 
   const handleLogout = () => {
+    navigate('/')
     signOut(auth)
   }
 
@@ -177,8 +178,6 @@ export default function NavBarLogged(props) {
                       <Typography textAlign="center">Mi Perfil</Typography>
                     </MenuItem>
                     <MenuItem
-                      as={Link}
-                      to="/"
                       onClick={handleLogout}
                     >
                       <Typography textAlign="center">Cerrar sesión</Typography>

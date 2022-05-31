@@ -14,7 +14,7 @@ import { STProfileComponent } from './style'
 import ChangePasswordForm from '../change-password-form/component'
 
 export default function Profile(props) {
-  const { user, setReloadApp, setChangePassword } = props
+  const { user, setReloadApp } = props
   const [openChangePassword, setOpenChangePassword] = useState(false)
   const [openUploadAvatar, setOpenUploadAvatar] = useState(false)
   const handleUpdateAvatar = () => {
@@ -58,7 +58,6 @@ export default function Profile(props) {
             user={user}
             openChangePassword={openChangePassword}
             handleCloseChangePassword={handleCloseChangePassword}
-            setChangePassword={setChangePassword}
           />
         )}
       </Container>

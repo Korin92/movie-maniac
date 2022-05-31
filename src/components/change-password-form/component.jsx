@@ -11,13 +11,14 @@ import DialogActions from '@mui/material/DialogActions'
 import Button from '@mui/material/Button'
 import TextField from '@mui/material/TextField'
 
-import { signOut, updatePassword } from 'firebase/auth'
+import { signOut } from 'firebase/auth'
 import { auth } from '../../utils/firebase'
 
 import { AuthServices } from '../../services/auth-services'
 
 import AlertMessage from '../alert/component'
 import { Errors } from '../../utils/errors'
+import { MyEstadoGlobalContext } from '../../utils/globalState'
 
 export default function ChangePasswordForm({
   openChangePassword,
@@ -28,6 +29,8 @@ export default function ChangePasswordForm({
   const [alert, setAlert] = useState(false)
   const [severity, setSeverity] = useState(null)
   const [isLoading, setIsLoading] = useState(false)
+
+  const { setMostrar } = React.useContext(MyEstadoGlobalContext)
 
   const navigate = useNavigate()
 
@@ -41,13 +44,16 @@ export default function ChangePasswordForm({
 
   const onSubmit = (e) => {
     e.preventDefault()
-    AuthServices.changePassword(
+    if (!AuthServices.changePassword(
       formData,
       setIsLoading,
       setAlert,
       setSeverity,
       setMessage,
-    ) ? navigate('/') : null
+    )) {
+      navigate('/')
+      setMostrar(true)
+    }
   }
 
   return (

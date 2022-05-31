@@ -1,6 +1,6 @@
 /* eslint-disable max-len */
 import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 // MaterialUI
 import Card from '@mui/material/Card'
@@ -58,6 +58,8 @@ export default function SimilarMovies(props) {
   const [disabled, setDisabled] = useState(false)
 
   const { user, movieId } = props
+
+  const navigate = useNavigate()
 
   const responsive = {
     desktop: {
@@ -154,6 +156,11 @@ export default function SimilarMovies(props) {
       setIsSeen(false)
     })
   }, [isSeen, user])
+
+  const handleGoToMovie = (id) => {
+    navigate(`/details/${id}`)
+    // window.location.reload()
+  }
 
   return (
     !loading && (
@@ -322,8 +329,14 @@ export default function SimilarMovies(props) {
                               )}
 
                               <ThemeProvider theme={themeMenuItem}>
-                                <MenuItem as={Link} to={`/details/${movie.id}`}>
-                                  <Typography className="more">Saber más</Typography>
+                                <MenuItem
+                                  onClick={() => {
+                                    navigate(`/details/${movie.id}`)
+                                    window.location.reload()
+                                  }}
+                                  component="div"
+                                >
+                                  <Typography component="div" className="more">Saber más</Typography>
                                 </MenuItem>
                               </ThemeProvider>
                             </CardActions>

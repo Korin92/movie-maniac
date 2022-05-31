@@ -33,7 +33,7 @@ const removeMovieSeen = async (seen) => {
 // Get all favorties from the user
 const getMovieSeen = async (user) => {
   const arrayMoviesSeen = []
-  if (user) {
+  if (user.auth.currentUser) {
     const q = query(collection(db, `users/${auth.currentUser.uid}/movies-seen`))
     const querySnapshot = await getDocs(q)
 

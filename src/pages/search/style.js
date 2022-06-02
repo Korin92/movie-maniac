@@ -2,7 +2,7 @@ import styled from 'styled-components'
 
 export const STSearch = styled.div`
   margin-bottom: 50px;
-  min-height: calc(100vh - 210px);
+  min-height: calc(100vh - 160px);
  
   .progress {
     display: flex;

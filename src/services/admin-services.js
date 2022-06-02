@@ -54,9 +54,32 @@ const addAdmin = async (user) => {
   }
 }
 
+const deleteAdmin = async (user) => {
+  try {
+    await deleteDoc(doc(db, 'admins', user.uid))
+  } catch (e) {
+    console.error('Error deleting document: ', e)
+  }
+}
+
+const getOwners = async () => {
+  const arrayOwners = []
+  const q = query(collection(db, 'owner'))
+  const querySnapshot = await getDocs(q)
+
+  querySnapshot?.docs.map((owner) => {
+    const data = owner.data()
+    data.id = owner.id
+    return arrayOwners.push(data.id)
+  })
+  return arrayOwners
+}
+
 export const AdminServices = {
   deleteRatings,
   getUsers,
   addAdmin,
   getAdmins,
+  deleteAdmin,
+  getOwners,
 }

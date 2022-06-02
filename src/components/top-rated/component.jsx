@@ -36,6 +36,7 @@ import CardContentComponent from '../card-content/component'
 
 // Styles
 import { STCard, theme, themeMenuItem } from '../../styles/card-default/style'
+import { STNotFilm } from './style'
 
 export default function TopRated(props) {
   // States
@@ -115,7 +116,7 @@ export default function TopRated(props) {
 
   // Function to get the top rated movies
   const getMoviesTopRated = async () => {
-    if (topRated.length > 0) {
+    if (topRated?.length > 0) {
       const unresolvedPromises = topRated.map((top) =>
         MovieServices.getMovie(top.credential))
       const results = await Promise.all(unresolvedPromises)
@@ -284,6 +285,17 @@ export default function TopRated(props) {
           </Grid>
         </Grid>
       </Grid>
+      {!topRated && (
+        <STNotFilm>
+          <h2 className="not-film">
+            {' '}
+            No hay películas valoradas, ¡sé el primero en hacerlo!
+            {' '}
+            <a className="link" href="/">➡️valorar películas ahora⬅️</a>
+            {' '}
+          </h2>
+        </STNotFilm>
+      )}
     </STCard>
   )
 }

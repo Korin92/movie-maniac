@@ -4,6 +4,7 @@ import Button from '@mui/material/Button'
 import { DataGrid } from '@mui/x-data-grid'
 
 import { Typography } from '@mui/material'
+import Alert from '@mui/material/Alert'
 import { STAdmin, STContainer } from './style'
 import { AdminServices } from '../../services/admin-services'
 import TableUsers from '../table-users/component'
@@ -14,10 +15,18 @@ export default function Admin() {
   const [users, setUsers] = useState([])
   const [tableUsers, setTableUsers] = useState(false)
   const [totalRatings, setTotalRatings] = useState([])
+  const [close, setClose] = useState(true)
 
   const handleReset = () => {
     AdminServices.deleteRatings().then(() => {
-      setReset(true)
+      if (totalRatings?.length > 0) {
+        setReset(true)
+        setClose(false)
+        setTotalRatings(0)
+      } else {
+        setReset(false)
+        setClose(false)
+      }
     }).catch((err) => {
       console.log(err)
       setReset(false)
@@ -37,10 +46,8 @@ export default function Admin() {
     RatingServices.getRatings().then((i) => {
       setTotalRatings(i)
     })
-  }, [])
+  }, [reset])
 
-  console.log('tableRatings', totalRatings)
-  console.log('users', users)
   return (
     <STContainer>
       <STAdmin>
@@ -48,14 +55,18 @@ export default function Admin() {
         <Typography className="title-rating" variant="h2">
           Total de películas valoradas:
           {' '}
-          {totalRatings.length}
+          {totalRatings?.length ? totalRatings.length : 0}
         </Typography>
         <Button className="admin-btn" onClick={handleReset}>Resetear valoraciones de películas</Button>
-        {reset && <p>Valoraciones reseteadas</p>}
+        {!close && (
+          reset ? (
+            <Alert sx={{ margin: '8px' }} onClose={() => { setClose(true) }}>Valoraciones reseteadas</Alert>)
+            : (<Alert sx={{ margin: '8px' }} severity="warning" onClose={() => { setClose(true) }}>No hay valoraciones</Alert>)
+        )}
         <Typography className="title-rating" variant="h2">
           Total de usuarios registrados:
           {' '}
-          {users.length}
+          {users?.length}
         </Typography>
         <Button className="admin-btn" onClick={handlerTableUsers}>Consultar usuarios</Button>
       </STAdmin>

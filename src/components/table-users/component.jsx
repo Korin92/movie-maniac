@@ -11,12 +11,17 @@ import Paper from '@mui/material/Paper'
 import Button from '@mui/material/Button'
 import { AdminServices } from '../../services/admin-services'
 import { HandlerButtonsAdmin } from '../../utils/handler-buttons-admin/addAdmin'
+import { HandlerButtonsOwner } from '../../utils/handler-buttons-owner/deleteAdmin'
+import { auth } from '../../utils/firebase'
+import Loader from '../loader/component'
 
 export default function TableUsers({ users }) {
   const [isAdmin, setIsAdmin] = useState(false)
   const [admin, setAdmin] = useState([])
   const [adminCredential, setAdminCredential] = useState([])
   const [loading, setLoading] = useState(false)
+  const [owner, setOwner] = useState([])
+  const [open, setOpen] = useState(false)
 
   useEffect(() => {
     AdminServices.getAdmins().then((i) => {
@@ -24,6 +29,13 @@ export default function TableUsers({ users }) {
       setIsAdmin(false)
     })
   }, [isAdmin])
+
+  useEffect(() => {
+    AdminServices.getOwners().then((i) => {
+      console.log('owner', i)
+      setOwner(i)
+    })
+  }, [])
 
   const adminID = async (admin) => {
     const arrayIdAdmins = []
@@ -67,18 +79,34 @@ export default function TableUsers({ users }) {
                 <TableCell align="center">{isAdmin && adminCredential.includes(user.uid) ? 'Sí' : 'No'}</TableCell>
                 <TableCell align="center">{user.email}</TableCell>
                 <TableCell align="right">
-                  <Button
-                    disabled={!!adminCredential.includes(user.id)}
-                    onClick={() =>
-                      HandlerButtonsAdmin.handleAdmin(user)}
-                  >
-                    Hacer administrador
-                  </Button>
+                  {!adminCredential.includes(user.uid) && (
+                    <Button
+                      onClick={() => {
+                        setOpen(true)
+                        HandlerButtonsAdmin.handleAdmin(user, setLoading)
+                      }}
+                    >
+                      Añadir administrador
+                    </Button>
+
+                  )}
+                  {owner.includes(auth.currentUser.uid) && (
+                    adminCredential.includes(user.uid) && (
+                    <Button onClick={() => {
+                      setOpen(true)
+                      HandlerButtonsOwner.handleDeleteAdmin(user, setLoading)
+                    }}
+                    >
+                      Eliminar administrador
+                    </Button>
+                    )
+                  )}
                 </TableCell>
               </TableRow>
             ))}
         </TableBody>
       </Table>
+      {loading && <Loader open={open} />}
     </TableContainer>
   )
 }

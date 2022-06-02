@@ -13,8 +13,6 @@ export default function SearchBar() {
 
   const { searchInput, updateSearchInput } = useContext(SearchContext)
 
-  console.log(searchInput)
-
   const handleSubmit = (e) => {
     e.preventDefault()
   }

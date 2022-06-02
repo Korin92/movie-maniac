@@ -1,15 +1,12 @@
 import React, { useState, useEffect } from 'react'
 import Box from '@mui/material/Box'
-import List from '@mui/material/List'
-import ListItemButton from '@mui/material/ListItemButton'
-import ListItemIcon from '@mui/material/ListItemIcon'
-import ListItemText from '@mui/material/ListItemText'
 import FavoriteIcon from '@mui/icons-material/Favorite'
 import AccountCircleIcon from '@mui/icons-material/AccountCircle'
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye'
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff'
 import BottomNavigation from '@mui/material/BottomNavigation'
 import BottomNavigationAction from '@mui/material/BottomNavigationAction'
+import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings'
 
 import { AuthServices } from '../../services/auth-services'
 
@@ -86,7 +83,7 @@ export default function MenuProfile(props) {
                 setSelected('administrar')
               }}
               label="Administrar"
-              icon={<AccountCircleIcon className="icon-menu-profile" />}
+              icon={<AdminPanelSettingsIcon className="icon-menu-profile" />}
             />
           )}
         </BottomNavigation>

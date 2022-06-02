@@ -85,6 +85,8 @@ export default function Details(props) {
 
   const handleStars = (newValue) => {
     setValue(newValue)
+    setVotes(1)
+    setStars(newValue)
     RatingServices.addRating(movieId, newValue)
   }
 

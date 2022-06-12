@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 
+// Material UI
 import Card from '@mui/material/Card'
 import Grid from '@mui/material/Grid'
 import CardContent from '@mui/material/CardContent'
@@ -7,19 +8,25 @@ import CardMedia from '@mui/material/CardMedia'
 import Typography from '@mui/material/Typography'
 import Skeleton from '@mui/material/Skeleton'
 import Box from '@mui/material/Box'
+
+// Services
 import { MovieServices } from '../../services/movies-services'
 
+// Image default
 import NOIMAGE from '../../assets/png/NO-IMAGE1.png'
 
+// Styles
 import { STCardCast } from './style'
 
 export default function CardCast(props) {
+  // States
   const [loading, setLoading] = useState(false)
-
-  const { movieId } = props
-
   const [credits, setCredits] = useState({})
 
+  // Props
+  const { movieId } = props
+
+  // Useffect for get credits
   useEffect(() => {
     MovieServices.getCredits(movieId).then((movie) => {
       setCredits(movie)
@@ -27,6 +34,7 @@ export default function CardCast(props) {
     })
   }, [movieId])
 
+  // Function for get image
   const getImage = (image) => {
     if (image) {
       return `https://image.tmdb.org/t/p/original/${image}`

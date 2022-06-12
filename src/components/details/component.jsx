@@ -32,17 +32,20 @@ export default function Details(props) {
   const [value, setValue] = useState(0)
   const [stars, setStars] = useState(0)
   const [votes, setVotes] = useState(0)
-
-  const maxValue = 5
-
   const [video, setVideo] = useState()
 
+  // Props
   const { movieId } = useParams()
   const { user } = props
-
   const { backdrop_path, poster_path } = movie
+
+  // Constants
+  const maxValue = 5
   const image = backdrop_path ? `https://image.tmdb.org/t/p/original${backdrop_path}` : poster_path ? `https://image.tmdb.org/t/p/original${poster_path}` : NOIMAGEFILM
 
+  // Effects
+
+  /** Effect for get details of movie */
   useEffect(() => {
     MovieServices.getDetails(movieId).then((film) => {
       setMovie(film)
@@ -50,6 +53,7 @@ export default function Details(props) {
     })
   }, [movieId])
 
+  /** Effect for get video of movie */
   useEffect(() => {
     MovieServices.getVideos(movieId).then((film) => {
       setVideo(film.results)
@@ -57,6 +61,7 @@ export default function Details(props) {
     })
   }, [movieId])
 
+  /** Effect for get rating of movie */
   useEffect(() => {
     RatingServices.getRating(movieId).then((film) => {
       if (film) {
@@ -67,12 +72,17 @@ export default function Details(props) {
     })
   }, [value, movieId])
 
+  // Functions
+
+  /** Function for get age of premiere */
   const releasedDate = () => {
     if (!movie.release_date) {
       return 'Sin fecha'
     }
     return new Date(movie.release_date).getFullYear()
   }
+
+  /** Function for get video of movie */
   const getVideo = (videoMovie) => {
     if (videoMovie) {
       const videoKey = video.filter((item) =>
@@ -83,6 +93,7 @@ export default function Details(props) {
     return ''
   }
 
+  // handle rating
   const handleStars = (newValue) => {
     setValue(newValue)
     setVotes(1)
@@ -97,7 +108,7 @@ export default function Details(props) {
           <STPoster image={image}>
             <Typography className="title" variant="h1">
               {movie.title}
-              {' '}
+              <span />
               (
               {releasedDate()}
               )
@@ -128,12 +139,12 @@ export default function Details(props) {
               <div className="info-rating">
                 <Typography variant="h2" className="text-rating">
                   votos:
-                  {' '}
+                  <span />
                   {votes}
                 </Typography>
                 <Typography variant="h2" className="text-rating">
                   valoración media:
-                  {' '}
+                  <span />
                   {stars}
                 </Typography>
               </div>

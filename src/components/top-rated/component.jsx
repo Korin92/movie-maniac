@@ -288,11 +288,11 @@ export default function TopRated(props) {
       {!topRated && (
         <STNotFilm>
           <h2 className="not-film">
-            {' '}
+            <span />
             No hay películas valoradas, ¡sé el primero en hacerlo!
-            {' '}
+            <span />
             <a className="link" href="/">➡️valorar películas ahora⬅️</a>
-            {' '}
+            <span />
           </h2>
         </STNotFilm>
       )}

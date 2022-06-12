@@ -6,7 +6,7 @@ import {
   createUserWithEmailAndPassword,
   updateProfile,
   sendEmailVerification,
-  EmailAuthProvider, reauthenticateWithCredential, sendPasswordResetEmail, signOut, updatePassword,
+  EmailAuthProvider, reauthenticateWithCredential, sendPasswordResetEmail, updatePassword,
 } from 'firebase/auth'
 import {
   collection,
@@ -21,6 +21,7 @@ import { Errors } from '../utils/errors'
 // Firebase
 import { db, auth } from '../utils/firebase'
 
+// auth user
 const login = (
   setFormError,
   formData,
@@ -75,6 +76,7 @@ const login = (
   }
 }
 
+// register user
 const register = (setFormError, formData, setIsLoading, setAlert, setSeverity, setMessage) => {
   setFormError({})
 
@@ -154,6 +156,7 @@ export const reauthenticate = (password) => {
   return reauthenticateWithCredential(user, credentials)
 }
 
+// send email verification for change password
 const recoverPassword = (email, setAlert, setMessage, setSeverity, setIsLoading) => {
   sendPasswordResetEmail(auth, email)
     .then(() => {
@@ -169,6 +172,7 @@ const recoverPassword = (email, setAlert, setMessage, setSeverity, setIsLoading)
     })
 }
 
+// update user password
 const changePassword = (
   formData,
   setIsLoading,
@@ -199,7 +203,6 @@ const changePassword = (
     setSeverity('warning')
     setAlert(true)
   } else {
-    setAlert(false)
     setIsLoading(true)
     reauthenticate(formData.currentPassword)
       .then(() => {
@@ -207,29 +210,29 @@ const changePassword = (
 
         updatePassword(currentUser, formData.newPassword)
           .then(() => {
-            setMessage('Contraseña cambiada')
+            setAlert(false)
             setSeverity('success')
-            signOut(auth)
             console.log('Contraseña cambiada')
           })
           .catch((err) => {
+            setAlert(true)
             console.log(err)
             setIsLoading(false)
             setSeverity('error')
             Errors.handlerErrors(err.code, setMessage)
-            setAlert(true)
           })
       })
       .catch((err) => {
+        setAlert(true)
         console.log(err)
         Errors.handlerErrors(err.code, setMessage)
         setIsLoading(false)
         setSeverity('error')
-        setAlert(true)
       })
   }
 }
 
+// add user to the database
 const addUser = async () => {
   const user = auth.currentUser
 

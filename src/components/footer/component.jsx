@@ -1,10 +1,14 @@
 import React from 'react'
+
+// Material UI
 import Grid from '@mui/material/Grid'
 import InstagramIcon from '@mui/icons-material/Instagram'
 import FacebookIcon from '@mui/icons-material/Facebook'
 import TwitterIcon from '@mui/icons-material/Twitter'
 import Box from '@mui/material/Box'
 import { Typography } from '@mui/material'
+
+// Styles
 import { STFooter } from './style'
 
 export default function Footer() {

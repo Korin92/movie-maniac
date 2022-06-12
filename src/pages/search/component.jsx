@@ -19,6 +19,7 @@ import { MovieServices } from '../../services/movies-services'
 // Components
 import CardMovies from '../../components/card-movies/component'
 import SearchContext from '../../components/search/context'
+import ScrollToTop from '../../components/scroll-top/component'
 
 // Style
 import { STSearch } from './style'
@@ -26,13 +27,15 @@ import { STSearch } from './style'
 export default function SearchPage({
   user,
 }) {
+  // Context
   const context = useContext(SearchContext)
+  // States
   const [movies, setMovies] = useState([])
   const [loading, setLoading] = useState(true)
-
   const [page, setPage] = useState(1)
   const [totalPages, setTotalPages] = useState(1)
 
+  // Function for get movies by search
   const getMoviesSearch = useCallback(async () =>
     await MovieServices.getSearchMovies(context.searchInput, null).then((film) => {
       setMovies(film.results)
@@ -43,6 +46,7 @@ export default function SearchPage({
       .catch((err) =>
         console.log(err)), [context])
 
+  // Functions for pagination
   const hashMorePage = (search) => {
     handleNextPage(search, page)
     setLoading(false)
@@ -60,6 +64,7 @@ export default function SearchPage({
     })
   }
 
+  // UseEffect for get movies by search
   useEffect(() => {
     getMoviesSearch()
     setLoading(false)
@@ -70,21 +75,25 @@ export default function SearchPage({
 
   return (
     <STSearch>
+      <ScrollToTop />
       <InfiniteScroll
         dataLength={movies.length}
         hasMore={totalPages}
         next={() =>
           hashMorePage(context.searchInput)}
-        loader={(
+        loader={loading ? (
           <Box className="progress" sx={{ display: 'flex' }}>
-            {loading && <CircularProgress />}
+            (
+            <CircularProgress />
+            )
           </Box>
-        )}
+        ) : null}
       >
         {totalPages ? (
           <CardMovies movies={movies} loading={loading} title="Tu busqueda " user={user} />
         ) : (
-          <div className="no-results">Sin resultados =(</div>)}
+          <div className="no-results">Sin resultados =(</div>
+        )}
       </InfiniteScroll>
     </STSearch>
   )

@@ -10,12 +10,15 @@ import DialogContent from '@mui/material/DialogContent'
 import DialogContentText from '@mui/material/DialogContentText'
 import DialogTitle from '@mui/material/DialogTitle'
 
+// Services
+import { AuthServices } from '../../../services/auth-services'
+
+// components
 import Loader from '../../loader/component'
 import AlertMessage from '../../alert/component'
 
-import { AuthServices } from '../../../services/auth-services'
-
 export default function RecoverPassword({ openRecoverPassword, handleCloseRecoverPassword }) {
+  // States
   const [formData, setFormData] = useState(defaultValueForm())
   const [formError, setFormError] = useState({})
   const [isLoading, setIsLoading] = useState(false)
@@ -83,13 +86,14 @@ export default function RecoverPassword({ openRecoverPassword, handleCloseRecove
             </Button>
           </DialogActions>
         </form>
-        {isLoading && <Loader open={openRecoverPassword} />}
+        {isLoading ? <Loader open={openRecoverPassword} /> : null}
       </Dialog>
 
     </div>
   )
 }
 
+// Function to set default values
 function defaultValueForm() {
   return {
     email: '',

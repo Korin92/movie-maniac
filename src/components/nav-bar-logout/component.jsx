@@ -1,5 +1,5 @@
 /* eslint-disable no-nested-ternary */
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 
 // MaterialUI
@@ -24,6 +24,7 @@ import {
 import LoginForm from '../auth/login-form/component'
 import RegisterForm from '../auth/register-form/component'
 import SearchBar from '../search/component'
+import SearchContext from '../search/context'
 
 // Images
 import LOGOTIPO from '../../assets/png/LOGOTIPO.png'
@@ -37,6 +38,7 @@ export default function NavBarLogout(props) {
   const [open, setOpen] = useState(false)
 
   const navigate = useNavigate()
+  const context = useContext(SearchContext)
 
   // Handlers
   const handleOpenNavMenu = (event) => {
@@ -108,16 +110,20 @@ export default function NavBarLogout(props) {
                 <Container theme={themeContainer}>
                   <ThemeProvider theme={themeLogout}>
                     <MenuItem
-                      as={Link}
-                      to="/now-playing-movies"
-                      onClick={handleCloseNavMenu}
+                      onClick={() => {
+                        context.searchInput = ''
+                        navigate('/now-playing-movies')
+                        handleCloseNavMenu()
+                      }}
                     >
                       <Typography textAlign="center">Cartelera</Typography>
                     </MenuItem>
                     <MenuItem
-                      as={Link}
-                      to="/top-rated"
-                      onClick={handleCloseNavMenu}
+                      onClick={() => {
+                        context.searchInput = ''
+                        navigate('/top-rated')
+                        handleCloseNavMenu()
+                      }}
                       role="button"
                     >
                       <Typography textAlign="center">Mejor valoradas</Typography>
@@ -143,11 +149,23 @@ export default function NavBarLogout(props) {
 
             <Box className="links-app" sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
               <ThemeProvider theme={themeLogout}>
-                <MenuItem as={Link} to="/now-playing-movies" role="button">
+                <MenuItem
+                  onClick={() => {
+                    context.searchInput = ''
+                    navigate('/now-playing-movies')
+                  }}
+                  role="button"
+                >
                   <Typography textAlign="center">Cartelera</Typography>
                 </MenuItem>
 
-                <MenuItem as={Link} to="/top-rated" role="button">
+                <MenuItem
+                  onClick={() => {
+                    context.searchInput = ''
+                    navigate('/top-rated')
+                  }}
+                  role="button"
+                >
                   <Typography textAlign="center">Mejor valoradas</Typography>
                 </MenuItem>
               </ThemeProvider>

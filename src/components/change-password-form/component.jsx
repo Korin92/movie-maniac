@@ -1,8 +1,11 @@
 /* eslint-disable no-shadow */
 /* eslint-disable no-use-before-define */
-import React, { useState } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
+
+// React router
 import { useNavigate } from 'react-router-dom'
 
+// Material UI
 import Dialog from '@mui/material/Dialog'
 import DialogTitle from '@mui/material/DialogTitle'
 import DialogContent from '@mui/material/DialogContent'
@@ -11,27 +14,34 @@ import DialogActions from '@mui/material/DialogActions'
 import Button from '@mui/material/Button'
 import TextField from '@mui/material/TextField'
 
+// Firebase
 import { signOut } from 'firebase/auth'
 import { auth } from '../../utils/firebase'
 
+// States
 import { AuthServices } from '../../services/auth-services'
 
+// Utils
+import { MyGlobalStateContext } from '../../utils/globalState'
+
+// Components
 import AlertMessage from '../alert/component'
-import { Errors } from '../../utils/errors'
-import { MyEstadoGlobalContext } from '../../utils/globalState'
 
 export default function ChangePasswordForm({
   openChangePassword,
   handleCloseChangePassword,
 }) {
+  // States
   const [formData, setFormData] = useState(defaultValueForm())
-  const [message, setMessage] = useState(null)
+  const [message, setMessage] = useState('')
   const [alert, setAlert] = useState(false)
-  const [severity, setSeverity] = useState(null)
+  const [severity, setSeverity] = useState('')
   const [isLoading, setIsLoading] = useState(false)
 
-  const { setMostrar } = React.useContext(MyEstadoGlobalContext)
+  // Context
+  const { setShow } = useContext(MyGlobalStateContext)
 
+  // Navigate
   const navigate = useNavigate()
 
   // handlers
@@ -42,19 +52,26 @@ export default function ChangePasswordForm({
     })
   }
 
+  // handlers
   const onSubmit = (e) => {
     e.preventDefault()
-    if (!AuthServices.changePassword(
+    AuthServices.changePassword(
       formData,
       setIsLoading,
       setAlert,
       setSeverity,
       setMessage,
-    )) {
-      navigate('/')
-      setMostrar(true)
-    }
+    )
   }
+
+  // UseEffect to navigate to home and sing out user
+  useEffect(() => {
+    if (severity === 'success') {
+      navigate('/')
+      setShow(true)
+      signOut(auth)
+    }
+  }, [navigate, setShow, severity])
 
   return (
     <div>
@@ -75,11 +92,7 @@ export default function ChangePasswordForm({
               name="currentPassword"
               fullWidth
               variant="standard"
-            //   error={formError.email}
             />
-            {/* {formError.email && (
-              <span className="error-text">Por favor, introduce un correo electronico válido.</span>
-            )} */}
             <TextField
               autoFocus
               margin="dense"
@@ -89,13 +102,7 @@ export default function ChangePasswordForm({
               name="newPassword"
               fullWidth
               variant="standard"
-            //   error={formError.password}
             />
-            {/* {formError.password && (
-              <span className="error-text">
-                Por favor, elige una contraseña superior a 5 caracteres.
-              </span>
-            )} */}
             <TextField
               autoFocus
               margin="dense"
@@ -114,12 +121,12 @@ export default function ChangePasswordForm({
             </Button>
           </DialogActions>
         </form>
-        {/* {isLoading && <Loader open={open} />} */}
       </Dialog>
     </div>
   )
 }
 
+// Function to set default values
 function defaultValueForm() {
   return {
     currentPassword: '',

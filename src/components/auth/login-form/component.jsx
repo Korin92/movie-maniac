@@ -15,10 +15,10 @@ import DialogTitle from '@mui/material/DialogTitle'
 import ButtonResetSendEmailVerification from '../../reset-send-email-validation/component'
 import Loader from '../../loader/component'
 import AlertMessage from '../../alert/component'
+import RecoverPassword from '../recover-password-form/component'
 
 // services
 import { AuthServices } from '../../../services/auth-services'
-import RecoverPassword from '../recover-password-form/component'
 
 export default function LoginForm(props) {
   // States
@@ -36,14 +36,7 @@ export default function LoginForm(props) {
   // props
   const { open, handleClose } = props
 
-  // handlers
-  const onChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    })
-  }
-
+  // Function for login user
   const login = () => {
     AuthServices.login(
       setFormError,
@@ -56,6 +49,14 @@ export default function LoginForm(props) {
       setAlert,
       setSeverity,
     )
+  }
+
+  // handlers
+  const onChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    })
   }
 
   const onSubmit = (e) => {
@@ -71,9 +72,10 @@ export default function LoginForm(props) {
     setOpenRecoverPassword(false)
   }
 
+  // UseEffect for dismount component
   useEffect(() =>
     () => {
-      setFormData({}) // This worked for me
+      setFormData({})
     }, [])
 
   return (
@@ -119,7 +121,7 @@ export default function LoginForm(props) {
             )}
             <DialogContentText>
               ¿No recuerdas tu contraseña?
-              {' '}
+              <span />
               <Button onClick={() => {
                 handleOpenRecoverPassword()
                 handleClose()
@@ -146,7 +148,7 @@ export default function LoginForm(props) {
             </Button>
           </DialogActions>
         </form>
-        {isLoading && <Loader open={open} />}
+        {isLoading ? <Loader open={open} /> : null}
         {!userActive && (
           <ButtonResetSendEmailVerification
             user={user}
@@ -165,6 +167,7 @@ export default function LoginForm(props) {
   )
 }
 
+// Function for default value form
 function defaultValueForm() {
   return {
     email: '',

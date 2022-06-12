@@ -33,6 +33,8 @@ const getNowPlayingMovies = async (page) => {
   return apiResponse
 }
 
+// get details of a movie
+
 const getDetails = async (movieId) => {
   const apiUrl = `${API_URL}/movie/${movieId}?api_key=${API_KEY}&language=es-ES`
 
@@ -42,6 +44,8 @@ const getDetails = async (movieId) => {
   return apiResponse
 }
 
+// get credits of a movie
+
 const getCredits = async (movieId) => {
   const apiUrl = `${API_URL}/movie/${movieId}/credits?api_key=${API_KEY}&language=es-ES`
 
@@ -50,6 +54,8 @@ const getCredits = async (movieId) => {
 
   return apiResponse
 }
+
+// get videos of a movie
 
 const getVideos = async (movieId) => {
   const apiUrl = `${API_URL}/movie/${movieId}/videos?api_key=${API_KEY}&language=es-ES`
@@ -66,6 +72,8 @@ const getVideos = async (movieId) => {
   return apiResponseEU
 }
 
+// get providers of a movie
+
 const getProviders = async (movieId) => {
   const apiUrl = `${API_URL}/movie/${movieId}/watch/providers?api_key=${API_KEY}`
   const res = await fetch(apiUrl)
@@ -73,6 +81,8 @@ const getProviders = async (movieId) => {
 
   return apiResponse
 }
+
+// get similiar movies of a movie
 
 const getSimilarMovies = async (movieId) => {
   const apiUrl = `${API_URL}/movie/${movieId}/similar?api_key=${API_KEY}&language=es-ES&page=1&region=ES`
@@ -82,6 +92,8 @@ const getSimilarMovies = async (movieId) => {
   return apiResponse
 }
 
+// get a movie by id
+
 const getMovie = async (movieId) => {
   const apiUrl = `${API_URL}/movie/${movieId}?api_key=${API_KEY}&language=es-ES`
   const res = await fetch(apiUrl)
@@ -90,12 +102,11 @@ const getMovie = async (movieId) => {
   return apiResponse
 }
 
+// get movies by search
 const getSearchMovies = async (search, page = 1) => {
   const apiUrl = `${API_URL}/search/movie?api_key=${API_KEY}&language=es-ES&query=${search}&page=${page}&include_adult=false`
   const res = await fetch(apiUrl)
   const apiResponse = await res.json()
-
-  console.log('apiResponse desde movies-services', apiResponse)
 
   return apiResponse
 }

@@ -25,10 +25,12 @@ import { MoviesSeenServices } from '../../services/movies-seen-services'
 import CardMediaComponent from '../card-media/component'
 
 export default function PendingWatch({ user }) {
+  // States
   const [pending, setPending] = useState([])
   const [movies, setMovies] = useState([])
   const [loading, setLoading] = useState()
 
+  // Function to get movies pending
   const getMoviesPending = async () => {
     if (pending.length > 0) {
       const unresolvedPromises = pending.map((pendingWatch) =>
@@ -38,6 +40,9 @@ export default function PendingWatch({ user }) {
       setLoading(false)
     }
   }
+
+  // UseEffects
+  /** UseEffect for get movies pending */
   useEffect(() => {
     setLoading(true)
     PendingWatchServices.getPending(user).then((i) => {
@@ -50,6 +55,7 @@ export default function PendingWatch({ user }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pending])
 
+  // Function to delete movie pending and add to movies seen
   const handleClick = (id) => {
     MoviesSeenServices.addMoviesSeen(id)
     const idRemove = pending.findIndex((pendingWatch) =>

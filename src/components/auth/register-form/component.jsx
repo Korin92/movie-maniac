@@ -18,8 +18,10 @@ import Loader from '../../loader/component'
 import { AuthServices } from '../../../services/auth-services'
 
 export default function RegisterForm(props) {
+  // Props
   const { open, handleClose } = props
 
+  // States
   // eslint-disable-next-line no-use-before-define
   const [formData, setFormData] = useState(defaultValueForm())
   const [formError, setFormError] = useState({})
@@ -28,6 +30,7 @@ export default function RegisterForm(props) {
   const [severity, setSeverity] = useState(null)
   const [message, setMessage] = useState(null)
 
+  // Handlers
   const onChange = (e) => {
     setFormData({
       ...formData,
@@ -121,6 +124,7 @@ export default function RegisterForm(props) {
   )
 }
 
+// Function to set default values
 function defaultValueForm() {
   return {
     email: '',

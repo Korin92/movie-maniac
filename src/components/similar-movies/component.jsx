@@ -35,11 +35,16 @@ import { HandlerButtonPending } from '../../utils/handler-buttons-cards/handlerB
 import { HandlerButtonSeen } from '../../utils/handler-buttons-cards/handlerButtonSeen'
 
 // Components
-import { STSimilarMovies, themeMenuItem, theme } from './style'
 import CardMediaComponent from '../card-media/component'
 import CardContentComponent from '../card-content/component'
 
+// Styles
+import {
+  STSimilarMovies, themeMenuItem, theme, responsive,
+} from './style'
+
 export default function SimilarMovies(props) {
+  // States
   const [movies, setMovies] = useState([])
   const [loading, setLoading] = useState(true)
 
@@ -57,46 +62,14 @@ export default function SimilarMovies(props) {
 
   const [disabled, setDisabled] = useState(false)
 
+  // Props
   const { user, movieId } = props
 
+  // Hooks
   const navigate = useNavigate()
 
-  const responsive = {
-    desktop: {
-      breakpoint: {
-        max: 3000,
-        min: 1024,
-      },
-      items: 4,
-      partialVisibilityGutter: 40,
-    },
-    desktopSmall: {
-      breakpoint: {
-        max: 1600,
-        min: 1024,
-      },
-      items: 3,
-      partialVisibilityGutter: 40,
-    },
-
-    mobile: {
-      breakpoint: {
-        max: 464,
-        min: 0,
-      },
-      items: 1,
-      partialVisibilityGutter: 30,
-    },
-    tablet: {
-      breakpoint: {
-        max: 1024,
-        min: 464,
-      },
-      items: 2,
-      partialVisibilityGutter: 30,
-    },
-  }
-
+  // UseEffects
+  /** UseEffect for get similar movies */
   useEffect(() => {
     let isMounted = true
     MovieServices.getSimilarMovies(movieId).then((film) => {
@@ -112,6 +85,7 @@ export default function SimilarMovies(props) {
     return () => { isMounted = false }
   }, [movieId])
 
+  /** UseEffect for get favorites */
   useEffect(() => {
     FavServices.getFavs(user).then((i) => {
       setFavs(i)
@@ -119,6 +93,7 @@ export default function SimilarMovies(props) {
     })
   }, [isFavorite, user])
 
+  /** UseEffect for set credentials favs */
   useEffect(() => {
     HandlerButtonFav.favoriteMovies(user, favs).then((i) => {
       setCredentialFav(i)
@@ -127,6 +102,7 @@ export default function SimilarMovies(props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [favs, user])
 
+  /** UseEffect for get pendings */
   useEffect(() => {
     PendingWatchServices.getPending(user).then((i) => {
       setPendings(i)
@@ -134,6 +110,7 @@ export default function SimilarMovies(props) {
     })
   }, [isPending, user])
 
+  /** UseEffect for set credentials pendings */
   useEffect(() => {
     HandlerButtonPending.pendingsMovies(user, pendings).then((i) => {
       setCredentialPending(i)
@@ -142,6 +119,7 @@ export default function SimilarMovies(props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pendings, user])
 
+  /** UseEffect for set credentials seen */
   useEffect(() => {
     HandlerButtonSeen.seenMovies(user, seen).then((i) => {
       setCredentialSeen(i)
@@ -150,17 +128,13 @@ export default function SimilarMovies(props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [seen, user])
 
+  /** UseEffect for get seen */
   useEffect(() => {
     MoviesSeenServices.getMovieSeen(user).then((i) => {
       setSeen(i)
       setIsSeen(false)
     })
   }, [isSeen, user])
-
-  const handleGoToMovie = (id) => {
-    navigate(`/details/${id}`)
-    // window.location.reload()
-  }
 
   return (
     !loading && (

@@ -1,33 +1,41 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useCallback } from 'react'
 
+// Material UI
 import Dialog from '@mui/material/Dialog'
-import Container from '@mui/material/Container'
-import Button from '@mui/material/Button'
 
+// Firebase
 import { updateProfile } from '@firebase/auth'
-
 import {
   getStorage, ref, uploadBytes, getDownloadURL,
 } from 'firebase/storage'
 
+// Dropzone
 import { useDropzone } from 'react-dropzone'
-import { auth } from '../../utils/firebase'
-import Loader from '../loader/component'
 
+// Utils
+import { auth } from '../../utils/firebase'
+
+// Components
+import Loader from '../loader/component'
 import AlertMessage from '../alert/component'
 
+// Styles
 import {
   STDialogContent, STAddPhotoAlternateIcon, STTypography, STDialogActions, STButton,
 } from './style'
 
 export default function UploadAvatar(props) {
+  // Props
   const {
     user, setReloadApp, openUploadAvatar, handleCloseUploadAvatar,
   } = props
+
+  // States
   const [, setAvatarUrl] = useState()
   const [loading, setLoading] = useState(false)
 
+  // Function for update avatar
   const updateUserAvatar = () => {
     const storage = getStorage()
     getDownloadURL(ref(storage, `avatar/${user.uid}`))
@@ -45,6 +53,7 @@ export default function UploadAvatar(props) {
       })
   }
 
+  // Function for upload avatar
   const uploadImage = (file) => {
     setLoading(true)
     const storage = getStorage()
@@ -52,6 +61,7 @@ export default function UploadAvatar(props) {
     return uploadBytes(spaceRef, file)
   }
 
+  // Function for handle dropzone
   const onDrop = useCallback((acceptedFiles) => {
     const file = acceptedFiles[0]
     setAvatarUrl(URL.createObjectURL(file))

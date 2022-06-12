@@ -1,18 +1,22 @@
 import React, { useRef, useContext } from 'react'
-import { useNavigate } from 'react-router'
 
 // MaterialUI
 import SearchIcon from '@mui/icons-material/Search'
 
 // Styles
 import { Search, SearchIconWrapper, StyledInputBase } from './style'
+
+// Context
 import SearchContext from './context'
 
 export default function SearchBar() {
+  // useRef
   const inputRef = useRef(null)
 
+  // Context
   const { searchInput, updateSearchInput } = useContext(SearchContext)
 
+  // Handlers
   const handleSubmit = (e) => {
     e.preventDefault()
   }

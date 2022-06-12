@@ -1,7 +1,7 @@
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable react/jsx-no-useless-fragment */
-import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import React, { useEffect, useState, useContext } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 // MaterialUI
 import Card from '@mui/material/Card'
@@ -36,6 +36,7 @@ import { HandlerButtonSeen } from '../../utils/handler-buttons-cards/handlerButt
 // Components
 import CardMediaComponent from '../card-media/component'
 import CardContentComponent from '../card-content/component'
+import SearchContext from '../search/context'
 
 // eslint-disable-next-line react/prop-types
 export default function CardMovies({
@@ -55,6 +56,10 @@ export default function CardMovies({
   const [seen, setSeen] = useState([])
 
   const [disabled, setDisabled] = useState(false)
+
+  // Hooks
+  const navigate = useNavigate()
+  const context = useContext(SearchContext)
 
   // Effects
 
@@ -260,7 +265,13 @@ export default function CardMovies({
                           </ThemeProvider>
                           )}
                           <ThemeProvider theme={themeMenuItem}>
-                            <MenuItem as={Link} to={`/details/${movie.id}`} role="button">
+                            <MenuItem
+                              onClick={() => {
+                                context.searchInput = ''
+                                navigate(`/details/${movie.id}`)
+                              }}
+                              role="button"
+                            >
                               <Typography className="more">Saber más</Typography>
                             </MenuItem>
                           </ThemeProvider>

@@ -1,8 +1,7 @@
-import { getAuth } from '@firebase/auth'
 import {
   collection, doc, deleteDoc, query, getDocs, setDoc,
 } from 'firebase/firestore'
-import { db, auth } from '../utils/firebase'
+import { db } from '../utils/firebase'
 
 // Reset the ratings of the movies
 const deleteRatings = async () => {
@@ -16,6 +15,7 @@ const deleteRatings = async () => {
   })
 }
 
+// get users
 const getUsers = async () => {
   const arrayUsers = []
   const q = query(collection(db, 'users'))
@@ -29,6 +29,7 @@ const getUsers = async () => {
   return arrayUsers
 }
 
+// get admins
 const getAdmins = async () => {
   const arrayAdmins = []
   const q = query(collection(db, 'admins'))
@@ -42,6 +43,7 @@ const getAdmins = async () => {
   return arrayAdmins
 }
 
+// add admin
 const addAdmin = async (user) => {
   try {
     await setDoc(doc(db, 'admins', user.uid), {
@@ -54,6 +56,7 @@ const addAdmin = async (user) => {
   }
 }
 
+// delete admin
 const deleteAdmin = async (user) => {
   try {
     await deleteDoc(doc(db, 'admins', user.uid))
@@ -62,6 +65,7 @@ const deleteAdmin = async (user) => {
   }
 }
 
+// get owner
 const getOwners = async () => {
   const arrayOwners = []
   const q = query(collection(db, 'owner'))

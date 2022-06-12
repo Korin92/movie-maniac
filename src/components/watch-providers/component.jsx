@@ -1,19 +1,27 @@
 /* eslint-disable consistent-return */
 import React, { useEffect, useState } from 'react'
 
+// Material UI
 import Paper from '@mui/material/Paper'
 import CardMedia from '@mui/material/CardMedia'
 import Typography from '@mui/material/Typography'
 import Container from '@mui/material/Container'
+
+// Services
 import { MovieServices } from '../../services/movies-services'
+
+// Styles
 import { STProviders } from './style'
 
 export default function Providers(props) {
+  // States
   const [providers, setProviders] = useState([])
   const [loading, setLoading] = useState(false)
 
+  // Props
   const { movieId } = props
 
+  // UseEffect for get providers
   useEffect(() => {
     MovieServices.getProviders(movieId).then((movie) => {
       setProviders(movie.results.ES)
@@ -21,6 +29,7 @@ export default function Providers(props) {
     })
   }, [movieId])
 
+  // Function for render providers
   const getProviders = () => {
     if (!providers) return
     let provider = ''

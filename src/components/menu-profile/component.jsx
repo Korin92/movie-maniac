@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react'
+
+// Material UI
 import Box from '@mui/material/Box'
 import FavoriteIcon from '@mui/icons-material/Favorite'
 import AccountCircleIcon from '@mui/icons-material/AccountCircle'
@@ -8,20 +10,27 @@ import BottomNavigation from '@mui/material/BottomNavigation'
 import BottomNavigationAction from '@mui/material/BottomNavigationAction'
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings'
 
+// Services
 import { AuthServices } from '../../services/auth-services'
 
+// Styles
 import { STMenuProfile } from './style'
 
 export default function MenuProfile(props) {
+  // States
   const [selectedIndex, setSelectedIndex] = useState(1)
   const [userAdmin, setUserAdmin] = useState(false)
-  const { user, setSelected } = props
-  const [value, setValue] = React.useState(3)
+  const [value, setValue] = useState(3)
 
+  // Props
+  const { user, setSelected } = props
+
+  // Handlers
   const handleListItemClick = (event, index) => {
     setSelectedIndex(index)
   }
 
+  // Useffect for get user admin
   useEffect(() => {
     AuthServices.isUserAdmin(user.uid).then((response) => {
       setUserAdmin(response)
@@ -75,7 +84,7 @@ export default function MenuProfile(props) {
             label="Perfil"
             icon={<AccountCircleIcon className="icon-menu-profile" />}
           />
-          {userAdmin && (
+          {userAdmin ? (
             <BottomNavigationAction
               selected={selectedIndex === 4}
               onClick={(event) => {
@@ -85,7 +94,7 @@ export default function MenuProfile(props) {
               label="Administrar"
               icon={<AdminPanelSettingsIcon className="icon-menu-profile" />}
             />
-          )}
+          ) : null}
         </BottomNavigation>
       </Box>
     </STMenuProfile>

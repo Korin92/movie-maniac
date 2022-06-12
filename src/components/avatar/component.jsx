@@ -1,10 +1,14 @@
 import React from 'react'
+
+// Material UI
 import Avatar from '@mui/material/Avatar'
 import Stack from '@mui/material/Stack'
 
+// Styles
 import { STAvatarComponent } from './style'
 
 export default function ImageAvatar(props) {
+  // Props
   const { src, sx } = props
 
   return (

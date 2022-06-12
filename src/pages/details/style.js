@@ -10,28 +10,4 @@ export const STDetailsPage = styled.div`
   margin-top: 60px;
   background-color: transparent;
   margin: auto;
-
-  /* // RESPONSIVE
-  //========================================================================= //
-
-  // Móviles en horizontal o tablets en vertical
-  //------------------------------------------------------------------------- //
-  @media (min-width: 768px) {
-    margin-top: 60px;
-  }
-  @media (max-width: 600px) {
-    margin-top: 54px;
-  }
-
-  // Tablets en horizonal y escritorios normales
-  //------------------------------------------------------------------------- //
-  @media (min-width: 1024px) {
-    margin-top: 63px;
-  }
-
-  // Escritorios muy anchos
-  //------------------------------------------------------------------------- //
-  @media (min-width: 1200px) {
-    margin-top: 61px;
-  } */
 `

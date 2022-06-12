@@ -24,10 +24,12 @@ import { MoviesSeenServices } from '../../services/movies-seen-services'
 import CardMediaComponent from '../card-media/component'
 
 export default function MoviesSeen({ user }) {
+  // States
   const [watch, setwatch] = useState([])
   const [movies, setMovies] = useState([])
   const [loading, setLoading] = useState()
 
+  // Function to get movies seen
   const getMoviesWatch = async () => {
     if (watch.length > 0) {
       const unresolvedPromises = watch.map((movieSeen) =>
@@ -37,6 +39,9 @@ export default function MoviesSeen({ user }) {
       setLoading(false)
     }
   }
+
+  // UseEffects
+  /** UseEffect for get movies seen */
   useEffect(() => {
     setLoading(true)
     MoviesSeenServices.getMovieSeen(user).then((i) => {
@@ -49,6 +54,7 @@ export default function MoviesSeen({ user }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [watch])
 
+  // Function to delete movie seen
   const handleClick = (id) => {
     const idRemove = watch.findIndex((movieSeen) =>
       movieSeen.credential === id)

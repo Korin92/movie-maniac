@@ -36,7 +36,7 @@ const removePending = async (pending) => {
 // Get all favorties from the user
 const getPending = async (user) => {
   const arrayPending = []
-  if (user.auth.currentUser) {
+  if (user?.auth.currentUser) {
     const q = query(collection(db, `users/${auth.currentUser.uid}/pending`))
     const querySnapshot = await getDocs(q)
 

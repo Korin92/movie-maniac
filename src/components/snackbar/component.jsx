@@ -1,11 +1,15 @@
 import * as React from 'react'
 
+// Material UI
 import Snackbar from '@mui/material/Snackbar'
+
+// Components
 import AlertMessage from '../alert/component'
 
 export default function SnackbarComponent({
   message, open, severity, handleClose,
 }) {
+  // States
   const [state, setState] = React.useState({
     vertical: 'top',
     horizontal: 'center',

@@ -1,9 +1,9 @@
 import { AdminServices } from '../../services/admin-services'
 
+// handler button for delete admin
 const handleDeleteAdmin = (user, setLoading) => {
   setLoading(true)
   AdminServices.deleteAdmin(user).then(() => {
-    console.log('Admin deleted')
     setLoading(false)
   })
 }

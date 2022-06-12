@@ -1,6 +1,7 @@
 /* eslint-disable no-shadow */
 import React, { useEffect, useState } from 'react'
 
+// Material UI
 import Table from '@mui/material/Table'
 import TableBody from '@mui/material/TableBody'
 import TableCell from '@mui/material/TableCell'
@@ -9,13 +10,20 @@ import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 import Paper from '@mui/material/Paper'
 import Button from '@mui/material/Button'
+
+// Services
 import { AdminServices } from '../../services/admin-services'
+
+// Utils
 import { HandlerButtonsAdmin } from '../../utils/handler-buttons-admin/addAdmin'
 import { HandlerButtonsOwner } from '../../utils/handler-buttons-owner/deleteAdmin'
 import { auth } from '../../utils/firebase'
+
+// Components
 import Loader from '../loader/component'
 
 export default function TableUsers({ users }) {
+  // States
   const [isAdmin, setIsAdmin] = useState(false)
   const [admin, setAdmin] = useState([])
   const [adminCredential, setAdminCredential] = useState([])
@@ -23,20 +31,24 @@ export default function TableUsers({ users }) {
   const [owner, setOwner] = useState([])
   const [open, setOpen] = useState(false)
 
+  // UseEffect for get admin
   useEffect(() => {
     AdminServices.getAdmins().then((i) => {
       setAdmin(i)
-      setIsAdmin(false)
     })
   }, [isAdmin])
 
+  // UseEffect for get owner
   useEffect(() => {
     AdminServices.getOwners().then((i) => {
-      console.log('owner', i)
       setOwner(i)
     })
+    return () => {
+      setOwner([])
+    }
   }, [])
 
+  // Function for get admin credential
   const adminID = async (admin) => {
     const arrayIdAdmins = []
 
@@ -48,12 +60,12 @@ export default function TableUsers({ users }) {
     return arrayIdAdmins
   }
 
+  // UseEffect for get admin credential
   useEffect(() => {
     adminID(admin).then((i) => {
       setAdminCredential(i)
-      setIsAdmin(true)
     })
-  }, [admin])
+  }, [admin, isAdmin])
 
   return (
     <TableContainer component={Paper}>
@@ -76,13 +88,14 @@ export default function TableUsers({ users }) {
                 <TableCell component="th" scope="row">
                   {user.displayName}
                 </TableCell>
-                <TableCell align="center">{isAdmin && adminCredential.includes(user.uid) ? 'Sí' : 'No'}</TableCell>
+                <TableCell align="center">{adminCredential.includes(user.uid) ? 'Sí' : 'No'}</TableCell>
                 <TableCell align="center">{user.email}</TableCell>
                 <TableCell align="right">
                   {!adminCredential.includes(user.uid) && (
                     <Button
                       onClick={() => {
                         setOpen(true)
+                        setIsAdmin(true)
                         HandlerButtonsAdmin.handleAdmin(user, setLoading)
                       }}
                     >
@@ -94,6 +107,7 @@ export default function TableUsers({ users }) {
                     adminCredential.includes(user.uid) && (
                     <Button onClick={() => {
                       setOpen(true)
+                      setIsAdmin(false)
                       HandlerButtonsOwner.handleDeleteAdmin(user, setLoading)
                     }}
                     >
@@ -106,7 +120,7 @@ export default function TableUsers({ users }) {
             ))}
         </TableBody>
       </Table>
-      {loading && <Loader open={open} />}
+      {loading ? <Loader open={open} /> : null}
     </TableContainer>
   )
 }

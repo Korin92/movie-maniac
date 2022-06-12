@@ -14,9 +14,14 @@ import { STProfileComponent } from './style'
 import ChangePasswordForm from '../change-password-form/component'
 
 export default function Profile(props) {
-  const { user, setReloadApp } = props
+  // States
   const [openChangePassword, setOpenChangePassword] = useState(false)
   const [openUploadAvatar, setOpenUploadAvatar] = useState(false)
+
+  // Props
+  const { user, setReloadApp } = props
+
+  // Handlers
   const handleUpdateAvatar = () => {
     setOpenUploadAvatar(true)
   }

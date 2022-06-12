@@ -31,6 +31,8 @@ const addRating = async (movieId, rating) => {
   }
 }
 
+// get rating of a movie
+
 const getRating = async (movieId) => {
   const q = query(
     collection(db, 'rating'),
@@ -43,6 +45,8 @@ const getRating = async (movieId) => {
   }
   return null
 }
+
+// get ratings
 
 const getRatings = async () => {
   const q = query(
@@ -57,6 +61,7 @@ const getRatings = async () => {
   return null
 }
 
+// get top rated movies
 const getTopRated = async () => {
   const q = query(
     collection(db, 'rating'),

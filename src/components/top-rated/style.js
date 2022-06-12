@@ -1,14 +1,13 @@
 import styled from 'styled-components'
 
 export const STNotFilm = styled.div`
-
   .not-film {
     display: flex;
-  justify-content: center;
-  flex-direction: column;
-  align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
     > a {
-        text-align: center;
+      text-align: center;
       text-decoration: none;
       color: #f6f6fe;
       font-size: 1.2rem;

@@ -9,22 +9,24 @@ import { onAuthStateChanged, signOut } from 'firebase/auth'
 import ScrollToTop from './components/scroll-top/component'
 import NavBar from './components/nav-bar/component'
 import Routes from './routes/Routes'
-import Footer from './components/footer/component'
 import SearchContext from './components/search/context'
 import { useSearch } from './hooks/useSearch'
-import { MyEstadoGlobalContext } from './utils/globalState'
+import { MyGlobalStateContext } from './utils/globalState'
 
 // Firebase
 import { auth } from './utils/firebase'
 
 function App() {
+  // States
   const [user, setUser] = useState(null)
   const [isLoading, setIsLoading] = useState(true)
   const [reloadApp, setReloadApp] = useState(false)
-  const [mostrar, setMostrar] = useState(false)
+  const [show, setShow] = useState(false)
 
+  // Hooks
   const searchText = useSearch()
 
+  // user state
   onAuthStateChanged(auth, (currentUser) => {
     if (!currentUser?.emailVerified) {
       signOut(auth)
@@ -41,7 +43,7 @@ function App() {
   return (
     <div className="App">
       <ScrollToTop />
-      <MyEstadoGlobalContext.Provider value={{ mostrar, setMostrar }}>
+      <MyGlobalStateContext.Provider value={{ show, setShow }}>
         <SearchContext.Provider value={searchText}>
           <header>
             <NavBar user={user} />
@@ -54,10 +56,7 @@ function App() {
             />
           </div>
         </SearchContext.Provider>
-      </MyEstadoGlobalContext.Provider>
-      <footer>
-        <Footer />
-      </footer>
+      </MyGlobalStateContext.Provider>
     </div>
   )
 }

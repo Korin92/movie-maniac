@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
 export const STHome = styled.div`
-min-height: calc(100vh - 210px);
+min-height: calc(100vh - 160px);
 .progress{
     display: flex; 
     justify-content: center;

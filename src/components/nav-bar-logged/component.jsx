@@ -1,5 +1,5 @@
 /* eslint-disable no-nested-ternary */
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 
 // MaterialUI
@@ -32,12 +32,14 @@ import SearchBar from '../search/component'
 // Images
 import defaultAvatar from '../../assets/png/user.png'
 import LOGOTIPO from '../../assets/png/LOGOTIPO.png'
+import SearchContext from '../search/context'
 
 export default function NavBarLogged(props) {
   // props
   const { user, search } = props
 
   const navigate = useNavigate()
+  const context = useContext(SearchContext)
 
   // States
   const [anchorElNav, setAnchorElNav] = useState(null)
@@ -116,10 +118,18 @@ export default function NavBarLogged(props) {
                     <MenuItem as={Link} to="/" aria-label="home">
                       <Typography textAlign="center">Inicio</Typography>
                     </MenuItem>
-                    <MenuItem as={Link} to="/now-playing-movies">
+                    <MenuItem onClick={() => {
+                      context.searchInput = ''
+                      navigate('/now-playing-movies')
+                    }}
+                    >
                       <Typography textAlign="center">Cartelera</Typography>
                     </MenuItem>
-                    <MenuItem as={Link} to="/top-rated">
+                    <MenuItem onClick={() => {
+                      context.searchInput = ''
+                      navigate('/top-rated')
+                    }}
+                    >
                       <Typography textAlign="center">Mejor valoradas</Typography>
                     </MenuItem>
                   </ThemeProvider>
@@ -138,10 +148,18 @@ export default function NavBarLogged(props) {
             />
             <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
               <ThemeProvider theme={themeLogged}>
-                <MenuItem as={Link} to="/now-playing-movies">
+                <MenuItem onClick={() => {
+                  context.searchInput = ''
+                  navigate('/now-playing-movies')
+                }}
+                >
                   <Typography textAlign="center">Cartelera</Typography>
                 </MenuItem>
-                <MenuItem as={Link} to="/top-rated">
+                <MenuItem onClick={() => {
+                  context.searchInput = ''
+                  navigate('/top-rated')
+                }}
+                >
                   <Typography textAlign="center">Mejor valoradas</Typography>
                 </MenuItem>
               </ThemeProvider>
@@ -171,9 +189,11 @@ export default function NavBarLogged(props) {
                 <Container theme={themeContainer}>
                   <ThemeProvider theme={themeLogged}>
                     <MenuItem
-                      as={Link}
-                      to="/profile"
-                      onClick={handleCloseUserMenu}
+                      onClick={() => {
+                        context.searchInput = ''
+                        navigate('/profile')
+                        handleCloseUserMenu()
+                      }}
                     >
                       <Typography textAlign="center">Mi Perfil</Typography>
                     </MenuItem>

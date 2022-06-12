@@ -33,7 +33,7 @@ const removeFavs = async (favs) => {
 // Get all favorties from the user
 const getFavs = async (user) => {
   const arrayFavs = []
-  if (user.auth.currentUser) {
+  if (user?.auth.currentUser) {
     const q = query(collection(db, `users/${auth?.currentUser.uid}/favs`))
     const querySnapshot = await getDocs(q)
 
